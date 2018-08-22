@@ -94,7 +94,16 @@ IF TRIM(OC) = "AUTO" THEN
                     " '"&TOC&"', GETDATE(), '"&HOR&"', 0, 0,'"&PE1&"', '"&PE2&"', '"&PE3&"', '"&RE1&"', '"&RE2&"',  " & _
                     " '"&RE3&"', '"&PAI&"', '"&REMI&"', '"&ATE&"', '"&CN1&"', '"&CN2&"', '"&CN3&"', '"&CHK&"',      " & _
                     " '"&DOCR&"', '"&DESP&"', '"&DOC2&"', '"&ALM&"', '"&DIS&"', '"&PRV&"', '"&CCTO&"', '', NULL,    " & _
-                    " NULL, '', '', 0, '') ;                                                                "
+                    " NULL, '', '', 0, '') ;                                                                        " 
+
+        IF UCASE(TRIM(TIP)) = "I" THEN
+            liqui = trim(oc) + "001"
+            CAD = CAD + " INSERT INTO RSFACCAR..AL0001LIQC (LQ_CORDCOM, LQ_CNUMLIQ, LQ_CCODPRO, LQ_DFECLIQ, LQ_CCODMON, " & _ 
+                        " LQ_NTIPCAM, LQ_CGLOLIQ, LQ_DFECCRE, LQ_CUSER) VALUES('"&oc&"', '"&liqui&"', '"&pro&"' ,       " & _
+                        " getdate(), '"&mon&"', "&cam&", '', getdate(), 'SIST') "
+      
+        END IF            
+                          
 ELSE
     CAD = CAD + " Update RSFACCAR..CO0001MOVC Set OC_CCODPRO='"&PRO&"',             " & _
                 " OC_CRAZSOC='"&RAZ&"',     OC_CDIRPRO='"&DIR&"',                   " & _
@@ -126,6 +135,11 @@ ELSE
                 " Where OC_CNUMORD='"&OC&"' ;                                       "
     cad = cad + " update modelador..ordencompra set almdes = '"&alm&"' where        " & _
                 " NUMORD = '"&OC&"' ;                                               "
+     IF UCASE(TRIM(TIP)) = "I" THEN
+            liqui = trim(oc) + "001"
+            CAD = CAD " UPDATE RSFACCAR..AL0001LIQC SET LQ_CCODPRO = '"&PRO&"'      " & _
+                      " WHERE   LQ_CNUMLIQ = '"&LIQUI&"'    "
+     end if
 END IF
 
 ' Inicia transacción , para que los datos no queden a medias

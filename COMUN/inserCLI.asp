@@ -1,98 +1,93 @@
 <%@ Language=VBScript %>
-<%Usuario = Request.Cookies("Usuario")("USUARIO")%>
+<% Response.Buffer = true %>
+<%Session.LCID=2058%>
+<%	txtUsuario = Request.Cookies("Usuario")("USUARIO")
+	if Request.QueryString("PERFIL") <> "" then
+		NIVEL = Request.QueryString("PERFIL")
+		RESPONSE.COOKIES("usuario")("Perfil") = cint(nivel)
+	end if
+	txtPerfil = Request.Cookies("Usuario")("Perfil")
+	NIVEL = txtPerfil	
+	owner = Application("owner")%>
+
+<%'***************************************************
+'PROCESO        : INSERCION DE NUEVOS CLIENTEs a la Intranet
+'CREACION       : MABEL MOLINA
+'***************************************************%>
 <!--#include file="../includes/Cnn.inc"-->
 <!--#include file="../includes/rutinas.asp"-->
-<%'***************************************************
-'PROCESO        : INSERCION DE NUEVOS CLIENTE
-'CREACION       : MABEL MOLINA
-'FECHA CREACION : 
-'FECHA MODIFIC  : 13/09/2007
-'OBS: SE MODIFICO POR ERROR AL MOMENTO DE GRABAR.
-'***************************************************%>
-<%Response.Buffer = TRUE %>
 <%
-FAD = ""
-CHK = prepara_str_sql(Request.querystring("chk"))
-COD = prepara_str_sql(Request.querystring("pos"))
-NOM = prepara_str_sql(Request.querystring("des"))
-CLI = prepara_str_sql(Request.querystring("CLI"))
-tip = prepara_str_sql(Request.querystring("TIP"))
-ZON = prepara_str_sql(Request.querystring("ZON"))
-PAI = prepara_str_sql(Request.querystring("PAI"))
-RUC = prepara_str_sql(Request.querystring("RUC"))
-CIU = prepara_str_sql(Request.querystring("CIU"))
-TEL = prepara_str_sql(Request.querystring("TEL"))
-FAX = prepara_str_sql(Request.querystring("FAX"))
-DIR = prepara_str_sql(Request.querystring("DIR"))
-url = prepara_str_sql(Request.querystring("url"))
-if trim(ruc)="" then ruc="00000000000" 
-IF LEN(CLI) < 12 THEN
-	CLI = ""
-END IF 
+ABR = UCASE(prepara_str_sql(Request.querystring("ABR")))
+NOM = left(UCASE(prepara_str_sql(Request.querystring("NOM"))),80)
+
 FECHA ="{ fn NOW() }"
-'	busca si encuentra un código duplicado
-	CAD =   " SELECT CLIENTE FROM EMPRESAS  " & _
-			" WHERE  CLIENTE = '"&COD&"'    " & _
-			" ORDER BY CLIENTE DESC         "
-			response.Write(cad)
+    CAD =   " SELECT TOP 1 abreviatura FROM cliente     " & _
+            " where abreviatura = '"&abr&"'             "
 	RS.Open CAD, CNN
-IF RS.RecordCount > 0 THEN	
-	RS.Close
-	if chk = "0" then
-		CAD =	" UPDATE  EMPRESAS set      " & _
-				" NOMBRE = '"&NOM&"',       " & _ 
-				" DIRECCION = '"&DIR&"',    " & _
-				" CIUDAD = '"&CIU&"' ,      " & _
-				" PAIS = '"&PAI&"' ,        " & _
-				" ruc = '"&ruc&"' ,         " & _
-				" TIPO = '"&TIP&"' ,        " & _
-				" FAX = '"&FAX&"' ,         " & _
-				" TELEFONO = '"&TEL&"' ,    " & _
-				" ESTADO = 'A',             " & _
-				" USUARIO = '"&USUARIO&"',  " & _
-				" FECHA = "&FECHA&" ,       " & _
-				" ZONA= '"&ZON&"'           " & _ 
-				" WHERE CLIENTE = '"&COD&"';"
-	else
-		CAD =	" UPDATE EMPRESAS               " & _
-				" SET  USUARIO = '"&USUARIO&"', " & _
-				" FECHA = "&fecha&" ,           " & _
-				" ESTADO = 'E'	                " & _ 
-				" WHERE CLIENTE = '"&COD&"' ;   "	
-	end if		
-else	
-	RS.CLOSE
-	CAD =   " SELECT TOP 1 CLIENTE FROM EMPRESAS                " & _
-			" where TIPO = '"&TIP&"'  AND CLIENTE <= '999999'   "  & _
-			" ORDER BY CLIENTE DESC                             "
+   '   RESPONSE.WRITE("ACA 1")
+	IF RS.RecordCount > 0  THEN	%>
+        <script type="text/jscript" language="jscript">
+            alert("Abreviatura de Cliente Previamente Usada")
+        </script>
+        <%
+        response.end
+    else
+    '  RESPONSE.WRITE("ACA 2")
+        rs.close
+        aaa = Replace(abr, " ", "")
+        CAD =   " SELECT replace(abreviatura, ' ' , '') FROM cliente           " & _
+                " where REPLACE(abreviatura, ' ', '') = '"&aaa&"'   " 
+	    RS.Open CAD, CNN
+	    IF RS.RecordCount > 0  THEN	%>
+            <script type="text/jscript" language="jscript">
+                alert("Nombre  de Cliente ya Existe")
+            </script>
+        <%  response.end 
+        END IF
+    end if
+  '  RESPONSE.WRITE("ACA")
+    RS.CLOSE
+'	busca si encuentra un código duplicado
+	CAD =   " SELECT TOP 1 codigo FROM cliente                 " & _
+			" ORDER BY codigo DESC                             "
 	RS.Open CAD, CNN
 	IF RS.RecordCount > 0  THEN	
 		RS.MOVEFIRST
-		COD = CDBL(RS("CLIENTE")) + 1
-		IF TIP = "E" THEN
-			COD = RIGHT("000000" + LTRIM(RTRIM(COD)),6)
-		END IF 
+		COD = CDBL(RS("codigo")) + 1
+		COD = RIGHT("000000" + LTRIM(RTRIM(COD)),5)
 	ELSE 
-		if tip = "E" then	
-			cod = "000000"	
-		ELSEIF TIP = "L" THEN	
-			COD = "100000"
-		ELSE
-			COD = "900000"	
-		END IF 
+		cod = "000000"	
 	end if 	
-	CAD =	" insert into EMPRESAS  " & _
-			" (CLIENTE, NOMBRE, DIRECCION, CIUDAD, RUC, " & _
-			" ZONA, PAIS, TIPO,  FAX, TELEFONO, " & _
-			" ESTADO, usuario, fecha)" & _
-			" values('"&COD&"', '" & NOM & "', " & _
-			" '" & DIR & "', '" & CIU & "', '"&ruc&"', " & _
-			" '" & ZON & "', '" & PAI & "', " & _
-			" '" & TIP & "', '" & FAX & "', " & _
-			" '" & TEL & "',  " & _
-			" 'A', '"&USUARIO&"', "&fecha&")  " 
+    RS.CLOSE
 
-End if
+    RS.OPEN "SELECT NumClienteRS FROM TB_CTRL" ,CNN
+    RS.MOVEFIRST
+    RESPONSE.Write(RS("NUMCLIENTErs"))
+	
+	rsconcarnum=("E"+right("0000"+TRIM(CSTR(CDBL(RS("NumClienteRS")+1))),4))
+	
+    REA = RIGHT("00000E"+TRIM(CSTR(CDBL(RS("NumClienteRS")+1)) ),8)
+	
+    rs.close
+                                                                                                                        
+  cad = " INSERT INTO CLIENTE (CODIGO,	ABREVIATURA, NOMBRE, TIPO, RSCCLIENTE, ESTADO,	FECCREA, USUCREA, STAT)          " & _  
+        " VALUES('"&cod&"',	 '"&abr&"', '"&nom&"',  'E',	'"&REA&"',	'A',	getdate(),	'"&txtusuario&"','R');	     " & _  
+        " INSERT INTO TEMPORADAS (CLIENTE, CODIGO, DESCRIPCION,USUARIO,FECHA,ESTADO)                                     " & _  
+        " 		VALUES('"&cod&"','999','POR CONFIRMAR','AUTOGENERA',GETDATE(),'A')  ;                                    " & _  
+        " INSERT INTO TEMPORADAS (CLIENTE, CODIGO, DESCRIPCION,USUARIO,FECHA,ESTADO)                                     " & _  
+        " 		VALUES('"&cod&"','000','SIN TEMPORADA','AUTOGENERA',GETDATE(),'A')  ;                                    " & _  
+        " INSERT INTO RSFACCAR..FT0001CLIE(CL_CCODCLI, CL_CNOMCLI,	CL_CDIRCLI, CL_CTIPCLI, CL_CVENDE,   CL_CZONVTA,     " & _  
+        " CL_CESTADO,	CL_CFLADES,	CL_CTIPVTA,	CL_CTIPPRE, CL_NPORDES,	 CL_NPORDE2,	CL_NDOCVEN,	CL_CUSUCRE) VALUES ( " & _  
+        " '"&rea&"', '"&nom&"', '', 'C', 'OF', '0003', 'V', 'N', '2', '1', 0,	0,	'0','sist')  ;            " & _  
+		"INSERT INTO RSCONCAR..CP0001MAES(AC_CVANEXO,AC_CCODIGO,AC_CNOMBRE,AC_CDIRECC,AC_DFECCRE,AC_DFECMOD,AC_CUSER,AC_CESTADO) VALUES ('P','"&rsconcarnum&"','"&nom&"','',GETDATE(),GETDATE(),'sist','V');" & _  
+        " UPDATE TB_CTRL SET NumClienteRS=NumClienteRS + 1;                                                              " & _
+        " insert into DESTINOS   SELeCT (select top 1 right('0000'+ convert(varchar,convert(int,codigo)+1),4)            " & _
+        " from DESTINOS order by 1 desc),  'GLOBAL', '', '', 'USA', '"&cod&"', 'AUTO', GETDATE(),'A' ;                   "
+' ABREVIATUA ES CHAR(5)
+' hay que grabar adicionalmente  destino,
+
+
+
 cnn.BeginTrans
 Response.Write(cad)
 'Response.end
@@ -109,7 +104,8 @@ set Cnn = Nothing
 SET RS = Nothing
 'regresa a la página de donde fué llamado, para que vea que agregó el registro
 cod = cstr(cod)
-eee= "../clientes.asp?POS="+COD+ "&PERFIL=1"  %>
+eee= "../clientes.asp"%>
 <script>
-top.window.location.replace('<%=trim(eee)%>')
+alert('Cliente Creado')
+parent.window.location.replace('<%=trim(eee)%>')
 </script>
