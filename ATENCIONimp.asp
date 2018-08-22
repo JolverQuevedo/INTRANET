@@ -99,7 +99,7 @@ CIA = "0001"
         rs.open cad, cnn
         if rs.recordcount > 0 then rs.movefirst%>
             <%do while not rs.eof%>
-                <option value="<%=rs("TG_CCLAVE")%>" 
+                <option value='<%=rs("TG_CCLAVE")%>'
                 <%if trim(rs("tg_cclave"))= "FT" then  %>selected<%end if%>><%=rs("TG_CDESCRI") %></option>
                 <%rs.movenext %>
             <%loop%>
