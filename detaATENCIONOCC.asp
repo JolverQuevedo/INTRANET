@@ -216,7 +216,7 @@ height: 100%;
 	<%RS.MOVENEXT%>
 	<%CONT = CONT + 1%>
 	<%loop%>
-</table>
+</table> 
 <%end if%>
 <iframe  width="100%" src="" id="body0" name="body0" scrolling="yes" frameborder="1" height="200" align="middle" style="display:none" ></iframe>
 <%rs.close%>
@@ -380,6 +380,7 @@ function ficha(r) {
     itm = trim(t.rows(ff).cells(0).innerText)
 //    window.document.all.body0.style.display = 'none'
     window.document.all.body0.src = 'bake/bakeATENCIONocc.asp?pos=' + '<%=POS%>' + '&ITM=' + itm + '&srv=' + srv + '&alm=' + parent.document.getElementById("COD").value + '&pe2=' + strzero(parent.document.getElementById("PE1").value, 11)
+	//prompt("asasd",'bake/bakeATENCIONocc.asp?pos=' + '<%=POS%>' + '&ITM=' + itm + '&srv=' + srv + '&alm=' + parent.document.getElementById("COD").value + '&pe2=' + strzero(parent.document.getElementById("PE1").value, 11));
    // alert(oldframe)
    // si es la primera vez que entra ala linea, no oculta nada
     if (parseInt(oldframe, 10) > 0) 

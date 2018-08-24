@@ -29,7 +29,7 @@ RS.CLOSE
 CAD =   " Select OC_CITEM, OC_CCODIGO, OC_CCODREF, OC_CDESREF, OC_CUNIDAD, CONVERT(NUMERIC(13,3),OC_NCANORD) AS OC_NCANORD,OC_NPREUN2,  " & _
         " CONVERT(NUMERIC(13,3), (OC_NCANORD*"&TOLERANCIA&")-ISNULL((select sum(c6_ncantid) from RSFACCAR..al0001movc AS A inner join   " & _
         " RSFACCAR..al0001movd AS B on c5_cnumdoc = c6_cnumdoc and c5_ctd = c6_ctd and c5_calma = c6_calma where C5_CNUMord='"&pos&"'   " & _
-        " AND C6_CITEM ='"&itm&"' and left(c6_ccodigo,1) <> 'S'),0)) AS PORATENDER, CONVERT(NUMERIC(13,3), ((OC_NCANORD*"&tolerancia&")-" & _
+        " AND C6_CITEM ='"&itm&"' AND C6_CCODIGO='"&ref&"' and left(c6_ccodigo,1) <> 'S'),0)) AS PORATENDER, CONVERT(NUMERIC(13,3), ((OC_NCANORD*"&tolerancia&")-" & _
         " OC_NCANTEN)) AS OC_NCANTEN, OC_NCANSAL, OC_NANCHO, OC_NCORTE, OC_CESTADO, OC_NPREUN2, OC_CNUMORD, OC_NIGVPOR,                 " & _
         " (select isnull(sum(c6_ncantid),0) from RSFACCAR..al0001movc AS A inner join                                                             " & _
         " RSFACCAR..al0001movd AS B on c5_cnumdoc = c6_cnumdoc and c5_ctd = c6_ctd and c5_calma = c6_calma where C5_CNUMord='"&pos&"'   " & _
