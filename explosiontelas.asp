@@ -305,7 +305,7 @@ rs.close
          <tr>
     <td colspan="12" class="tituloGRANDEgris3">Detalle de Explosion</td>
    </tr>
-        <tr class="TEXTOBLUE">
+        <tr class="tituloGRANDEVERDE">
             <td >PO</td>  
             <td  >COMBO</td>
             <td >CRUDO</td>

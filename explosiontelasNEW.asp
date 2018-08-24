@@ -92,7 +92,7 @@ ofi = request.QUERYSTRING("ofi")
 
 
 <%cad = "exec  SP_PRE_explosion_telas '"&ofi&"' " 
-response.write(cad)
+'response.write(cad)
 RS.CLOSE
 rs.open cad, cnn
 IF RS.RECORDCOUNT > 0 THEN 
