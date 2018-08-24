@@ -137,7 +137,7 @@ ELSE
                 " NUMORD = '"&OC&"' ;                                               "
      IF UCASE(TRIM(TIP)) = "I" THEN
             liqui = trim(oc) + "001"
-            CAD = CAD " UPDATE RSFACCAR..AL0001LIQC SET LQ_CCODPRO = '"&PRO&"'      " & _
+            CAD = CAD +" UPDATE RSFACCAR..AL0001LIQC SET LQ_CCODPRO = '"&PRO&"'      " & _
                       " WHERE   LQ_CNUMLIQ = '"&LIQUI&"'    "
      end if
 END IF
@@ -162,7 +162,7 @@ SET RS = Nothing
 'regresa a la página de donde fué llamado, para que vea que agregó el registro
 %>
 <script language="javascript" type="text/jscript">
-    parent.window.location.replace('../FICHAOC.ASP?OC=' + '<%=OC%>')
+    //parent.window.location.replace('../FICHAOC.ASP?OC=' + '<%=OC%>')
 
 
 
