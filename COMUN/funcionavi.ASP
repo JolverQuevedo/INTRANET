@@ -202,9 +202,24 @@ function VALIDA()
 		window.thisForm.CTO.focus();
 		return false;
 	}
+    if ( parseFloat(window.thisForm.CTO.value) <=0 ) 
+	{	alert('Debe Informar el Costo del avio');
+		window.thisForm.CTO.focus();
+		return false;
+	}
     if ( trim(window.thisForm.REA.value)  == '') 
 	{	alert('Debe Informar la cuenta contable a la que pertenece el avio');
 		window.thisForm.REA.focus();
+		return false;
+	}
+    if ( trim(window.thisForm.SUN.value)  == '') 
+	{	alert('Debe Informar el codigo SUNAT');
+		window.thisForm.SUN.focus();
+		return false;
+	}
+    if ( trim(window.thisForm.CTO.value)  == '') 
+	{	alert('Debe Informar el Costo del avio');
+		window.thisForm.CTO.focus();
 		return false;
 	}
 	return true;

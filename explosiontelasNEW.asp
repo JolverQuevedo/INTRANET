@@ -143,16 +143,16 @@ end if    %>
   <tr  id="LIN<%=U%>" name="LIN<%=U%>" class="TEXTO4" style="text-align:left">
       <%ubi = trim(rs("ubi")) %>      
       <%id= trim(rs("id")) %>
-      <td><input readonly tabindex=-1 class="texto4" id="po<%=u%>"   name="po<%=u%>"   value="<%=TRIM(RS("PO"))%>"     </td>  
-      <td><input readonly tabindex=-1 class="texto4" id="comb<%=u%>" name="comb<%=u%>" value="<%=TRIM(RS("COMBO"))%>"  </td>    
-      <td><input readonly tabindex=-1 class="texto4" id="tel<%=u%>"  name="tel<%=u%>"  value="<%=TRIM(RS("TELA"))%>"   </td>    
-      <td><input readonly tabindex=-1 class="texto4" id="fam<%=u%>"  name="fam<%=u%>"  value="<%=TRIM(RS("FAMTEL"))%>" </td>    
-      <td><textarea readonly tabindex=-1  class="texto4" id="obs<%=u%>" name="obs<%=u%>" style="overflow:hidden"><%=TRIM(RS("OBS"))%></textarea>    </td>    
-      <td><input readonly tabindex=-1 class="texto4" id="qty<%=u%>" name="qty<%=u%>"  style="text-align:right" value="<%=FORMATNUMBER(CDBL(RS("QTY")),0,,,TRUE)%>" /></td>    
-      <td><input readonly tabindex=-1 class="texto4" id="kgs<%=u%>" name="kgs<%=u%>"  style="text-align:right" value="<%=FORMATNUMBER(CDBL(RS("KILOS")),3,,,TRUE)%>" /></td>    
-      <td><input readonly tabindex=-1 class="texto4" id="col<%=u%>" name="col<%=u%>" value="<%=TRIM(RS("COLOR"))%>" /></td> 
-      <td><input readonly tabindex=-1 class="texto4" id="ubi<%=u%>" name="ubi<%=u%>" value="<%=TRIM(RS("ubi"))%>" /></td> 
-      <td><input readonly tabindex=-1 class="texto4" id="idd<%=u%>" name="idd<%=u%>" value="<%=TRIM(RS("id"))%>" /></td>  
+      <td><input readonly tabindex="-1" class="texto4" id="po<%=u%>"   name="po<%=u%>"   value="<%=TRIM(RS("PO"))%>"     </td>  
+      <td><input readonly tabindex="-1" class="texto4" id="comb<%=u%>" name="comb<%=u%>" value="<%=TRIM(RS("COMBO"))%>"  </td>    
+      <td><input readonly tabindex="-1" class="texto4" id="tel<%=u%>"  name="tel<%=u%>"  value="<%=TRIM(RS("TELA"))%>"   </td>    
+      <td><input readonly tabindex="-1" class="texto4" id="fam<%=u%>"  name="fam<%=u%>"  value="<%=TRIM(RS("FAMTEL"))%>" </td>    
+      <td><textarea readonly tabindex="-1"  class="texto4" id="obs<%=u%>" name="obs<%=u%>" style="overflow:hidden"><%=TRIM(RS("OBS"))%></textarea>    </td>    
+      <td><input readonly tabindex="-1" class="texto4" id="qty<%=u%>" name="qty<%=u%>"  style="text-align:right" value="<%=FORMATNUMBER(CDBL(RS("QTY")),0,,,TRUE)%>" /></td>    
+      <td><input readonly tabindex="-1" class="texto4" id="kgs<%=u%>" name="kgs<%=u%>"  style="text-align:right" value="<%=FORMATNUMBER(CDBL(RS("KILOS")),3,,,TRUE)%>" /></td>    
+      <td><input readonly tabindex="-1" class="texto4" id="col<%=u%>" name="col<%=u%>" value="<%=TRIM(RS("COLOR"))%>" /></td> 
+      <td><input readonly tabindex="-1" class="texto4" id="ubi<%=u%>" name="ubi<%=u%>" value="<%=TRIM(RS("ubi"))%>" /></td> 
+      <td><input readonly tabindex="-1" class="texto4" id="idd<%=u%>" name="idd<%=u%>" value="<%=TRIM(RS("id"))%>" /></td>  
       <td style="display:none"><input id="h1<%=u%>" name="h1<%=u%>" value="<%=TRIM(RS("h1"))%>" /></td>  
       <td style="display:none"><input id="p1<%=u%>" name="p1<%=u%>" value="<%=TRIM(RS("p1"))%>" /></td>  
       <td style="display:none"><input id="k1<%=u%>" name="k1<%=u%>" value="<%=TRIM(RS("k1"))%>" /></td>  
