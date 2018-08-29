@@ -41,7 +41,7 @@ if len(FEC) > 0 then cad = cad + " and CONVERT(SMALLDATETIME, LLEGAPO, 103)  = C
 
 rs.open cad,cnn
 if rs.recordcount <=0 then RESPONSE.End
-COLUMNAS= RS.FIELDS.COUNT - 6
+COLUMNAS= RS.FIELDS.COUNT - 7
 
 IF  request.QueryString("EXCEL") = "1" THEN
   archivo = "c:\temp\despacho.xls"
@@ -67,6 +67,11 @@ END IF
 		    </font>
 	    </td>
     <%next%>
+	<td align="center">
+		    <font face="arial" color="IVORY" size="1">
+		    <b>PROTO-VERSION</b>
+		    </font>
+	    </td>
 </tr>
 <%'*****************************%>
 <%' MUESTRA EL GRID (2 COLORES) %>
@@ -92,6 +97,9 @@ END IF
         <td class="DATOSnormal" align="left"><%=ucase(rs("obs"))%></td>
         <td class="DATOSnormal" align="center"><%=ucase(rs("cli"))%></td>
         <td class="DATOSnormal" align="left"><%=ucase(rs("nom"))%></td>
+		<td class="DATOSnormal" align="left"></td>
+		<td class="DATOSnormal" align="left"></td>
+		<td class="DATOSnormal" align="left"><%=ucase(rs("PROTOVERSION"))%></td>
     </tr>
 	<%RS.MOVENEXT%>
 	<%CONT = CONT + 1%>
