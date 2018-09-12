@@ -55,7 +55,7 @@ RESPONSE.WRITE(CAD)
 		    ate = parseFloat('<%=rs("PORATENDER")%>')
 		    rec = FormatNumber(parseFloat('<%=rs("OC_NCANTEN")%>'), 3, true, true, true,true)
 		    //  ate = FormatNumber(parseFloat('<%=rs("OC_NCANSAL")%>'), 3, true, true, true, true)
-
+            tol = parseFloat(ate)* parseFloat('<%=tolerancia%>')
 		    if (Left(trim(kod), 1) == '9') {
 		        window.parent.document.all.tallas.style.display = 'block'
 		        window.parent.document.all.tallasR.style.display = 'block'
@@ -69,9 +69,9 @@ RESPONSE.WRITE(CAD)
 			window.parent.document.all.orde.value = ord
 			window.parent.document.all.unid.value = unm
 			window.parent.document.all.puni.value = pun
-           // alert()
+			//alert(ord - ate + tol)
 			window.parent.document.all.pund.value = pun
-			window.parent.document.all.xrec.value = ate
+			window.parent.document.all.xrec.value = Math.ceil(ord - ate + tol)
 			window.parent.document.all.reci.value = RECIBIDO
 			window.parent.document.all.rea.value = '<%=rea %>'
 			window.parent.document.all.tipc.value = top.window.document.all.CAM.value
@@ -199,7 +199,8 @@ CAD =   "Select AR_CFSERIE, AR_CUNIDAD,  AR_CFSERIE, AR_CFLOTE,AR_NPRECI2 , AR_N
 
 
                         window.parent.document.all.reci.value = window.parent.document.all.QTPE.value
-                        window.parent.document.all.xrec.value = window.parent.document.all.QTOC.value - window.parent.document.all.reci.value
+                        window.parent.document.all.xrec.value = Math.ceil(ord-ate+tol)
+                        //window.parent.document.all.QTOC.value - window.parent.document.all.reci.value
 
                         if (trim('<%=rs("t1")%>') == '') {
                             window.parent.document.all.q1.style.display = 'none'

@@ -145,6 +145,46 @@ padding:10px;
 	background-color:transparent;
 
 }
+.AMERICANnavy1
+{	FONT-SIZE: 10px;
+	COLOR: navy;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:300;
+	vertical-align:middle;
+	background-color:transparent;
+
+}
+
+.AMERICANnavy11
+{	FONT-SIZE: 9px;
+	COLOR: navy;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:400;
+	width:100%;
+	vertical-align:middle;
+	background-color:transparent;
+
+}
+.AMERICANnavy11right
+{	FONT-SIZE: 8px;
+	COLOR: navy;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:100;
+	width:100%;
+	vertical-align:middle;
+	background-color:transparent;
+	text-align:right;
+	padding-right:5px;
+}
+.AMERICANred11
+{	FONT-SIZE: 10px;
+	COLOR: white;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:900;
+	vertical-align:middle;
+	background-color:red;
+
+}
 .AMERICANwhite
 {	FONT-SIZE: 12px;
 	COLOR: white;
@@ -239,7 +279,7 @@ padding:10px;
     COLOR: navy;
     BORDER-BOTTOM: medium none;
     FONT-FAMILY: Arial;
-    BACKGROUND-COLOR: transparent
+    BACKGROUND-COLOR: transparent;
 }
 .textarea1
 {

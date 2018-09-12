@@ -30,7 +30,7 @@ if trim(pos) = "" then limite = " top 100 " else limite = " top 100 percent"
         kad = " and AC_CNOMBRE like'"&des&"'"             
     end if
 cad =   " Select  "&limite&" AC_CCODIGO as Cod ,AC_CNOMBRE as Razon_Social ," & _
-        " ac_cruc, ac_cfaxacr, ac_cdirecc                       " & _
+        " ac_cruc, AC_CTELEF1, ac_cdirecc                       " & _
         " From RSCONCAR..CP0001MAES Where AC_CVANEXO='P'        " 
         
 cad = cad + KAD

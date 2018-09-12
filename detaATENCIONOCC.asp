@@ -216,7 +216,7 @@ height: 100%;
 	<%RS.MOVENEXT%>
 	<%CONT = CONT + 1%>
 	<%loop%>
-</table> 
+</table>
 <%end if%>
 <iframe  width="100%" src="" id="body0" name="body0" scrolling="yes" frameborder="1" height="200" align="middle" style="display:none" ></iframe>
 <%rs.close%>
@@ -290,7 +290,7 @@ height: 100%;
         <tr bgcolor='<%=Application("color1")%>'>
             <td class="TALASBLUE22">Por Recibir</td>
             <td width="10%"><input id="xrec" name="xrec" value="" class="TALASBLUE22" style="text-align:right;padding-right:5px;"  readonly tabindex="-1"/></td>
-            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parámetro</td>
+            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parï¿½metro</td>
             <td colspan="2"  class="TALASBLUE22" style="width:10%; text-align:right;">Mov Real</td>
             <td><input id="rea" name="rea" value="" class="TALASBLUE22"  style="text-align:right;padding-right:5px;" readonly tabindex="-1"/></td>
         </tr>
@@ -367,8 +367,9 @@ function ficha(r) {
     else
         can = parseFloat(t.rows(ff).cells(6).innerText)
     if (Left(t.rows(ff).cells(1).innerText, 1) == 'S') {
-        alert("Linea corresponde a un servicio\n NO a una Compra")
-        return true;
+        if(!confirm("Linea corresponde a un servicio\n NO a una Compra, desea continuar?")){
+                   return true;
+                }
     }
     srv = trim(t.rows(ff).cells(1).innerText)
 
@@ -380,7 +381,6 @@ function ficha(r) {
     itm = trim(t.rows(ff).cells(0).innerText)
 //    window.document.all.body0.style.display = 'none'
     window.document.all.body0.src = 'bake/bakeATENCIONocc.asp?pos=' + '<%=POS%>' + '&ITM=' + itm + '&srv=' + srv + '&alm=' + parent.document.getElementById("COD").value + '&pe2=' + strzero(parent.document.getElementById("PE1").value, 11)
-	//prompt("asasd",'bake/bakeATENCIONocc.asp?pos=' + '<%=POS%>' + '&ITM=' + itm + '&srv=' + srv + '&alm=' + parent.document.getElementById("COD").value + '&pe2=' + strzero(parent.document.getElementById("PE1").value, 11));
    // alert(oldframe)
    // si es la primera vez que entra ala linea, no oculta nada
     if (parseInt(oldframe, 10) > 0) 
@@ -441,7 +441,7 @@ function vale() {
    }
 
     if (parseFloat(aten) > parseFloat(xrec)) {
-        alert("No puede recibir más de lo pendiente")
+        alert("No puede recibir mï¿½s de lo pendiente")
         document.all.aten.value = 0
         return false;
     }
@@ -473,7 +473,7 @@ function graba(opc) {
 
       
     var si
-    { si = confirm("¿ Confirma que desea Grabar de este Registro ? "); }
+    { si = confirm("ï¿½ Confirma que desea Grabar de este Registro ? "); }
     if (si == false)
     { return false; }
     if (vale() == true) {
@@ -521,7 +521,7 @@ function graba(opc) {
  function fin(opc) {
      
      var si
-     { si = confirm("¿ Confirma que desea Finalizar estsa ORDEN DE COMPRA? "); }
+     { si = confirm("ï¿½ Confirma que desea Finalizar estsa ORDEN DE COMPRA? "); }
      if (si == false)
      { return false; }
      else {

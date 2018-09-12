@@ -136,8 +136,11 @@ IF RS2.RECORDCOUNT > 0 THEN RS2.MOVEFIRST%>
 <%' solo tengo 36 caracteres entre letras y numeros a un digito%>
 <%for k=u to 50 %>
 <tr id="LIN<%=k%>" name="LIN<%=K%>" style="display:none">
-    <td class="AMERICANnavy" style="width:1%" id="IT<%=k%>" name="IT<%=k%>"><%=k%></td>
-    <td style="width:5%"><input id="COL<%=k%>" name="COL<%=k%>" class="DATOSkhaki3" style="text-align:left;width:100%" onfocus="lineas('<%=k%>');" style="background-color:white" onkeyup="FLECHA('<%=K%>')"/></td>    
+    <td class="AMERICANnavy" style="width:1%" id="IT<%=k%>" name="IT<%=k%>"><%=k%>
+	
+		<img src="imagenes/search.gif" onclick="buscacolor('<%=k%>')"/>
+	</td>
+    <td style="width:5%"><input id="COL<%=k%>" name="COL<%=k%>"  ondblclick="buscacolor('<%=k%>')"  class="DATOSkhaki3" style="text-align:left;width:100%" onfocus="lineas('<%=k%>');" style="background-color:white" onkeyup="FLECHA('<%=K%>')" onchange="colormismo('<%=K%>')"/></td>    
             <%FOR I = 1 TO 15%>
                <td align="center" width="5%">
                  <input id="C<%=I%>C<%=k%>" name="C<%=I%>C<%=k%>" value="" class="DATOSkhaki3" style="background-color:white" onkeyup="FLECHA('<%=K%>')" style="width:100%" />
@@ -153,11 +156,30 @@ IF RS2.RECORDCOUNT > 0 THEN RS2.MOVEFIRST%>
 <iframe id="cuerpo" name="cuerpo" src="" onload="autofitIframe(this);" width="100%" scrolling="no" frameborder="0"></iframe>
 </body>
 <script language="jscript" type="text/jscript">
-var TOPE = parseInt('<%=k%>',10)
-
-
 var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
 opc += "menubar=no,resizable=yes,scrollbars=yes,left=0,top=0,height=600,width=900";
+function buscacolor(k) {
+  window.open("./help/helpcoloresetc.asp?cliente=<%=cli%>&elid="+k,"",opc);
+}
+function colormismo(k) {
+  //alert(k);
+  if(confirm("deseas rellenar los datos automaticamente?")){
+    for(var i=1;i<=15;i++){
+        if(eval("document.all.x"+i+".value") !=""){
+            var cad ="document.all.C" + i+ "C"+ k+ ".value = document.all.COL"+k+".value";
+            eval(cad);
+        }
+    }
+    eval("document.all.COL"+(parseFloat(k)+1)+".focus()");
+  }
+
+}
+
+var TOPE = parseInt('<%=k%>',10)
+
+/*
+var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
+opc += "menubar=no,resizable=yes,scrollbars=yes,left=0,top=0,height=600,width=900";*/
   
 document.all.veri.value = TOPE
 tto = parseInt('<%=u%>', 10)

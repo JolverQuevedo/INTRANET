@@ -29,7 +29,7 @@ CAD =	"Select * From RSCONCAR..CP0001MAES Where AC_CVANEXO='P' And AC_CCODIGO='"
                 window.parent.thisForm.PRO.value = '<%=trim(rs("ac_cCODIGO"))%>';
                 window.parent.thisForm.RUC.value = '<%=trim(rs("ac_cRUC"))%>'
                 window.parent.thisForm.NOM.value = '<%=trim(rs("ac_cNOMBRE"))%>'
-                window.parent.thisForm.FAX.value = '<%=trim(rs("ac_cFAXACR"))%>'
+                window.parent.thisForm.FAX.value = '<%=trim(rs("AC_CTELEF1"))%>'
                 window.parent.thisForm.DPRO.value = '<%=trim(rs("ac_cDIRECC"))%>'
 			</script>	
         <%end if%>

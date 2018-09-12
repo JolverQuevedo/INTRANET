@@ -196,7 +196,10 @@ RS2.MOVEFIRST%>
 <%DO WHILE NOT RS2.EOF %>   
   <tr  id="LIN<%=U%>" name="LIN<%=U%>">
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=u%>" name="IT<%=u%>"><%=u%></td>
-    <td style="width:39%"><input id="COL<%=u%>" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:100%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" /></td>
+    <td style="width:39%" style="display:inline">
+        <img id="estilocli" onclick="helpcolores('COL<%=u%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>	
+	<input id="COL<%=u%>" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:91%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" />
+    </td>
      <td style="width:4%" ><input id="FOB<%=u %>" name="FOB<%=u%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs2("fob"),2,,true)%>"/></td>   
             <%FOR I = 0 TO 9%>
                <td align="center" width="5%">
@@ -216,7 +219,10 @@ if 36 > u+19 then maximus = u+19 else maximus = 36%>
 <%for k=u to maximus %>
 <tr id="LIN<%=k%>" name="LIN<%=K%>" style="display:none">
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=k%>" name="IT<%=k%>"><%=k%></td>
-    <td style="width:39%"><input id="COL<%=k%>" name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:100%" onfocus="lineas('<%=k%>');" /></td>
+    <td style="width:39%" style="display:inline">
+        <img id="estilocli" onclick="helpcolores('COL<%=k%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>
+        <input id="COL<%=k%>" name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:91%" onfocus="lineas('<%=k%>');" />
+    </td>
      <td style="width:4%" ><input id="FOB<%=k%>" name="FOB<%=k%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs("fob"),2,,true) %>   "/></td>      
             <%FOR I = 0 TO 9%>
                <td align="center" width="5%">
@@ -301,6 +307,14 @@ if 36 > u+19 then maximus = u+19 else maximus = 36%>
 
 <script language="javascript" src="includes/cal.js"></script>
 <script type="text/jscript" language="jscript">
+	function helpcolores(elemento){
+        var opc  = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no," ;
+	    opc += "menubar=no,resizable=yes,scrollbars=yes,left=0,top=0,height=600,width=900" ;
+
+        window.open('help/helpcolores.asp?elid='+elemento+'&cliente=<%=cli%>','',opc)
+    }
+
+
     addCalendar("Calendar1", "Elija una fecha", "EMB", "thisForm")
     addCalendar("Calendar2", "Elija una fecha", "LLE", "thisForm")
     if (trim(document.all.PO.value) == 'AUTO')
@@ -563,7 +577,7 @@ function grabaylimpia() {
             //document.all.body10.style.display = 'none'
         }
     }
-
+	window.location=("fichapos.asp?PO=AUTO&cli=<%=cli%>");
 }
 
 function graba()

@@ -199,8 +199,8 @@ end if
 	Cnn.Close
 	SET Cnn = NOTHING %>
 <script language="jscript" type="text/jscript">
-alert("OFI creada")
-    top.window.location.replace='../fichapos.asp?po=' + '<%=pos %>' + '&cli=' + '<%=cli%>' 
+	alert("OFI creada")
+	window.top.location='../fichapos.asp?po=<%=pos %>&cli=<%=cli%>' 
 </script>  
 </BODY>
 </HTML>

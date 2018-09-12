@@ -36,7 +36,7 @@ else
 	thisForm.COD.focus();
 }
 thisForm.DES.value = '';
-thisForm.CORR.selectedIndex = -1;
+thisForm.CORR.value = '';
 }
 function elimina()
 {	var si
@@ -67,6 +67,8 @@ function dd(ff)
 	thisForm.DES.value = ltrim(t.rows(pos).cells(1).innerText) ;
 	thisForm.CORR.value = ltrim(t.rows(pos).cells(2).innerText) ;
 	thisForm.COD.readOnly= true
+   
+
 	oldrow=pos
 	return true;
 }

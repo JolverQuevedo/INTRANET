@@ -118,6 +118,11 @@
         rs.Close
         response.write("sin foto")
        else
+
+	  kad = "update RSFACCAR.dbo.AL0001ARTI set AR_CDESCRI =left('"&dMod&"',60) where AR_CCODIGO='"&(right(fArt,5)+"00000")&"'"
+          response.write(+"<br/>"+kad)
+          Cnn.Execute(KAD)
+
           cad = "select * from estilos where cliente = '"&fCli&"' and codest= '"&fest&"' " 
           response.write(cad)
           rs.open cad,cnn,2,2
