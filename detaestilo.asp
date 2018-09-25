@@ -208,7 +208,7 @@ columnas = rs.Fields.Count
 
 <form name="thisForm" method="post" action="DETAESTILO.asp">
 <%'*********************************************************************%>
-<table id="TABLA" align="CENTER" cols="2" width="100%"
+<table id="TABLA" class="datos" align="CENTER" cols="2" width="100%"
 	 cellpadding="2"  cellspacing="1" bordercolor="White"
 	  bgcolor="lightgrey" border="1" >
 <%'**************************%>
@@ -239,7 +239,7 @@ cont= 1 %>
 		        <td class="texto td"><%=TRIM(RS.FIELDS.ITEM(I))%></td>
 	        <%NEXT%>
 	        <td align="center" style="display:none"><%=RS.FIELDS(i).NAME%></td>
-            <td  class="img-zoom" ><img src="BAKE/recuperaFOTOESTILO.asp?ID=<%=rs("CODEST")%>&CLI=<%=POS%>" HEIGHT="40" /></td> 
+            <td  class="img-zoom" ><img src="BAKE/recuperaFOTOESTILO.asp?ID=<%=rs("CODEST")%>&CLI=<%=POS%>" HEIGHT="40" /></td>
         </tr>
 	    <%RS.MOVENEXT%>
 	    <%CONT = CONT + 1%>

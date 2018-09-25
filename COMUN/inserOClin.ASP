@@ -16,7 +16,9 @@
 '*********************** OJO **********************
 
 OC =    TRIM(REQUEST.QUERYSTRING("OC"))
+
 rs.open ("select oc_Ccodpro,OC_CTIPORD, OC_DFECDOC, oc_ntipcam, oc_ccodmon from RSFACCAR..CO0001MOVC  where oc_cnumord = '"&OC&"'"),cnn
+
 pro  = rs("oc_ccodpro")
 TIP = RS("OC_CTIPORD")
 FECD = RS("OC_DFECDOC")
@@ -142,13 +144,14 @@ else
     usd = (pre+pigv) * ped
     sol = ((pre+pigv) * cam) * ped
 end if
+
 response.write(pre)
 response.write("<br>")
 response.write(pre+pigv)
 response.write("<br>")
-response.write((pre+pigv) / cam)
+'response.write((pre+pigv) / cam)
 response.write("<br>")
-response.write(((pre+pigv) / cam) * ped )
+'response.write(((pre+pigv) / cam) * ped )
 response.Write("<br>")
 response.write(PIGV)
 response.Write("<br>")
@@ -157,6 +160,7 @@ response.Write("<br>")
 response.write(PED)
 response.Write("<br>")
 ' incluir el igv...
+
 preuni = pre 
 pigv = pre * (iigv/100) * ped
 '-------------------------------------------------------------------

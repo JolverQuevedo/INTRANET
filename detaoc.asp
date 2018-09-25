@@ -1,5 +1,6 @@
 <%@ Language=VBScript %>
 <% Response.Buffer = true %>
+<%Session.LCID=2057%>
 <%	txtUsuario = Request.Cookies("Usuario")("USUARIO")
 	if Request.QueryString("PERFIL") <> "" then
 		NIVEL = Request.QueryString("PERFIL")
@@ -7,6 +8,7 @@
 	end if
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
 	NIVEL = txtPerfil%>
+
     <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
 </head>
 <script type="text/jscript" language="jscript">

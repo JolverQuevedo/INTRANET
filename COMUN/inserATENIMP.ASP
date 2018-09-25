@@ -78,7 +78,7 @@ pesouni = 0
 ' VERIFICAMOS LOS CONTADORES PARA LOS PARTES QUE SE VAN A GENERAR
 '---------------------------------------------------------------------------------------------
 
-rs.open "select A1_NNUMENT, A1_NNUMsal from RSFACCAR..AL0001ALMA  Where A1_CALMA='"&DES&"' "
+rs.open "select A1_NNUMENT, A1_NNUMsal from RSFACCAR..AL0001ALMA  Where A1_CALMA='"&DES&"' ;"
 IF RS.RECORDCOUNT <= 0 THEN %>
     <script language="jscript" type="text/jscript">
         alert("No hay DEFINIDOS contadores para almacen : \n" + '<%=ucase(des)%>' + '\nAvisar a Sistemas')
@@ -91,7 +91,7 @@ rs.close
 ' miro si hay registro en la tabla de stocks para crearlo con 0 disponilbe
 '---------------------------------------------------------------------------
 
-vad = "select * from RSFACCAR..AL0001STOC  WHERE SK_CALMA = '"&DES&"' AND SK_CCODIGO='"&ART&"'  "
+vad = "select * from RSFACCAR..AL0001STOC  WHERE SK_CALMA = '"&DES&"' AND SK_CCODIGO='"&ART&"' ; "
 rs.open vad, cnn
 
 if rs.recordcount <=0 then
@@ -106,7 +106,7 @@ response.write(vad)
 ' en el item que estamos trabajando con la cantidad que estamos ingresando
 '' primero sumamos las atenciones PARCIALES del item para poder calcular el saldo POR ATENDER!
 
-MUD = "select isnull(OC_NCANTEN,0)+"&ate&" as aten from RSFACCAR..CO0001MOVD Where OC_CNUMORD='"&oc&"' AND OC_CITEM='"&lin&"'"
+MUD = "select isnull(OC_NCANTEN,0)+"&ate&" as aten from RSFACCAR..CO0001MOVD Where OC_CNUMORD='"&oc&"' AND OC_CITEM='"&lin&"' ;"
 rs.open MUD, cnn
 
 ' response.write("<br>")
@@ -119,18 +119,18 @@ rs.close
 ' sumo los parciales acumulados de las atenciones para tener el atendido VERDADERO
 dedo =  " select isnull(sum(c6_ncantid),0) as xxx from RSFACCAR..al0001movc AS A inner join          " & _
         " RSFACCAR..al0001movd AS B on c5_cnumdoc = c6_cnumdoc and c5_ctd = c6_ctd and c5_calma = c6_calma where C5_CNUMord='"&oc&"'   " & _
-        " AND C6_CITEM ='"&lin&"' "
+        " AND C6_CITEM ='"&lin&"' ; "
 rs.open dedo, cnn
 if rs.recordcount > 0 then atendido = cdbl(rs("xxx")) else atendido = 0
 rs.close
-cad = "Update RSFACCAR..CO0001MOVD Set OC_NCANTEN="&ateNDIDO&", OC_CESTADO='4', OC_NCANSAL =  OC_NCANORD-"&atendido&" Where OC_CNUMORD='"&oc&"' AND OC_CITEM='"&lin&"'"
+cad = "Update RSFACCAR..CO0001MOVD Set OC_NCANTEN="&ateNDIDO&", OC_CESTADO='4', OC_NCANSAL =  OC_NCANORD-"&atendido&" Where OC_CNUMORD='"&oc&"' AND OC_CITEM='"&lin&"' ;"
 ' response.write("<br>")
 ' RESPONSE.WRITE(CAD)
 ' RESPONSE.END
 '-----------------------------------------------------------------------------------------------------------------
 ' VEMOS SI EXISTE EN ALMACEN EL PARTE DE ENTRADA 
 '-----------------------------------------------------------------------------------------------------------------
-rs.open "select * from RSFACCAR..AL0001MOVC where C5_CALMA = '"&des&"' and C5_CTD = 'PE' AND C5_CNUMDOC = '"&PE1&"' ", CNN
+rs.open "select * from RSFACCAR..AL0001MOVC where C5_CALMA = '"&des&"' and C5_CTD = 'PE' AND C5_CNUMDOC = '"&PE1&"' ; ", CNN
 
 IF RS.RECORDCOUNT <= 0 THEN
 ' NO EXISTE, SE HACE EL INSERT
@@ -153,7 +153,7 @@ IF RS.RECORDCOUNT <= 0 THEN
     ' parte de entrada por el producto terminado
     cad = cad + " Insert Into RSFACCAR..AL0001MOVC(C5_CALMA, C5_CTD, C5_CNUMDOC, C5_DFECDOC, C5_CTIPMOV, C5_CCODMOV, C5_CRFTDOC,    " & _
                 " C5_CRFNDOC, C5_CGLOSA1, C5_DFECCRE, C5_CUSUCRE, C5_CNUMORD, C5_CNUMLIQ, C5_CCODPRO, C5_CNOMPRO, C5_CCODMON,       " & _
-                " C5_CTIPO, C5_NTIPCAM, C5_CSITUA, C5_CLOCALI, ) Values ('"&des&"','PE','"&pe1&"', Convert(datetime,'"&fec&"',103),'E','CO','"&ref&"',      " & _
+                " C5_CTIPO, C5_NTIPCAM, C5_CSITUA, C5_CLOCALI ) Values ('"&des&"','PE','"&pe1&"', Convert(datetime,'"&fec&"',103),'E','CO','"&ref&"',      " & _
                 " '"&nro&"','"&glo&"',GETDATE(),'"&USUARIO&"','"&oc&"','"&LIQ&"','"&RUC&"','"&pro&"','"&mon&"','V',"&kam&",'V','0001');    "
 else
     nro = rs("c5_crfndoc")
@@ -194,32 +194,32 @@ RS.CLOSE
                 " C6_DFECDOC,C6_CCODMOV,C6_CESTADO,C6_CCODMON,C6_CTIPO,C6_NTIPCAM,C6_NPORDE1,C6_NIMPO1,C6_NPORDE2,       " & _
                 " C6_NIMPO2,C6_NPORDE4,C6_NIMPO4, C6_NPORDES,C6_NDESCTO) Values('"&des&"','0001','PE','"&pe1&"',         " & _
                 " '"&lin&"', '"&SRV&"', '"&DET&"','"&lin&"',"&ate&","&doltot&","&doltot&","&dol&","&soltot&","&sol&",    " & _
-                " "&dol&","&dol&",  Convert(datetime,'"&fec&"',103),'CO','V','US','V',"&cam&",0,0,0,0,0,0,0,0) ;                                " 
+                " "&dol&","&dol&",  Convert(datetime,'"&fec&"',103),'CO','V','US','V',"&cam&",0,0,0,0,0,0,0,0) ;         " 
 
 response.write(srv)
 codpro = srv
 
 ' HAY QUE GRABAR LAS CANTIDADES POR TALLA DEL PE EN EL MULTI
-mas = "select * from MULTI..RS_ALMOVC0001 WHERE C5_CALMA = '"&DES&"' AND C5_CTD = 'PE' AND C5_CNUMDOC = '"&PE1&"' "
+mas = "select * from MULTI..RS_ALMOVC0001 WHERE C5_CALMA = '"&DES&"' AND C5_CTD = 'PE' AND C5_CNUMDOC = '"&PE1&"'; "
 RS.OPEN MAS,CNN
 ' EXISTE EN EL MULTI
 deta = ""
 
 IF RS.RECORDCOUNT > 0 THEN
     cad = cad + " delete  MULTI..rs_almovd_TALLA0001  WHERE CALMA = '"&DES&"' AND CTD = 'PE' " & _
-                " AND CNUMDOC = '"&PE1&"' and citem = '"&lin&"'"
+                " AND CNUMDOC = '"&PE1&"' and citem = '"&lin&"';"
 
     cad = cad + "delete  MULTI..rs_almovd0001  WHERE CALMA = '"&DES&"' AND CTD = 'PE' " & _
-                " AND CNUMDOC = '"&PE1&"' and citem = '"&lin&"'" 
+                " AND CNUMDOC = '"&PE1&"' and citem = '"&lin&"' ;" 
 
      cad = cad + "delete  MULTI..RS_ALMOVC0001  WHERE c5_CALMA = '"&DES&"' AND c5_CTD = 'PE' " & _
-                " AND c5_CNUMDOC = '"&PE1&"' "
+                " AND c5_CNUMDOC = '"&PE1&"' ; "
 end if
 
 
 
 CAD = CAD + " INSERT INTO MULTI..RS_ALMOVC0001 SELECT '"&DES&"', 'PE', '"&PE1&"', '"&ref&"', '"&nro&"' ,  Convert(datetime,'"&fec&"',103), null, " & _
-            " '"&usuario&"', null "
+            " '"&usuario&"', null ; "
 '***************************************************************
 ' rectilineos SON 10 TALLAS Y CANTIDADES....
 '***************************************************************
@@ -244,7 +244,7 @@ IF LEFT(ART,1) = "9"  THEN
             talla = aTal(i)
             if len(trim(aCan(i))) = 0 then canti = 0 else canti = cint(aCan(i))
             CAD = CAD + " INSERT INTO Multi..rs_almovd_TALLA0001 SELECT  '"&des&"', 'PE', '"&PE1&"', " & _
-                        " '"&LIN&"', '"&talla&"', "&canti&", "&i&" "
+                        " '"&LIN&"', '"&talla&"', "&canti&", "&i&" ;"
             recto = recto + canti
         end if
     NEXT
@@ -257,7 +257,7 @@ RS.CLOSE
 cad = cad + " insert into multi..rs_almovd0001 SELECT '"&des&"', 'PE', '"&PE1&"', '"&LIN&"', Convert(datetime,'"&fec&"',103),'"&ref&"'," & _
             "'"&nro&"' , 'E',  '"&REA&"', '"&codpro&"', '"&DET&"', "&ate&", "&ate&", '"&RUCp&"', '"&PRO&"', NULL,     " & _
             " '"&OC&"', NULL, NULL, NULL, NULL, "&pesouni&", "&pesouni&", "&pesouni&", "&pesouni&", NULL, NULL,   " & _
-            " NULL, '"&deta&"', NULL, 'V', NULL, NULL, NULL "
+            " NULL, '"&deta&"', NULL, 'V', NULL, NULL, NULL ; "
 
  RESPONSE.WRITE("<BR>")   
     RESPONSE.WRITE("<BR>")
@@ -268,7 +268,7 @@ cad = cad + " insert into multi..rs_almovd0001 SELECT '"&des&"', 'PE', '"&PE1&"'
 if CINT(fin) = 1 then  
     sas = " select  * from  RSFACCAR..AL0001MOVD where C6_CALMA = '"&DES&"' and C6_CTD = 'PE' and C6_CNUMDOC = '"&pe1&"', " & _ 
           " '"&REF&"', '"&NUME&"', GETDATE(), GETDATE(),  " & _
-          " order by c6_citem ;"
+          " order by c6_citem ; "
     rs.open sas, cnn
     if rs.recordcount <= 0 then %>
         <script language="javascript" type="text/jscript">
@@ -295,7 +295,7 @@ if CINT(fin) = 1 then
     rs.close
   
     sas = " select  * from  RSFACCAR..AL0001MOVD where C6_CALMA = '"&DES&"' and C6_CTD = 'PE' and C6_CNUMDOC = '"&pe2&"' " & _
-          " order by c6_citem ;"
+          " order by c6_citem ; "
     rs.open sas, cnn
     if rs.recordcount <= 0 then %>
         <script language="javascript" type="text/jscript">

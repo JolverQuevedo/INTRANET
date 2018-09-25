@@ -152,9 +152,17 @@ padding:10px;
 	font-weight:300;
 	vertical-align:middle;
 	background-color:transparent;
-
+	width:100%;
 }
-
+.AMERICANnavy33
+{	FONT-SIZE: 10px;
+	COLOR: navy;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:300;
+	vertical-align:middle;
+	background-color:transparent;
+	
+}
 .AMERICANnavy11
 {	FONT-SIZE: 9px;
 	COLOR: navy;
@@ -1182,10 +1190,11 @@ height:80px;border: 1px dotted #000099;}
     FONT-FAMILY: Arial;
 	OVERFLOW: hidden;
 	width:100%;
-	border:none;
+	/*border:none;*/
 	height:auto;
 	color:#006;
-    BACKGROUND-COLOR: transparent
+    BACKGROUND-COLOR: transparent;
+	
 } 
 
 

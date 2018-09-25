@@ -495,8 +495,8 @@ function graba(opc) {
     cad += '&cam=' + parseFloat(removecommas(trim(document.all.tipc.value)))
     cad += '&fin=' + trim(opc)
     cad += '&rea=' + trim(document.all.rea.value)
-    cad += '&LIQ=' + trim(document.all.LIQ.value)
-    cad += '&DUA=' + trim(document.all.DUA.value)
+    cad += '&LIQ=' + trim(parent.document.getElementById("LIQ").value)
+    cad += '&DUA=' + trim(parent.document.getElementById("DUA").value)
   //   alert(cad)
 
     if (Left(trim(document.all.codi.value), 1) == '9') {

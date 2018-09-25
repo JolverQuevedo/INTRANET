@@ -28,7 +28,7 @@ SET RS2 = Server.CreateObject("ADODB.RecordSet")
 
 RS.OPEN CAD, CNN
 	
-if RS.RECORDCOUNT <= 0 then     ' IF 1º   --> NO EXISTE EL CODIGO (PRINCIPAL O DE REFERENCIA) %>
+if RS.RECORDCOUNT <= 0 then     ' IF 1ï¿½   --> NO EXISTE EL CODIGO (PRINCIPAL O DE REFERENCIA) %>
 	<script type="text/jscript" language="jscript">
     // si no existe el codigo SE BLANQUEA todo EL FORMULARIO
 		alert("Articulo no registrado")
@@ -43,7 +43,7 @@ if RS.RECORDCOUNT <= 0 then     ' IF 1º   --> NO EXISTE EL CODIGO (PRINCIPAL O D
 		window.parent.thisForm.IISC.value = ''
         plop ='yyy'
     </script>
-<%else      ' ELSE 1º --> EXISTE EL CODIGO (PRINCIPAL O DE REFERENCIA)
+<%else      ' ELSE 1ï¿½ --> EXISTE EL CODIGO (PRINCIPAL O DE REFERENCIA)
 	'*************************************************'
     response.write("<br>")
     response.write("mmmmmmmmmmmmmmmmmmmmmmm")

@@ -17,7 +17,7 @@ function calcHeight(obj)
   //find the height of the internal page
   var the_height=
     document.getElementById(obj).contentWindow.
-      document.body.scrollHeight+25;
+      document.body.scrollHeight+5;
   //change the height of the iframe
   document.getElementById(obj).height=
       the_height;
@@ -71,7 +71,7 @@ function calcHeight(obj)
                 </tr>
 		    </table> 
          </td>
-         <td id="grab" align="center" width="10%"><img id="Img1" alt="GRABA CAMBIOS" style="cursor:pointer; " onClick="graba(1)" title="GUARDAR" src="imagenes/disk.gif" />
+         <td id="grab" align="center" width="10%"><img id="Img1" alt="GRABA CAMBIOS" style="cursor:pointer; " onClick="graba()" title="GUARDAR" src="imagenes/disk.gif" />
 	     </td>
          <td  width="20%" align="right"><img src="imagenes/logo.gif" border="0"  alt="" id="GRABA"  /></td>
     </tr>
@@ -99,7 +99,6 @@ function calcHeight(obj)
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="5%">R.U.C.</td>
     <td><input type="text" id="RUC" name="RUC" value="<%=rs("RUC")%>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
   </tr>
-  
   <tr>
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">Direccion</td>
     <td colspan="5"><input type="text" id="DPRO" name="DPRO" value="<%=UCASE(TRIM(rs("DIREC")))%>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
@@ -110,7 +109,7 @@ function calcHeight(obj)
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="11%">Solicitante  </td>
     <td ><input type="text" id="USR" name="USR" value="<%=trim(ucase(txtUsuario))%> - <%=trim(desUsuario)%>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO">Att. : </td>
-    <td  width="25%"><input type="text" id="SOLI" name="SOLI" value="<%=trim(ucase(rs("ATT")))%>" class="BARRA333" style="width:100%; text-align:left" maxlength="50"/></td>
+    <td  width="25%"><input type="text" id="ATT" name="ATT" value="<%=trim(ucase(rs("ATT")))%>" class="BARRA333" style="width:100%; text-align:left" maxlength="50"/></td>
   </tr>
  </table>
  
@@ -121,22 +120,22 @@ function calcHeight(obj)
 <table border="1" cellpadding="2" width="100%" cellspacing="0" bgcolor="<%=(Application("color2"))%>" bordercolordark="<%=(Application("borde"))%>" bordercolorlight="<%=(Application("COLOR1"))%>">
     <tr>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">F. Ent.</td>
-        <td width="1%" align="right" STYEL="PADDING-RIGHT:10PX;"><A href="javascript:showCal('Calendar1')"><img height="16" src="imageNEs/cal.gif" width="16" border=0></A></td>
-        <td width="15%"><input type="text" id="ENT" name="ENT"  class="DESCRIPTORES"  value="<%=FORMATDATETIME(DATE(),2) %>"></td>
+        <td width="1%" align="right" style="PADDING-RIGHT:10PX;"><A href="javascript:showCal('Calendar1')"><img height="16" src="imageNEs/cal.gif" width="16" border=0></A></td>
+        <td width="15%"><input type="text" id="ENT" name="ENT"  class="DESCRIPTORES"  value="<%=FORMATDATETIME(DATE(),2) %>" /></td>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="15%">Clase </td>
         <td width="23%" colspan="3" class="descriptores">
             <label class="radio-inline">
-              <input type="radio" name="cla" id="cla" checked />Servicios Externos
+              <input type="radio" name="cla" id="cla" checked value="2"/>Servicios Externos
             </label>
             <label class="radio-inline">
-              <input type="radio" name="cla" id="cla"  />Fabrica
+              <input type="radio" name="cla" id="cla"  value="1"/>Fabrica
             </label>
         </td>
     </tr>
   <tr>
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">Moneda</td>
     <td colspan="2">
-    <select id="MON" name="MON" class="DESCRIPTORES" onchange="CLIENTE()">
+    <select id="MON" name="MON" class="DESCRIPTORES" onchange="CLIENTE();verevere()">
             <option value =""></option>
             <%CAD = "Select TG_CCLAVE, TG_CDESCRI From RSFACCAR..AL0001TABL Where TG_CCOD='03' Order by TG_CCLAVE" 
             RS2.OPEN CAD, CNN
@@ -165,7 +164,7 @@ function calcHeight(obj)
      </tr>
     <tr valign="top">
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Entregar en</td>
-        <td  colspan="6"><input type="text" id="ALM" name="ALM" value="<%=rs("ENTREGA")%>" class="BARRA333" style="width:100%; text-align:left" maxlength="100"/></td>
+        <td  colspan="6"><input type="text" id="DIR" name="DIR" value="<%=rs("ENTREGA")%>" class="BARRA333" style="width:100%; text-align:left" maxlength="100"/></td>
     </tr>
     <tr>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >Proceso  </td>
@@ -182,7 +181,7 @@ function calcHeight(obj)
             </select>
         </td>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >Cliente  </td>
-        <td width="11%" colspan="4"> <select id="CLI" name="CLI" class="DESCRIPTORES" onchange="SELE()" disabled="disabled" onclick="CLIENTE()">
+        <td width="11%" colspan="4"> <select id="CLI" name="CLI" class="DESCRIPTORES" onchange="SELE()" >
                 <option value =""></option>
                 <%CAD = "Select CODIGO, nombre From MODELADOR..cliente WHERE ESTADO ='A' ORDER BY nombre " 
                 RS2.OPEN CAD, CNN
@@ -212,38 +211,31 @@ function calcHeight(obj)
                
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">Estilo</td>
         <td  width="40%">
-            <select id="EST" name="EST" class="DESCRIPTORES" onchange="pos()">
+            <select id="EST" name="EST" class="DESCRIPTORES" onchange="pos();" >
                 <option value =""></option>
             </select>
         </td>
   </tr>  
-</table>
-
-
-<table border="1" cellpadding="2" width="100%" cellspacing="0" bgcolor="<%=(Application("color2"))%>" bordercolordark="<%=(Application("borde"))%>" bordercolorlight="<%=(Application("COLOR1"))%>">
-   <tr><td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" colspan="6">Po's: </td></tr>
-  <%for i=1 to 60 step 3 %>  
-  <tr>
-    <td style="display:none;"width="1%"  class="AMERICANnavy1" id='ccc<%=i  %>'><input type="checkbox" value="" id="chk<%=i %>"  onclick="vali('<%=i%>')"   /></td>
-    <td style="display:none;"width="30%" class="AMERICANnavy1" id='lin<%=i  %>'></td>                           
-    <td style="display:none;"width="1%"  class="AMERICANnavy1" id='ccc<%=i+1%>'><input type="checkbox" value="" id="chk<%=i+1%>" onclick="vali('<%=i+1%>')" /></td>
-    <td style="display:none;"width="30%" class="AMERICANnavy1" id='lin<%=i+1%>'></td>                           
-    <td style="display:none;"width="1%"  class="AMERICANnavy1" id='ccc<%=i+2%>'><input type="checkbox" value="" id="chk<%=i+2%>" onclick="vali('<%=i+2%>')" /></td>
-    <td style="display:none;"width="30%" class="AMERICANnavy1" id='lin<%=i+2%>'></td>
-  </tr>
-  <%next %>
-   <tr><td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" colspan="6">Colores: </td></tr>
- <%for p=1 to 60 step 3 %>  
-  <tr>
  
-    <td style="display:block;vertical-align:top;" width="33%" class="AMERICANnavy1" id='co<%=p%>'   colspan="2"><iframe id="col<%=p%>"   onload="calcHeight(this.id)" style="display:none" src="" scrolling="no" frameborder="1"></iframe></td>
-    <td style="display:block;vertical-align:top;" width="33%" class="AMERICANnavy1" id='co<%=p+1%>' colspan="2"><iframe id="col<%=p+1%>" onload="calcHeight(this.id)" style="display:none" src="" scrolling="no" frameborder="1"></iframe></td>    
-    <td style="display:block;vertical-align:top;" width="33%" class="AMERICANnavy1" id='co<%=p+2%>' colspan="2"><iframe id="col<%=p+2%>" onload="calcHeight(this.id)" style="display:none" src="" scrolling="no" frameborder="1"></iframe></td>
-  </tr>
-  <%next %>
-
+   <tr>
+       <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >COLORES </td>
+       <td width="40%" colspan="1"> <select id="COL" name="COL" class="DESCRIPTORES"  onchange="COLOR()"  >
+                <option value =""></option>              
+            </select>
+        </td>
+        <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >CANTIDAD</td>
+        <td width="40%" colspan="2"> <input type="text" id="TOTCOL" class="AMERICANnavy1" style="width:100%; text-align:right; padding-right:5px" value='<%=rs("cant")%>' disabled="disabled"/> 
+           
+        </td>
+   </tr>
+   <tr>
+     <td colspan="6">   
+            <iframe  id="DETACOL"  onload="calcHeight(this.id)" style="display:block;width:100%;" src="" scrolling="no" frameborder="1"></iframe>
+      </td>
+   </tr>
+  
+    
 </table>
-<button onclick="verdata()">ver Data</button>
 
 
 
@@ -254,16 +246,19 @@ function calcHeight(obj)
 </table> 
 <table border="1" cellpadding="2" width="100%" cellspacing="0" bgcolor="<%=(Application("color2"))%>" bordercolordark="<%=(Application("borde"))%>" bordercolorlight="<%=(Application("COLOR1"))%>">
     <tr valign="top">
-     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Fecha Emisi&oacute;n</td>
-        <td width="10%"><input type="text" id="FEC" name="FEC" value="<%=left(rs("FECDOC"),10   )%>" class="DESCRIPTORES" readonly tabindex="-1" style="text-align:center"/></td>
- 
+        <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Fecha Emisi&oacute;n</td>
+        <td width="10%"><input type="text" id="FEC" name="FEC" value="<%=left(rs("FECDOC"),10   )%>" class="DESCRIPTORES" disabled="disabled" style="text-align:center"/></td>
+        <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">P:Unit :</td>
+        <td width="10%"><input id="PUN" name="PUN" value="<%=formatnumber(rs("PREUNI"),3,,true)%>" onchange="precio()" onfocus="seleccionar(this)"
+        style="text-align:right; padding-right:5px;width:100%" class="barra333"/></td>              
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Total Soles :</td>
-        <td width="10%"><input id="soles" name="soles" value="<%=formatnumber(rs("impmn"),3,,true)%>" style="text-align:right; padding-right:5px;" class="DESCRIPTORES" readonly tabindex="-1"/></td>
-                <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Total US $ :</td>
-        <td width="10%"><input id="dolares" name="dolares" value="<%=formatnumber(rs("impus"),3,,true)%>" style="text-align:right; padding-right:5px;" class="DESCRIPTORES" readonly tabindex="-1"/></td>
+        <td width="10%"><input id="soles" name="soles" value="<%=formatnumber(rs("impmn"),3,,true)%>" style="text-align:right; padding-right:5px;" class="DESCRIPTORES" disabled="disabled" /></td>
+        <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Total US $ :</td>
+        <td width="10%"><input id="dolares" name="dolares" value="<%=formatnumber(rs("impus"),3,,true)%>" style="text-align:right; padding-right:5px;" class="DESCRIPTORES" disabled="disabled"/></td>
     </tr>
     <tr>
-        
+       <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Observaciones:</td>
+        <td width="90%" colspan="9"><textarea id="GLO" name="GLO" class="estilotextarea4" maxlength="250" ><%=left(rs("glosa"),200)%></textarea></td> 
     
     </tr>
 </table><script language="javascript" src="includes/cal.js"></script>
@@ -273,8 +268,13 @@ function calcHeight(obj)
 //**********************************************************************************************
     var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
     opc += "menubar=no,resizable=yes,scrollbars=yes,left=100,top=20,height=600,width=900";
-    if (trim(document.all.PRO.value) != '' && trim(document.all.MON.value) != '' && trim(document.all.TOC.value) != '') 
-    {          document.all.CLI.readonly = false    }
+// VEO SI HAY TIPO DE CAMBIO   
+if (trim(trim(document.all.TCAM.value) == '' ) || parseFloat(document.all.TCAM.value) == 0 ) {
+    alert("Favor solicitar a Contabilidad \nque Ingrese el tipo de Cambio")
+    this.window.close()
+}
+
+
     document.all.PRO.focus()
     seleccionar(document.all.PRO)
 
@@ -286,15 +286,20 @@ document.all.MON.selectedIndex = seleindice(subcadena,elemento);
 var subcadena ='<%=RS("TIPser")%>' ;
 var elemento = document.all.TOC ;
 document.all.TOC.selectedIndex = seleindice(subcadena,elemento);
-
+CLIENTE()
 function CLIENTE() {
-
-    if (trim(document.all.PRO.value) != '' && trim(document.all.MON.value) != '' && trim(document.all.TOC.value) != '')
+//return true
+    if (trim(document.all.PRO.value) != '' && trim(document.all.MON.value) != '' && trim(document.all.TOC.value) != '') {
         document.all.CLI.disabled = false
-
-
+        document.all.TEM.disabled = false
+        document.all.EST.disabled = false
+    }
+    else {
+        document.all.CLI.disabled = true
+        document.all.TEM.disabled = true
+        document.all.EST.disabled = true
+    }
 }
- 
 
 function BAKEPRO() {
     cad = 'bake/bakeREALpro.asp?pos=' + trim(thisForm.PRO.value)
@@ -336,7 +341,12 @@ function NUME()
       document.all.OS.value = document.all.TOC.value +'-'+ oss  
     }
     else
-    document.all.TOC.disabled = true
+        document.all.TOC.disabled = true
+
+ 
+    CAD = 'comun/deelOS.asp?OS=' + trim($("#OS").val())
+   // alert(CAD)
+    document.all.body10.src = CAD
 }
 function esti() {
   /*  document.all.body10.style.display = 'block'
@@ -345,40 +355,39 @@ function esti() {
     */
     cad = 'bake/baketemporadaestilo.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
+    cad += '&opc=1'
 
     document.all.body10.src = cad
     limpia()
-    for (u = 1; u <= 60; u++) {
-        che = "chk" + u.toString()
-        checa = document.getElementById(che).checked = false;
-        vali(u)
 
-    }
 }
 function pos() {
-    //alert();
-/*    document.all.body10.style.display = 'block'
+//----------------------------------------------------
+// muestra lasPO's de la Temporada, estilo- cliente
+//----------------------------------------------------
+ /*
+    document.all.body10.style.display = 'block'
     document.all.body10.height = "100"
     document.all.body10.width = "100%"
-  */
-   // if ()
-    //alert($("#CLI").val());
-    //alert($("#TEM").val());
-    //alert($("#EST").val());
+*/
+    cad = 'bake/BAKEcli-tem-est-col.asp?cli=' + trim($("#CLI").val())
+    cad += '&tem=' + trim($("#TEM").val())
+    cad += '&est=' + trim($("#EST").val())
 
-    cad = 'bake/BAKEcli-tem-est-pos.asp?cli=' + trim($("#CLI").val())
+    document.all.body10.src = cad
+  
+   //  acum(0)
+    
+
+}
+// acumula las cantidades de las po's que tienen Check
+function acum(nro) {
+    cad = 'bake/BAKEcli-tem-est-pos-col.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
     cad += '&est=' + trim($("#EST").val())
     cad += '&oss=' + trim($("#OS").val())
-    limpia()
-  
-    document.all.body10.src = cad
-    for (u = 1; u <= 60; u++) {
-        che = "chk" + u.toString()
-        checa = document.getElementById(che).checked = false;
-        vali(u)
+    document.all.DETACOL.src = cad   
 
-    }
 }
 function limpia() {
 
@@ -391,27 +400,8 @@ function limpia() {
         
     }
 }
-function vali(cnt) {
-    //alert(cnt)
-    cli = trim($("#CLI").val())
-    po =trim(eval("document.all.lin"+cnt+".innerText"))
-    //  alert(cli)
-    checa = eval("document.all.chk" + cnt + ".checked")
-    Kol = "#col" + cnt
-    if (checa == true) {
-        eval("document.all.col" + cnt + ".style.display='block'")
-        cad = 'osPO.asp?pos='+ po 
-    }
-    else {
-        eval("document.all.col" + cnt + ".style.display='none'")
-        cad = 'osPO.asp?pos=' 
-        eval("document.all.col" + cnt + ".src=cad")
-    }
-    eval("document.all.col" + cnt + ".src=cad")
-    
 
 
-}
 function cambia() {
     ttt = 0
     cont = parseInt($("#maxi").val(), 10)
@@ -422,58 +412,62 @@ function cambia() {
     
     document.all.total.value = ttt
 }
+function COLOR() {
+    cad = 'bake/BAKEcli-tem-est-pos-col.asp?cli=' + trim($("#CLI").val())
+    cad += '&tem=' + trim($("#TEM").val())
+    cad += '&est=' + trim($("#EST").val())
+    cad += '&col=' + trim($("#COL").val())
+    document.all.DETACOL.src = cad
 
-
-function verdata(){
-
-    /*
-        Defino una variable tblscolores en donde no solo podre obtener una sola tabla si no
-        varias veces por tal razon uso el selector "." al comienzo que llama a todos los
-        elementos con la clase colores
-
-        Entonces podemos decir que:
-        $("#pepito") = document.getElementByID("pepito")
-            |->>>> esto devuelve un elemento
-        y
-        $(".pepito") = document.getElementsByClassName("pepito")
-            |->>>> esto devuelve uno multiples elementos en esta funcion veremos eso
-     */
-
-    var tblscolores=$(".colores");
-    var pos="";
-    var colores="";
-    var qtys="";
-
-
-
-    tblscolores.find($(".po")).each(function(el) {
-        pos += trim(($(this).text())) + ",";
-    });
-    tblscolores.find($(".color")).each(function() {
-        colores += ($(this).text()) + ",";
-    });
-    tblscolores.find($(".tot")).each(function() {
-        qtys += ($(this).val()) + ",";
-    });
-
-    alert(colores)
-
-    if (!window.console) {
-        var console = {
-            log: function () { },
-            warn: function () { },
-            error: function () { },
-            time: function () { },
-            timeEnd: function () { }
-        }
-    }
-    console.log(pos);
-    console.log(colores);
-    console.log(qtys);
-    
 }
 
+function verevere() {
+
+    if (parseFloat(document.getElementById("PUN").value) != 0)
+        precio()
+    return true;
+
+}
+function precio() {
+
+// primero veo si hay CODIGO DE MONEDA
+if (document.all.MON.value == '') {
+    alert("Favor ingresar moneda")
+    document.all.MON.focus();
+    return false;
+}
+// segundo veo si hay cantidad a procesar
+qty = parseFloat(document.getElementById("TOTCOL").value)
+if (qty == 0)
+{    alert("Favor ingresar cantidad ")
+    document.all.TOTCOL.focus();
+    return false;
+}
+
+// tercero valido que el precio sea numerico
+document.getElementById("PUN").value = toInt((document.getElementById("PUN").value))
+pun = document.getElementById("PUN").value
+
+// tipo de cambio --> siempre hay sinó no lo deja hacer nada
+cam = parseFloat(document.getElementById("TCAM").value)
+
+if (trim(document.all.MON.value) == 'US') {
+    dol = parseFloat(pun) * parseFloat(qty)
+    sol = (parseFloat(pun) * parseFloat(cam) )* parseFloat(qty)
+}
+else {
+    sol = parseFloat(pun) * parseFloat(qty)
+    dol = (parseFloat(pun) / parseFloat(cam)) * parseFloat(qty)
+}
+
+document.getElementById("soles").value      = sol
+document.getElementById("dolares").value    = dol
+return true
+}
+
+
 function graba() {
+ 
     var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
     opc += "menubar=no,resizable=yes,scrollbars=no,left=100,top=20,height=600,width=900";
     if (trim(document.all.PRO.value) == '') {
@@ -487,84 +481,73 @@ function graba() {
         return true;
     }
     if (document.all.TOC.value == '') {
-        alert("Favor ingresar el tipo de Orden de compra")
+        alert("Favor ingresar el tipo de Servicio")
         document.all.TOC.focus();
         return true;
-    }
-   
+    }  
     if (fecha(document.all.FEC.value) == false) 
     {   alert("Formato de Fecha incorrecto")
         return true;
     }
+    // vemos si hay precio / cantidad
+    if (precio() == false)
+        return true
+    
+    // jalamos los valores del iframe
 
-
-
-
-    kad  = 'comun/insercabos.asp?OC=' + trim(document.all.OC.value)
+    // # po's del iframe
+    maxim = window.frames["DETACOL"].document.getElementById("recs").value;
+    aCan = new Array()
+    aPos = new Array()
+    aUbi = new Array()
+    for (m = 0; m < maxim; m++) {
+        // qty a procesar
+        can = "qt" + m.toString()
+        pos = "po" + m.toString()
+        ubi = "ub" + m.toString()
+        if(parseInt(window.frames["DETACOL"].document.getElementById(can).value,10) > 0)
+         {  aCan[m] = window.frames["DETACOL"].document.getElementById(can).value;
+            aPos[m] = window.frames["DETACOL"].document.getElementById(pos).innerText;
+            aUbi[m] = window.frames["DETACOL"].document.getElementById(ubi).innerText;
+         }
+    }
+    kad  = 'comun/inseros.asp?Os=' + trim(document.all.OS.value)
     kad += '&sit=1' 
-    kad += '&pro=' + trim(document.all.PRO.value)
-    kad += '&raz=' + ltrim(document.all.NOM.value)
-    kad += '&dir=' + toAlpha(document.all.DPRO.value)
-    kad += '&COT=' + ltrim(document.all.DOC1.value)
-    kad += '&FEDO=' + ltrim(document.all.FEC.value)
- //   kad += '&FPAG=' + ltrim(document.all.FPAG.value)
+    kad += '&ser='  + trim(document.all.TOC.value)
+    kad += '&ruc='  + ltrim(document.all.PRO.value)
+    kad += '&ATT='  + toAlpha(document.all.ATT.value)
+    kad += '&CLI=' + ltrim(document.all.CLI.value)
     kad += '&MON=' + ltrim(document.all.MON.value)
+    for (g = 0; g < 2; g++) {
+        if (document.all.cla[g].checked == true) 
+        {            kad += '&cla=' + parseInt(g + 1, 10)        }
+    }
     kad += '&CAM=' + ltrim(document.all.TCAM.value)
-    kad += '&SOL=' + ltrim(document.all.SOLI.value)
-    kad += '&OBS=' + ltrim(document.all.OBS.value)
-    kad += '&USR=' + '<%=txtUsuario%>'
-    kad += '&TOC=' + ltrim(document.all.TOC.value)
-    // FECHA ACTUALIZA
-    // HORA ACTUALIZA
-    kad += '&mus=' + trim(toInt(document.all.dolares.value))  // IMPORTE US
-    kad += '&mmn=' + trim(toInt(document.all.soles.value))    //IMPORTE SOLES 
-    kad += '&ATE=' + ltrim(document.all.ATEN.value)
-    kad += '&DOCR=' + ltrim(document.all.DOCR.value)
-    
-    kad += '&PRV=' + ltrim(document.all.PRV.value)
- 
-    // NO HAY DOCPAG
-    // NO HAY FECPAG -- NULL
-    // NO HAY FECVEN -- NULL
-    // NO HAY ESTPAG
-    // NO HAY MONPAG
-    // NO HAY IMPPAG --0
-    // NO HAY GLOPAG
+    kad += '&ubi=' + aUbi
+    kad += '&pos=' + aPos
+    kad += '&can=' + aCan
+    kad += '&FEDO=' + ltrim(document.all.FEC.value) // fecha del documento
+    kad += '&FENT=' + ltrim(document.all.ENT.value) // fecha de entrega
+    kad += '&FPAG=' + ltrim(document.all.FPAG.value) // forma de pago
+    kad += '&PUN=' + ltrim(document.all.PUN.value)
+    kad += '&usr='  + '<%=txtUsuario%>'
+    kad += '&glo='  + ltrim(document.all.GLO.value) // glosa
+    kad += '&dir=' + ltrim(document.all.DIR.value) // direccion de entrega
 
-     
-    /*document.all.body10.style.display = 'block'
-    document.all.body10.height = "350"
-    document.all.body10.width = "100%"
-    */
-    document.all.body10.src = kad
+    kad += '&dol=' + trim(toInt(document.all.dolares.value))  // IMPORTE US
+    kad += '&sol=' + trim(toInt(document.all.soles.value))    //IMPORTE SOLES 
 
-    //alert(kad)
-    cad = 'FICHAOSdeta.asp?OC=' + trim(thisForm.OC.value)
-window.open(cad,'Deta_OC', opc)
-    
-}
-NUME()
-
-
-window.onbeforeunload = confirmExit;
-
-function confirmExit() {
-
+       
     document.all.body10.style.display = 'block'
     document.all.body10.height = "350"
     document.all.body10.width = "100%"
-    kad = 'comun/recalculaos.asp?OC=' + trim(document.all.OS.value)
-  //  document.all.body10.src = kad
-  
+ alert(kad)  
+    document.all.body10.src = kad
 
-
-
+   
+    
 }
-window.onunload = refreshParent;
-function refreshParent() {
-    window.opener.window.location.reload();
-}
-
+NUME()
 
 </script>
 
@@ -572,7 +555,21 @@ function refreshParent() {
 SET RS  = NOTHING
 Cnn.Close
 SET Cnn = NOTHING %>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Función a lanzar cada vez que se presiona una tecla en un textarea
+        // en el que se encuentra el atributo maxlength
+        $("textarea[maxlength]").keyup(function () {
+            var limit = $(this).attr("maxlength"); // Límite del textarea
+            var value = $(this).val();             // Valor actual del textarea
+            var current = value.length;              // Número de caracteres actual
+            if (limit < current) {                   // Más del límite de caracteres?
+                // Establece el valor del textarea al límite
+                $(this).val(value.substring(0, limit));
+            }
+        });
+    });
+ </script>
 </form>
 </body>
 </html>

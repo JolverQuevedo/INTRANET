@@ -11,6 +11,7 @@
 <!--#include file="includes/Cnn.inc"-->
 <!--#include file="COMUN/FUNCIONESCOMUNES.ASP"-->
 <script type="text/jscript" language="jscript">
+
 var aCod = Array() 
 function calcHeight()
 {
@@ -51,6 +52,7 @@ function calcHeight()
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" lang="es-pe" />
 <title>FICHA O/C</title>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
+<!--<script src="/comun/jquery.js"></script>-->
 </head>
 <body >
 <form id="thisForm" method="post" name="thisForm" action="comun/inserFICHAoc.asp">
@@ -68,7 +70,7 @@ function calcHeight()
          <td  width="20%" align="right"><img src="imagenes/logo.gif" border="0"  alt="" id="GRABA"  /></td>
     </tr>
 </table>  
-<iframe  width="100%" style="display:none; width:100%;" src="" id="body10" name="body10" scrolling="yes" frameborder="0" ></iframe>
+<iframe  width="100%" style="display:NONE; width:100%;height:500px;" src="" id="body10" name="body10" scrolling="yes" frameborder="0" ></iframe>
 
 <table width="100%" border="1" bordercolordark="DarkOrange" cellpadding="0" cellspacing="0" bordercolorlight="<%=application("color2")%>" >   
 	<tr valign="middle">
@@ -114,12 +116,12 @@ function calcHeight()
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">Doc. Referencia</td>
     <td colspan="2">
         <select id="DOCR" name="DOCR" class="DESCRIPTORES">
-            <option value =""></option>
+            <option value=""></option>
             <%CAD = "Select TG_CCLAVE, TG_CDESCRI From RSFACCAR..AL0001TABL Where TG_CCOD='04' Order by TG_CCLAVE" 
             RS2.OPEN CAD, CNN
             IF RS2.RECORDCOUNT >0 THEN     RS2.MOVEFIRST
             DO WHILE NOT RS2.EOF%>
-            <option value ='<%=RS2("TG_CCLAVE") %>'><%=RS2("TG_CCLAVE") %> &nbsp;&nbsp;&nbsp;<%=RS2("TG_CDESCRI")%></option>
+            <option value='<%=RS2("TG_CCLAVE") %>'><%=RS2("TG_CCLAVE") %> &nbsp;&nbsp;&nbsp;<%=RS2("TG_CDESCRI")%></option>
                 <%RS2.MOVENEXT
             LOOP
             RS2.CLOSE%>
@@ -382,7 +384,8 @@ var elemento = document.all.DOCR ;
 document.all.DOCR.selectedIndex = seleindice(subcadena,elemento);	
 
 var subcadena ='<%=RS("OC_CCODMON")%>' ;
-var elemento = document.all.MON ;
+
+var elemento = document.all.MON;
 document.all.MON.selectedIndex = seleindice(subcadena,elemento);	
 
 var subcadena ='<%=RS("OC_CTIPORD")%>' ;
@@ -434,7 +437,17 @@ if (trim(CkK) == '1')
 {    document.all.CHK.checked = true
      document.all.CHK.value = '1'
  }
- 
+function seleindice(sub,el){
+    setTimeout(function(){
+        subcadena = trim(sub)
+        for(var i=0;i<el.options.length;i++){
+            valorselect = trim(el.options[i].value)
+            if(valorselect == subcadena){
+                el.selectedIndex=i
+            }
+        }
+    }, 50);
+}
 
 function BAKEPRO() {
     cad = 'bake/bakeREALpro.asp?pos=' + trim(thisForm.PRO.value)
@@ -542,7 +555,7 @@ function graba() {
 
     //alert(kad)
     cad = 'FICHAOCdeta.asp?OC=' + trim(thisForm.OC.value)
-window.open(cad,'Deta_OC', opc)
+    window.open(cad,'Deta_OC', opc)
     
 }
 window.onbeforeunload = confirmExit;

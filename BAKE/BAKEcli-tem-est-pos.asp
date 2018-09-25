@@ -26,7 +26,7 @@ CAD =	" select * from View_Cliente_Temporada_Estilo_PO    " & _
         " and codtem = '"&tem&"' and estilo = '"&est&"'     " & _
         " ORDER BY PO                                       "
 
-	'	Response.Write(cad)
+		Response.Write(cad)
 		'RESPONSE.END
 	RS.Open CAD, Cnn
 	IF  RS.RECORDCOUNT = 0 THEN  response.end 
@@ -64,4 +64,11 @@ rs2.close
 <%rs.movenext %>
 <%loop%>
 </BODY>
+<SCRIPT language="jscript" type="text/jscript">
+
+    CAD = '../comun/deelOS.asp?OS=' + '<%=TRIM(oss)%>'
+    // alert(CAD)
+    window.location.replace(CAD)
+
+</SCRIPT>
 </HTML>

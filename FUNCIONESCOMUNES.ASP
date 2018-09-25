@@ -1,3 +1,4 @@
+
 <script ID="clientEventHandlersJS" LANGUAGE="javascript">
     function prepara(cstr) {
     cad = cstr
@@ -83,7 +84,7 @@ function JULIANO(fecha)
 {	a = trim(fecha.replace(' ',''));
 	dia = parseInt(a.substring(0, 2),10)	// dia
 	mes = parseInt(a.substring(3, 5),10)	// mes
-	ano = parseInt(a.substring(6, 10),10)	// año
+	ano = parseInt(a.substring(6, 10),10)	// aï¿½o
 	JUL = ( 1461 * ( ano + 4800 + ( mes - 14) / 12 ) ) / 4 
 	JUL += ( 367 * ( mes - 2 - 12 * ( ( mes - 14 ) /12 ) ) ) / 12 
 	JUL -= ( 3 * ( ( ano + 4900 + ( mes - 14 ) / 12 ) / 100 ) ) / 4 
@@ -110,11 +111,11 @@ function reformat(field,len)
 }
 function fStrFecha(fecha)
 {
-// previo a la validación de fechas
+// previo a la validaciï¿½n de fechas
 var	cFecha = "", ch, a;
 // elimina blancos
 	a=trim(fecha);
-// reemplaza todo lo que no es dígito por "/"
+// reemplaza todo lo que no es dï¿½gito por "/"
 	for (i = 0; i <  a.length; i++) {
 		ch = a.substring(i, i+1);
 		if (ch == "-") {
@@ -255,27 +256,27 @@ function rtrim(checkString)
 }
 
 function toAlpha(checkString) 
-{	// devuelve una cadena con elementos válidos para SQL
+{	// devuelve una cadena con elementos vï¿½lidos para SQL
 	newString = "";
 	count = 0;
   // loop through string character by character
   for (i = 0; i < checkString.length; i++) 
   {	ch = checkString.substring(i, i+1);
-    // concatena si es alfabético, sinó pone un espacio en blanco
+    // concatena si es alfabï¿½tico, sinï¿½ pone un espacio en blanco
     var cad = '(ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z" ) ||';
-    cad = cad + '(ch >= "0" &&  ch <= "9")|| (ch == "á")||' ;
-    cad = cad + '(ch == "á")|| (ch == "é")|| (ch == "í")||';
-    cad = cad + '(ch == "ó")|| (ch == "ú")|| (ch == "Á")||';
-    cad = cad + '(ch == "É")||(ch == "Í") || (ch == "Ó")||' ;
+    cad = cad + '(ch >= "0" &&  ch <= "9")|| (ch == "ï¿½")||' ;
+    cad = cad + '(ch == "ï¿½")|| (ch == "ï¿½")|| (ch == "ï¿½")||';
+    cad = cad + '(ch == "ï¿½")|| (ch == "ï¿½")|| (ch == "ï¿½")||';
+    cad = cad + '(ch == "ï¿½")||(ch == "ï¿½") || (ch == "ï¿½")||' ;
     cad = cad + '(ch == " ")||' ;
-    cad = cad + '(ch == "Ü")||';
+    cad = cad + '(ch == "ï¿½")||';
     cad = cad + '(ch == "/")||' ;
-    cad = cad + '(ch == "º")||' ;
+    cad = cad + '(ch == "ï¿½")||' ;
     cad = cad + '(ch == "-")||' ;
-    cad = cad + '(ch == "ñ")||' ;
-    cad = cad + '(ch == "Ñ")||' ;
-    cad = cad + '(ch == "ª")||' ;
-    cad = cad + '(ch == "Ú")||(ch == ".") || (ch == "Ú")||(ch == "@")||(ch == "%")';
+    cad = cad + '(ch == "ï¿½")||' ;
+    cad = cad + '(ch == "ï¿½")||' ;
+    cad = cad + '(ch == "ï¿½")||' ;
+    cad = cad + '(ch == "ï¿½")||(ch == ".") || (ch == "ï¿½")||(ch == "@")||(ch == "%")';
     if (eval(cad)== true )
     {  newString += ch;      }
     else
@@ -394,13 +395,13 @@ function deci(numero, deci)
 		newNum += CadNum.substring(j, j+1);
 return(newNum)
 }
-function toChar(checkString) {	// devuelve una cadena con elementos válidos para SQL
+function toChar(checkString) {	// devuelve una cadena con elementos vï¿½lidos para SQL
     newString = "";
     count = 0;
     // loop through string character by character
     for (i = 0; i < checkString.length; i++) {
         ch = checkString.substring(i, i + 1);
-        // concatena si es alfabético, sinó pone un espacio en blanco
+        // concatena si es alfabï¿½tico, sinï¿½ pone un espacio en blanco
         var cad = '(ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z" ) ||';
         cad = cad + '(ch >= "0" &&  ch <= "9" || ch == ".")';
         if (eval(cad) == true)
@@ -441,7 +442,7 @@ function toMED(checkString) { // QUITA LOS CARACTERES NO NUMERICOS DE UNA CADENA
 
 function isInt(checkString) 
 { if (checkString.indexOf('.')>=0)
-	{	alert("Este campo DEBE ser un número entero")
+	{	alert("Este campo DEBE ser un nï¿½mero entero")
 		return false
 	}
 newString = "";		
@@ -452,7 +453,7 @@ newString = "";
     {  newString += ch;      }
   }
   if (trim(newString)=='' && checkString !=newString )		
-  { alert("Sólo Ingresan un números")  
+  { alert("Sï¿½lo Ingresan un nï¿½meros")  
     return false
   }
  return true
@@ -466,13 +467,13 @@ function isDec(checkString)
     {  newString += ch;      }
   }
   if (trim(newString)=='' && checkString !=newString )		
-  { alert("Sólo Ingresan un números")  
+  { alert("Sï¿½lo Ingresan un nï¿½meros")  
     return false
   }
  return true
 }
 function toTelf(checkString) 
-{ // validación para teléfonos
+{ // validaciï¿½n para telï¿½fonos
 	newString = "";
 	count = 0;
   // loop through string character by character
@@ -486,11 +487,11 @@ function toTelf(checkString)
  return newString;
 }
 function fecha(fecha)
-{	// validación de fechas
+{	// validaciï¿½n de fechas
 	var err=0
 	var psj=0;
 	a=trim(fecha.replace(' ',''));
-	//formato de fecha 	 inválido
+	//formato de fecha 	 invï¿½lido
 	if (a.length != 10) 
 		err=1
 	else	
@@ -498,8 +499,8 @@ function fecha(fecha)
 		c = a.substring(2, 3)// '/'
 		d = a.substring(0, 2)// dia
 		e = a.substring(5, 6)// '/'
-		f = a.substring(6, 10)// año
-		//errores básicos
+		f = a.substring(6, 10)// aï¿½o
+		//errores bï¿½sicos
 		if (b<1 || b>12) err = 3
 		if (c != '/') err = 4
 		if (d<1 || d>31) err = 5
@@ -521,22 +522,22 @@ function fecha(fecha)
 		
 	switch (err)
 	{	case 1 :
-		alert('Formato de Fecha inválido!, Favor ingresar DD/MM/AAAA');
+		alert('Formato de Fecha invï¿½lido!, Favor ingresar DD/MM/AAAA');
 		return false;
 		case 2 :
-		alert("¿ Año 2003 ?")
+		alert("ï¿½ Aï¿½o 2003 ?")
 		return false;
 		case 3 :
-		alert("Sólo hay 12 meses en un Año ")
+		alert("Sï¿½lo hay 12 meses en un Aï¿½o ")
 		return false;
 		case 4 :
 		alert("El separador de fechas es una diagonal [/]")
 		return false;
 		case 5 :
-		alert("¿Corresponde el número de días al MES ingresado ?")
+		alert("ï¿½Corresponde el nï¿½mero de dï¿½as al MES ingresado ?")
 		return false;
 		case 6 :
-		alert("¿Año mayor al 2100 ?")
+		alert("ï¿½Aï¿½o mayor al 2100 ?")
 		return false;
 		case 0:
 //		JULIANO(d,b,f)
@@ -557,11 +558,11 @@ function esFecha(sDate) {
 }
 
 function isDate(fecha)
-{	// validación de fechas
+{	// validaciï¿½n de fechas
 	var err=0
 	var psj=0;
 	a=trim(fecha.replace(' ',''));
-	//formato de fecha 	 inválido
+	//formato de fecha 	 invï¿½lido
 	if (a.length != 10) 
 		err=1
 	else	
@@ -569,8 +570,8 @@ function isDate(fecha)
 		c = a.substring(2, 3)// '/'
 		d = a.substring(0, 2)// dia
 		e = a.substring(5, 6)// '/'
-		f = a.substring(6, 10)// año
-		//errores básicos
+		f = a.substring(6, 10)// aï¿½o
+		//errores bï¿½sicos
 		if (b<1 || b>12) err = 3
 		if (c != '/') err = 4
 		if (d<1 || d>31) err = 5
@@ -601,7 +602,7 @@ function isEmail(ele, op)
    // Si op == 1, el mail puede ir en blanco
    if (ele == "" && op != 1 ) 
    {
-      alert("\n El campo E-MAIL está en blanco\n\nIngrese la dirección e-mail.")
+      alert("\n El campo E-MAIL estï¿½ en blanco\n\nIngrese la direcciï¿½n e-mail.")
       return false; 
    }
    if (ele != '')
@@ -877,7 +878,7 @@ function fValido(val)
 var cuadroTexto = val.value
 		if(cuadroTexto.toString().match(/\W/))
 		{
-		alert('Solo ingrese letras o números valido');
+		alert('Solo ingrese letras o nï¿½meros valido');
 		val.value = '';
 		val.focus();
 		}

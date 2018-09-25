@@ -21,6 +21,7 @@ function dd(ff)
 
 function EDITA(ff) {
 	var t = document.all.TABLA;
+
 	var pos = parseInt(ff, 10)
 	COD = ltrim(t.rows(pos).cells(0).innerText);
 	ECL = ltrim(t.rows(pos).cells(1).innerText);

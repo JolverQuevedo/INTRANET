@@ -62,7 +62,8 @@ set cnn=nothing%>
 function ENVIO()
 {	cad = 'detaESTILO.asp?pos='+trim(thisForm.CLI.value)
 	//alert(cad)
-	top.window.frames.item(1).window.location.replace(cad)
+	top.window.document.all.mainFrame.src=cad;
+	//top.window.frames.item(1).window.location.replace(cad)
 }
 </SCRIPT>
 </BODY>

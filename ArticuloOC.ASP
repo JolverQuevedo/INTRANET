@@ -37,14 +37,21 @@ IF  LEN(TRIM(request.QueryString("can"))) = 0 THEN CAN= 0 ELSE can =  request.Qu
 if trim(request.QueryString("pre")) = "" then pre = 0 else pre =  request.QueryString("pre") 
 com =  request.QueryString("com") 
 
-    if trim(oc)= "" then oc = "AUTO"
+    if trim(oc)= "" then 
+        oc = "AUTO"
+    end if
 	Set RS2 = Server.CreateObject("ADODB.Recordset")
 	RS2.CursorLocation   = 3
 	RS2.CursorType       = 3    
 	RS2.LockType         = 1 	
-    rs2.open "select oc_ctipord from rsfaccar..CO0001MOVC WHERE OC_CNUMORD = '"&OC&"'" ,CNN
-    RS2.MOVEFIRST
-    TIPO = ucase(RS2("OC_CTIPORD"))
+	RS2.open "select oc_ctipord from rsfaccar..CO0001MOVC WHERE OC_CNUMORD = '"&OC&"'" ,CNN
+	IF RS2.RecordCount > 0 THEN
+		RS2.MOVEFIRST
+		TIPO = ucase(RS2("OC_CTIPORD"))
+		'response.write(tipo)
+	else 
+		TIPO = ""
+	end if	
     RS2.CLOSE
     cad = "exec OC_LIN_COD '"&oc&"', '"&lin&"' , '"&cod&"' "  
 	'   response.Write(cAD)
@@ -96,12 +103,16 @@ com =  request.QueryString("com")
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITOch">Cod. REFERENCIA</td>
         <td colspan="2"><input type="text" id="KOD" name="KOD" value="<%=trim(RS("OC_CCODREF"))%>" class="DATOSKHAKI" onchange="BAKECOD('X')" 
          ondblclick="helpCOD('K')" maxlength="25"/></td>
-        <%solo = RS("OC_CCODREF")
+        <%
+		solo = RS("OC_CCODREF")
         pop = "select AR_CDESCRI from rsfaccar..al0001arti where ar_ccodigo = '"&solo&"'" 
+		
         rs2.open pop,cnn
+		
         if rs2.recordcount > 0 then 
             rs2.movefirst
             relacion = rs2("ar_cdescri")
+			
         else
             relacion = ""
         end if
@@ -259,6 +270,7 @@ if (trim('<%=tipo%>') != 'S') {
     document.all.KOD.style.backgroundColor = '#c4c4c4'
     document.all.KOD.disabled = true
 }
+
 function helpCOD(OP) {
     if (trim(OP) == '')
         cad = 'help/HLPartREAL2.asp?pos=' + trim(document.all.COD.value) + '&opp=' + OP + '&tip=' + '<%=TIPO%>'
