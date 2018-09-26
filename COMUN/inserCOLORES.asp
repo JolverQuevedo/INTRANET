@@ -12,7 +12,7 @@
 '*********************** OJO **********************
 'REVISAR EL LARGO DE LAS COLUMNAS de la tabla
 '*********************** OJO **********************
-CHK = Request.QueryString("chk")
+chk = TRIM(Request.QueryString("chk"))
 COD = ucase(TRIM(Request.QueryString("cod")))
 DES = ucase(TRIM(Request.QueryString("DES")))
 TON = ucase(TRIM(Request.QueryString("TON")))
@@ -58,8 +58,11 @@ rs.open cad,cnn
 TOTALREG = rs.recordcount
 
 CAD = ""
+
 IF TOTALREG>0 THEN	
+
 	if chk = "" then
+	
 	    CAD = CAD +	" UPDATE  "&TBL&" set           " & _
 				    " "&DS&" = '"&DES&"',           " & _ 
 				    " COLCLI = '"&COL&"',           " & _
@@ -67,32 +70,38 @@ IF TOTALREG>0 THEN
 				    " USUARIO = '"&USUARIO&"',      " & _
 				    " FECHA = "&fecha&"             " & _
 				    " WHERE   "&PK&" = '"&COD&"';   "
+		
 	else
+			
 		CAD =CAD +	" UPDATE "&TBL&"                    " & _
 				    " SET  USUARIO = '"&USUARIO&"',     " & _
 				    " FECHA = "&fecha&" ,               " & _
 				    " ESTADO = 'E'	                    " & _ 
 				    " WHERE "&PK&" = '"&COD&"';         "
+			
 		cad = cad + " UPDATE RAYADOS SET 		        " & _
 		            " ESTADO = 'E',                     " & _
 				    " USUARIO = '"&USUARIO&"',          " & _
 				    " FECHA = "&fecha&"                 " & _
 				    " WHERE COLOR = '"&COD&"' AND       " & _
 				    " COMBIN = '00' ;                   "
+					
         cad = cad + " UPDATE RAYACOLOR SET 		        " & _
 		            " ESTADO = 'E',                     " & _
 				    " USUARIO = '"&USUARIO&"',          " & _
 				    " FECHA = "&fecha&"                 " & _
 				    " WHERE COLOR = '"&COD&"' AND       " & _
 				    " COMBIN='00' AND CODCOL='"&COD&"'; "  
+					
         cad = cad + " UPDATE RAYASEC SET 		        " & _
 		            " ESTADO = 'E',                     " & _
 				    " USUARIO = '"&USUARIO&"',          " & _
 				    " FECHA = "&fecha&"                 " & _
 				    " WHERE COLOR = '"&COD&"' AND       " & _
-				    " COMBIN='00' AND CODCOL='"&COD&"'  " & _
+				    " COMBIN='00'" & _
 				    " AND SEC = 1;                      "      				    
-				cod=""
+		
+		cod=""
 	end if	
 else 
     VAD = "EXEC CM_I_COLORES '', '"&DES&"', '"&CLI&"', '"&TEN&"', '"&TON&"' , '"&COL&"', '1', '1', '1', '"&USUARIO&"' "
@@ -114,7 +123,7 @@ else
 	CAD =   " update rayados set REALSYS = '"&rre&"' " & _
             " where color = '"&cod&"'                "
 End if
-' Inicia transacción , para que los datos no queden a medias
+' Inicia transacciï¿½n , para que los datos no queden a medias
 'RESPONSE.WRITE("<br>")
 'RESPONSE.WRITE(CAD)
 'RESPONSE.END
@@ -132,7 +141,7 @@ end if
 Cnn.Close	
 set Cnn = Nothing
 SET RS = Nothing	
-'regresa a la página de donde fué llamado, para que vea que agregó el registro
+'regresa a la pï¿½gina de donde fuï¿½ llamado, para que vea que agregï¿½ el registro
 %>
 <script language="javascript" type="text/jscript">
 
