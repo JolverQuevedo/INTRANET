@@ -44,14 +44,10 @@ com =  request.QueryString("com")
 	RS2.CursorLocation   = 3
 	RS2.CursorType       = 3    
 	RS2.LockType         = 1 	
-	RS2.open "select oc_ctipord from rsfaccar..CO0001MOVC WHERE OC_CNUMORD = '"&OC&"'" ,CNN
-	IF RS2.RecordCount > 0 THEN
-		RS2.MOVEFIRST
-		TIPO = ucase(RS2("OC_CTIPORD"))
-		'response.write(tipo)
-	else 
-		TIPO = ""
-	end if	
+    rs2.open "select oc_ctipord from rsfaccar..CO0001MOVC WHERE OC_CNUMORD = '"&OC&"'" ,CNN
+    RS2.MOVEFIRST
+    TIPO = ucase(RS2("OC_CTIPORD"))
+    'response.write(tipo)
     RS2.CLOSE
     cad = "exec OC_LIN_COD '"&oc&"', '"&lin&"' , '"&cod&"' "  
 	'   response.Write(cAD)
@@ -103,16 +99,12 @@ com =  request.QueryString("com")
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITOch">Cod. REFERENCIA</td>
         <td colspan="2"><input type="text" id="KOD" name="KOD" value="<%=trim(RS("OC_CCODREF"))%>" class="DATOSKHAKI" onchange="BAKECOD('X')" 
          ondblclick="helpCOD('K')" maxlength="25"/></td>
-        <%
-		solo = RS("OC_CCODREF")
+        <%solo = RS("OC_CCODREF")
         pop = "select AR_CDESCRI from rsfaccar..al0001arti where ar_ccodigo = '"&solo&"'" 
-		
         rs2.open pop,cnn
-		
         if rs2.recordcount > 0 then 
             rs2.movefirst
             relacion = rs2("ar_cdescri")
-			
         else
             relacion = ""
         end if

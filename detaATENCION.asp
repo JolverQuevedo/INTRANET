@@ -303,7 +303,7 @@ frameborder="1" height="200px" align="middle" style="display:block" ></iframe>
         <tr bgcolor='<%=Application("color1")%>'>
             <td class="TALASBLUE22">Por Recibir</td>
             <td width="10%"><input id="xrec" name="xrec" value="" class="TALASBLUE22" style="text-align:right;padding-right:5px;"  readonly tabindex="-1"/></td>
-            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parï¿½metro</td>
+            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parámetro</td>
             <td colspan="2"  class="TALASBLUE22" style="width:10%; text-align:right;">Mov Real</td>
             <td><input id="rea" name="rea" value="" class="TALASBLUE22"  style="text-align:right;padding-right:5px;" readonly tabindex="-1"/></td>
         </tr>
@@ -465,9 +465,9 @@ function vale() {
        cad += '&qty=' + (parseFloat(aten) - parseFloat(xrec))
        // alert(cad)
 
-        var x = window.confirm("No puede recibir mï¿½s de lo pendiente \nDesea un codigo para Liberarlo?")
+        var x = window.confirm("No puede recibir más de lo pendiente \nDesea un codigo para Liberarlo?")
         if (x) 
-        {   window.alert("NO cierre esta ventana, le llegarï¿½ un mail con la autorizaciï¿½n ")
+        {   window.alert("NO cierre esta ventana, le llegará un mail con la autorización ")
             // Pide clave de autorizacion para permitir saltar la consistencia
             // el bake lanza el mail para que Marisa o Sistemas le mande la clave
         window.document.all.body0.src = 'bake/bakePWDpe.asp' + cad
@@ -475,7 +475,7 @@ function vale() {
             return false;
         }
         else 
-        {   var z = window.confirm("Ingresa cï¿½digo de validaciï¿½n?")
+        {   var z = window.confirm("Ingresa código de validación?")
             if (z) 
             {   // tiene la clave y la ingresa, o desiste de su intento
                 document.all.PWD.value = window.prompt("por favor Ingrese la clave","")
@@ -516,7 +516,7 @@ function graba(opc) {
     }
       
     var si
-    { si = confirm("ï¿½ Confirma que desea Grabar de este Registro ? "); }
+    { si = confirm("¿ Confirma que desea Grabar de este Registro ? "); }
     if (si == false)
     { return false; }
 
@@ -568,7 +568,7 @@ function graba(opc) {
  function fin(opc) {
      
      var si
-     { si = confirm("ï¿½ Confirma que desea Finalizar esta ORDEN DE SERVICIO ? "); }
+     { si = confirm("¿ Confirma que desea Finalizar esta ORDEN DE SERVICIO ? "); }
      if (si == false)
      { return false; }
      else {

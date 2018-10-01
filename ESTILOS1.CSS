@@ -160,7 +160,7 @@ padding:10px;
 	FONT-FAMILY:Arial, Helvetica, sans-serif;
 	font-weight:300;
 	vertical-align:middle;
-	background-color:transparent;
+/*	background-color:transparent;*/
 	
 }
 .AMERICANnavy11
@@ -170,7 +170,7 @@ padding:10px;
 	font-weight:400;
 	width:100%;
 	vertical-align:middle;
-	background-color:transparent;
+/*	background-color:transparent; */
 
 }
 .AMERICANnavy11right
@@ -193,6 +193,15 @@ padding:10px;
 	background-color:red;
 
 }
+.AMERICANGREEN11
+{	FONT-SIZE: 10px;
+	COLOR:#000;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:900;
+	vertical-align:middle;
+	background-color:#DDEBC6	;
+}
+
 .AMERICANwhite
 {	FONT-SIZE: 12px;
 	COLOR: white;

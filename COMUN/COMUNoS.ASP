@@ -19,8 +19,8 @@ function edita()
      {   alert("Orden de Servicio ANULADA")
         return true;
      }
-    cad = 'FichaOS.asp?oc=' + oc
-    //alert(cad)
+    cad = 'FichaOS.asp?os=' + oc
+    alert(cad)
     window.open(cad,'FICHA_OS',opc)
 }
 function elimina()
@@ -60,7 +60,7 @@ function elimina()
 }
 function anu()
 {   var si
-	{si = confirm("¿ Confirma la Eliminación de esta Orden de Servicio ? ");} 
+	{si = confirm("ï¿½ Confirma la Eliminaciï¿½n de esta Orden de Servicio ? ");} 
 	if (si == false)
 	{ return false;}
     var pos = parseInt(oldrow,10)
@@ -96,13 +96,13 @@ function imprime()
         return true;
      }
 
-	cad=  'reportes/prnos.asp?oc=' + trim(t.rows(pos).cells(0).innerText );
+	cad=  'reportes/prnos.asp?os=' + trim(t.rows(pos).cells(0).innerText );
 	window.open(cad)
 	}
 
 function BUSCA(url, alias) 
 {	if (trim(window.thisForm.kod.value) == '' && trim(window.thisForm.ds.value) == '')
-	{	alert("Debe informar al menos el Código o la descripción");
+	{	alert("Debe informar al menos el Cï¿½digo o la descripciï¿½n");
 		window.thisForm.kod.focus();
 	}
     cad = url+'?pos=' + trim(window.thisForm.kod.value)

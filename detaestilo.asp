@@ -39,12 +39,14 @@ var oldrow=1
 <!--#include file="COMUN/FUNCIONESCOMUNES.ASP"-->
 <!--#include file="includes/navegacion22.inc"-->
 <%Dim pageSize 
+
 if txtPerfil > 1 then 	pageSize = 16 else 	pageSize = 6
 ' Captura la posici�n inicial del browse
 POS = Request.QueryString("pos")
 if pos = "" or isnull(pos)  or pos = " " then
 	pos = ""
 end if
+
 est = Request.QueryString("est")
 if est = "" or isnull(est)  or est = " " then
 	est = ""
@@ -59,7 +61,9 @@ gen = Request.QueryString("gen")
 if gen = "" or isnull(gen)  or gen = " " then
 	gen = 0
 end if
+
 if cint(gen) = 1 then
+
     ' SI geN = 1 ES QUE VIENE DE GRABAR ESTILO Y NO VIENE CON CODIGO DE ARTICULO...
     cad = "select * from estilos where cliente = '"&pos&"' and codest = '"&est&"'"
    ' response.write(cad)
@@ -154,6 +158,7 @@ CAD =	" SELECT  top 15               			" & _
 		" AS T3 ON ESTILOS.GENERO = T3.GENERO	" & _
 		" WHERE ESTILOS.ESTADO = 'A'    		" & _
         " and cliente   = '"&POS&"'     		"
+
 IF LEN(TRIM(ESTCLI)) > 0 THEN  
     CAD = CAD +   " and ltrim(rtrim(ESTCLI)) >= '"&ESTCLI&"' order by estcli" 
 elseIF LEN(TRIM(codmod)) > 0 THEN  
@@ -175,7 +180,6 @@ IF RS.RECORDCOUNT > 0 THEN
     </script>
 <%END IF%>
 
-<%=rs("estcli") %>
 <script type="text/jscript">
     clien = '<%=pos%>'
     pos = '<%=pos%>'
@@ -225,6 +229,7 @@ columnas = rs.Fields.Count
 	<td align="center" style="display:none"><%=RS.FIELDS(i).NAME%></td>
 	<td align="center" style="display:block"><font face="arial" color="IVORY" size="1"><b><%=RS.FIELDS(i+1).NAME%></b></font></td>
 </tr>
+
 <%'*****************************%>
 <%' MUESTRA EL GRID (2 COLORES) %>
 <%'*****************************%>
@@ -244,6 +249,7 @@ cont= 1 %>
 	    <%RS.MOVENEXT%>
 	    <%CONT = CONT + 1%>
     <%LOOP%>
+    
 </table>
 <table border="0" align="center"  cellspacing="5">
 	<tr valign="top">
@@ -339,8 +345,10 @@ function BUSCA(url, alias) {
     return true;
 }
 </script>
+
 <%SET RS  = NOTHING 
-	SET Cnn = NOTHING  %>
+    SET Cnn = NOTHING  %>
+    
 </form>
 </body>
 </html>

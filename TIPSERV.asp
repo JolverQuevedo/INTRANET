@@ -110,7 +110,7 @@ end if
 ' Texto del Comando (SELECT) a ejecutar (POR DEFAULT)
 '****************************************************
 CAD =	" SELECT top  "&pagesize&"  " & _
-		" "&pk&","&ds&", CORREL, " & _ 
+		" "&pk&","&ds&", CORREL, DETALLE," & _ 
 		" USUARIO, FECHA, ESTADO AS EDO " & _
 		" from "&ALIAS&"  WHERE " & _
         " ESTADO = 'A' and "
@@ -280,7 +280,7 @@ columnas = rs.Fields.Count %>
                 <td width="10%" bgcolor="<%=(Application("barra"))%>" align="RIGHT"> <font face="arial" size="1" color="#000066"><b> 
                   DESCRIPCION :</b></font> </td>
                 <td bgcolor="#FFFFFF" colspan="3" width="70%"> 
-                  <input type="text" id="DES" name="DES"  style="width:100%"  />
+                  <input type="text" id="DES" name="DES"  style="width:100%" maxlength="50" />
                 </td>
                 <td width="5%" bgcolor="<%=(Application("barra"))%>" align= "right">
                  <font face="arial" size="1" color="MidnightBlue"><b> 
@@ -288,6 +288,13 @@ columnas = rs.Fields.Count %>
                  </td>
                 <td bgcolor="WHITE" width="5%" valign="middle"> 
                   <input type="text" id="CORR" name="CORR"  style="width:100%" onchange="this.value = toInt(this.value)" />
+                </td>
+              </tr>
+              <tr>
+               <td width="10%" bgcolor="<%=(Application("barra"))%>" align="RIGHT"> <font face="arial" size="1" color="#000066"><b> 
+                  DETALLE :</b></font> </td>
+                <td bgcolor="#FFFFFF" colspan="7" width="70%"> 
+                  <input type="text" id="DET" name="DET"  maxlenght= "150" style="width:100%"  />
                 </td>
               </tr>
             </table>

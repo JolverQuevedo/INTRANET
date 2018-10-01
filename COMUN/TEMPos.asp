@@ -18,22 +18,27 @@
   ubi= request.QueryString("ubi")
   aUbi = split(ubi,",")
 ' Inicia transacción , para que los datos no queden a medias
+Cnn.BeginTrans	
+ response.write(len(trim(ubi)))  
+ response.write("-------")
+cad =  " delete tempos where numord = '"&nro&"' and po = '"&po&"'; " 
+Cnn.Execute(CAD)
+response.write(cad)
+response.write("<br>")
 cad = ""
 if len(trim(ubi)) > 0 then
     for i=0 to ubound(aubi)
         id = aUbi(i)
-        if len(trim(id)) > 0 then
-            cad = cad + " delete tempos where numord = '"&nro&"' and po = '"&po&"' and ubi = "&id&"; "
-            cad = cad + " insert into tempos select '"&nro&"', '"&po&"', "&ubi&", "&aCan(i)&" ;"
+        if len(trim(id)) > 0 then      
+            cad = cad + " insert into tempos select '"&nro&"', '"&po&"', "&id&", "&aCan(i)&" ;"
         end if
     next
     response.write(cad)
     'response.end
-    Cnn.BeginTrans	
-    Cnn.Execute(CAD)
-
-
-    if  err.number <> 0 then
+  
+end if
+ if len(trim(cad)) > 0 then Cnn.Execute(CAD)
+if  err.number <> 0 then
 	    Response.Write ("No se han podido actualizar los datos solicitados,  Reintente en unos minutos")
 	    Cnn.RollbackTrans
 	    Cnn.Abort
@@ -42,8 +47,6 @@ if len(trim(ubi)) > 0 then
     end if
     'Response.Write(CAD)
     'Response.END
-end if
-
 Cnn.Close	
 set Cnn = Nothing
 SET RS = Nothing	
@@ -53,6 +56,7 @@ SET RS = Nothing
 
 %>
 <script language="jscript" type="text/jscript">
+   // alert("<%=cad%>")
     /*
     cad = '../detaoc.asp?fecha=' + '<%=right(fecha,7)%>'
     window.location.replace(cad)

@@ -157,7 +157,7 @@ document.onfocusout = function (e) {
 };
 
 function confirmExit() {
-    alert()
+
     document.all.body10.style.display = 'block'
     document.all.body10.height = "350"
     document.all.body10.width = "100%"
@@ -177,7 +177,7 @@ function confirmExit() {
     kad += '&nume=' + trim(parent.window.document.all.OS.value)
     kad += '&can=' + aCan
     kad += '&ubi=' + aUbi
-    alert(kad)
+   // prompt("",kad)
     document.all.body10.src = kad
 
 

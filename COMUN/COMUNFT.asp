@@ -16,6 +16,7 @@ function GRABAR_onclick()
 		cad += '&DS='  + DS	;
 	    cad += '&chk=' + chk;
 	    cad += '&TIP=' + thisForm.CORR.value;  
+        cad += '&det=' + thisForm.DET.value;  
 	    cad += '&LARGO=' + largo    ;
         //alert(chk)
 	if (ok == true )
@@ -66,10 +67,9 @@ function dd(ff)
 	thisForm.COD.value = ltrim(t.rows(pos).cells(0).innerText );
 	thisForm.DES.value = ltrim(t.rows(pos).cells(1).innerText) ;
 	thisForm.CORR.value = ltrim(t.rows(pos).cells(2).innerText) ;
+    thisForm.DET.value = ltrim(t.rows(pos).cells(3).innerText) ;
 	thisForm.COD.readOnly= true
-   
-
-	oldrow=pos
+ 	oldrow=pos
 	return true;
 }
 function retrocede() 

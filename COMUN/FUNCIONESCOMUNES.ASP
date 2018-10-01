@@ -194,7 +194,24 @@ function barra(chk)
 		chk = ' / ' + trim(chk)
 return chk;
 }
-function seleindice(subcadena, elemento)
+function seleindice(sub,el){
+	/*setTimeout -> hace que espere un determinado
+	tiempo aqui le puse 50 , recordar que esta en MILISEGUNDOS para ejecutar el contenido de la funcion que esta abajo
+	*/
+    setTimeout(function(){
+		//quito espacios al sub y lo asigno a la variable subcadena
+        var subcadena = trim(sub)
+        for(var i=0;i<el.options.length;i++){
+			//obteno el valor de cada option y lo comparo con el valor que se paso en el primer parametro
+            var valorselect = trim(el.options[i].value)
+            if(valorselect == subcadena){
+				//asigno el "VALOR" segun la posicion
+                el.selectedIndex=i
+            }
+        }
+    }, 50);
+}
+/*function seleindice(subcadena, elemento)
 {	// busca el elemento activo en un pop down dependiendo del descriptor
 	var a = '';
 	for (rt=0; rt<subcadena.length; rt++ )
@@ -212,7 +229,7 @@ function seleindice(subcadena, elemento)
 		}
 	} 
 	
-}
+}*/
 function trim(checkString)
 { // QUITA TODOS LOS BLANCOS DE LA CADENA
 var	newString = "";

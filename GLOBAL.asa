@@ -34,24 +34,17 @@ Sub Application_OnStart
 '***********************************************************************************************
 '   ESTE ES EL QUE ESTOY USANDO EN DESARROLLO
 '***********************************************************************************************
-''''	Application("ConStr")= "Provider=SQLOLEDB.1;Data Source=192.168.3.30;Initial Catalog=MODELADOR; User id=SA; Password=c4r4m3l1t0;"
+''''	Application("ConStr")= "Provider=SQLOLEDB.1;Data Source=localhost;Initial Catalog=MODELADOR; User id=SA; Password=c4r4m3l1t0;"
 '***********************************************************************************************	
 '   ESTE ES EL QUE ESTOY USANDO EN producción
 '***********************************************************************************************	
 	Application("ConStr")= "Provider=SQLOLEDB.1;Data Source=SERVSQL\MSSQLSERVER1;Initial Catalog=MODELADOR; User id=SA; Password=F3QY17;"
-
-
 
 'db_server = "192.168.3.4"
 'db_name = "MODELADOR"
 'db_username = "SA"
 'db_userpassword = "F3QY17"
 'Application("ConStr") = "Driver={SQL Server};SERVER=" & db_server & ";DATABASE=" & db_name & ";UID=" & db_username & ";PWD=" & db_userpassword
-
-
-
-
-
 
 Application("color1")       = "#F0F0F0" 	' gris
 Application("color2")       = "#FFFFFF"  	' blanco

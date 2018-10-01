@@ -19,6 +19,7 @@ TBL = TRIM(Request.QueryString("TBL"))
 PK  = TRIM(Request.QueryString("PK"))
 DS  = TRIM(Request.QueryString("DS"))
 TIP  = TRIM(Request.QueryString("TIP"))
+DET  = ucase(TRIM(Request.QueryString("det")))
 URL = TRIM(Request.QueryString("URL"))
 largo = TRIM(Request.QueryString("largo"))
 FECHA ="{ fn NOW() }"
@@ -55,7 +56,8 @@ IF TOTALREG>0 THEN
 	if chk = "" then
 		CAD =	" UPDATE  "&TBL&" set           " & _
 				" "&DS&" = '"&DES&"',           " & _ 
-				" correl = "&TIP&",             " &_
+				" correl = "&TIP&",             " & _
+                " detalle = '"&DET&"',          " & _
 				" ESTADO = 'A',                 " & _
 				" USUARIO = '"&USUARIO&"',      " & _
 				" FECHA = "&fecha&"             " & _
@@ -84,10 +86,11 @@ else
     end if        
 
 	CAD = 	" insert into "&TBL&"               " & _
-			" ("&PK&", "&DS&", correl, ESTADO,    " & _
-			" usuario, fecha )                  " & _
+			" ("&PK&", "&DS&", correl, ESTADO,  " & _
+			" usuario, fecha, DETALLE )         " & _
 			" values('"&COD&"', '" & DES & "',  " & _
-			" "&TIP&", 'A', '"&USUARIO&"', "&fecha&" )  " 
+			" "&TIP&", 'A', '"&USUARIO&"',      " & _
+            " "&fecha&", '"&DET&"' )  " 
 End if
 ' Inicia transacción , para que los datos no queden a medias
 RESPONSE.WRITE("<br>")

@@ -57,6 +57,7 @@ function calcHeight()
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" >
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=11">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" lang="es-pe" />
 <title><%=titulo%></title>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
@@ -188,7 +189,7 @@ RS2.MOVEFIRST%>
         <%FOR I = 0 TO 9%>
             <td align="center" width="5%">
                 <%TALLA = "T"&i %>
-                <input id="x<%=i%>" name="x<%=i%>" value="<%=RS2(TALLA)%>" class="talas" style="width:100%" tabindex=-1 readonly/>
+                <input id="x<%=i%>" readonly="readonly" name="x<%=i%>" value="<%=RS2(TALLA)%>" class="talas" style="width:100%" tabindex=-1 readonly/>
             </td>    
         <%NEXT%>
         <td width="15%" class="texto" align="center">TOTAL COLOR</td>
@@ -198,7 +199,7 @@ RS2.MOVEFIRST%>
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=u%>" name="IT<%=u%>"><%=u%></td>
     <td style="width:39%" style="display:inline">
         <img id="estilocli" onclick="helpcolores('COL<%=u%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>	
-	<input id="COL<%=u%>" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:91%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" />
+	    <input id="COL<%=u%>"  readonly="readonly" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:91%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" />
     </td>
      <td style="width:4%" ><input id="FOB<%=u %>" name="FOB<%=u%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs2("fob"),2,,true)%>"/></td>   
             <%FOR I = 0 TO 9%>
@@ -221,7 +222,7 @@ if 36 > u+19 then maximus = u+19 else maximus = 36%>
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=k%>" name="IT<%=k%>"><%=k%></td>
     <td style="width:39%" style="display:inline">
         <img id="estilocli" onclick="helpcolores('COL<%=k%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>
-        <input id="COL<%=k%>" name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:91%" onfocus="lineas('<%=k%>');" />
+        <input id="COL<%=k%>" readonly="readonly"  name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:91%" onfocus="lineas('<%=k%>');" />
     </td>
      <td style="width:4%" ><input id="FOB<%=k%>" name="FOB<%=k%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs("fob"),2,,true) %>   "/></td>      
             <%FOR I = 0 TO 9%>

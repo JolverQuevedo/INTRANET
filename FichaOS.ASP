@@ -38,13 +38,36 @@ function calcHeight(obj)
 	rs.open cad, cnn
 	IF RS.RecordCount > 0 THEN
 		RS.MOVEFIRST
-    ELSE
-        RESPONSE.Write("ERROR AL GRABAR LA CABECERA")
-        RESPONSE.Write("<BR>")
-        RESPONSE.Write("<BR>")
-        RESPONSE.Write("<CENTER>")
-        RESPONSE.Write("<A HREF=javascript:window.history.back(0)>REGRESAR</A>")
+        gg = "select codest, temporada, destem, estcli from view_pos where po = (select top 1 po from servidet where numord= '"&os&"')"
+        rs2.open gg, cnn
+       ' response.Write(gg)
+        if rs2.recordcount > 0 then
+            tempo = rs2("temporada")
+            deste = rs2("destem")
+            codes = rs2("codest")
+            deses = rs2("estcli")
+        else
+            tempo = ""
+            deste = ""
+            codes = ""   
+            deses = ""     
+        end if
+        rs2.close
+      '  response.write(tempo) 
 
+         COP = "select * FROM MULTI..VIEW_DETA_PO where po = (select top 1 po from servidet where numord= '"&os&"') AND UBI =(select top 1 UBI from servidet where numord= '"&os&"') "
+        ' RESPONSE.WRITE(COP)
+         RS2.OPEN COP,CNN
+         IF RS2.RECORDCOUNT > 0 THEN
+             COLO = RS2("COLOR")
+             UBIC = RS2("UBI")
+         ELSE
+            COLO = ""
+            UBIC = ""
+         END IF
+         RS2.CLOSE
+    ELSE
+        response.write("algo salio mal con el SP")
         RESPONSE.END
 	END IF
 %>
@@ -53,14 +76,13 @@ function calcHeight(obj)
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" lang="es-pe" />
 <title>FICHA SERVICIO TALLERES</title>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
-<script
-  src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 <body onload="document.all.PRO.focus()">
 <form id="thisForm" method="post" name="thisForm" action="comun/inserFICHAoS.asp">
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr valign="middle"> 
-		  <td width="20%"><img src="imagenes/CERRAR.gif" style="cursor:pointer;" onClick="this.window.close()" alt="SALIR"/></td>	
+		  <td width="20%"><img src="imagenes/CERRAR.gif" style="cursor:pointer;" onclick="cierra()" alt="SALIR"/></td>	
           
           <td align = "center" class="TALASBLUE" width="60%">
             <table cellpadding="22" cellspacing="0" border="1" bgcolor="#f7d975" align="center" width="100%" bordercolorlight="#f7d975">
@@ -109,7 +131,7 @@ function calcHeight(obj)
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="11%">Solicitante  </td>
     <td ><input type="text" id="USR" name="USR" value="<%=trim(ucase(txtUsuario))%> - <%=trim(desUsuario)%>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO">Att. : </td>
-    <td  width="25%"><input type="text" id="ATT" name="ATT" value="<%=trim(ucase(rs("ATT")))%>" class="BARRA333" style="width:100%; text-align:left" maxlength="50"/></td>
+    <td  width="25%"><input type="text" id="ATT" name="ATT" value="<%=trim(ucase(rs("ATT")))%>" class="BARRA333" style="width:100%; text-align:left" maxlength="100"/></td>
   </tr>
  </table>
  
@@ -121,7 +143,7 @@ function calcHeight(obj)
     <tr>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">F. Ent.</td>
         <td width="1%" align="right" style="PADDING-RIGHT:10PX;"><A href="javascript:showCal('Calendar1')"><img height="16" src="imageNEs/cal.gif" width="16" border=0></A></td>
-        <td width="15%"><input type="text" id="ENT" name="ENT"  class="DESCRIPTORES"  value="<%=FORMATDATETIME(DATE(),2) %>" /></td>
+        <td width="15%"><input type="text" id="ENT" name="ENT"  class="DESCRIPTORES"  value="<%=FORMATDATETIME(RS("FECENT"),2) %>" /></td>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="15%">Clase </td>
         <td width="23%" colspan="3" class="descriptores">
             <label class="radio-inline">
@@ -156,7 +178,7 @@ function calcHeight(obj)
             RS2.OPEN CAD, CNN
             IF RS2.RECORDCOUNT >0 THEN     RS2.MOVEFIRST
             DO WHILE NOT RS2.EOF%>
-            <option value ='<%=RS2("TG_DESCRI") %>'><%=RS2("TG_DESCRI")%></option>
+            <option value ='<%=RS2("TG_CODIGO") %>'><%=RS2("TG_DESCRI")%></option>
                 <%RS2.MOVENEXT
             LOOP
             RS2.CLOSE%>
@@ -181,7 +203,7 @@ function calcHeight(obj)
             </select>
         </td>
         <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >Cliente  </td>
-        <td width="11%" colspan="4"> <select id="CLI" name="CLI" class="DESCRIPTORES" onchange="SELE()" >
+        <td width="11%" colspan="4"> <select id="CLI" name="CLI" class="DESCRIPTORES" onchange="SELE()" style="background-color:Red" >
                 <option value =""></option>
                 <%CAD = "Select CODIGO, nombre From MODELADOR..cliente WHERE ESTADO ='A' ORDER BY nombre " 
                 RS2.OPEN CAD, CNN
@@ -216,16 +238,14 @@ function calcHeight(obj)
             </select>
         </td>
   </tr>  
- 
-   <tr>
+  <tr>
        <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >COLORES </td>
        <td width="40%" colspan="1"> <select id="COL" name="COL" class="DESCRIPTORES"  onchange="COLOR()"  >
-                <option value =""></option>              
-            </select>
+           <option value =""></option>              
+           </select>
         </td>
         <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >CANTIDAD</td>
-        <td width="40%" colspan="2"> <input type="text" id="TOTCOL" class="AMERICANnavy1" style="width:100%; text-align:right; padding-right:5px" value='<%=rs("cant")%>' disabled="disabled"/> 
-           
+        <td width="40%" colspan="2"> <input type="text" id="TOTCOL" class="AMERICANnavy1" style="width:100%; text-align:right; padding-right:5px" value='<%=rs("cant")%>' disabled="disabled"/>  
         </td>
    </tr>
    <tr>
@@ -258,101 +278,249 @@ function calcHeight(obj)
     </tr>
     <tr>
        <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO"  width="10%">Observaciones:</td>
-        <td width="90%" colspan="9"><textarea id="GLO" name="GLO" class="estilotextarea4" maxlength="250" ><%=left(rs("glosa"),200)%></textarea></td> 
+        <td width="90%" colspan="9"><textarea id="GLO" name="GLO" class="estilotextarea4" maxlength="200" ><%=left(rs("glosa"),200)%></textarea></td> 
     
     </tr>
-</table><script language="javascript" src="includes/cal.js"></script>
+</table>
+
+<script language="javascript" type="text/javascript" src="includes/cal.js"></script>
+
 <script language="jscript" type="text/javascript">
     addCalendar("Calendar1", "Elija una fecha", "ENT", "thisForm")
-
-//**********************************************************************************************
-    var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
+   
+   var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
     opc += "menubar=no,resizable=yes,scrollbars=yes,left=100,top=20,height=600,width=900";
-// VEO SI HAY TIPO DE CAMBIO   
-if (trim(trim(document.all.TCAM.value) == '' ) || parseFloat(document.all.TCAM.value) == 0 ) {
-    alert("Favor solicitar a Contabilidad \nque Ingrese el tipo de Cambio")
-    this.window.close()
-}
 
+    // VEO SI HAY TIPO DE CAMBIO   
+    if (trim(trim(document.all.TCAM.value) == '') || parseFloat(document.all.TCAM.value) == 0) {
+        alert("Favor solicitar a Contabilidad \nque Ingrese el tipo de Cambio")
+        this.window.close()
+    }
 
     document.all.PRO.focus()
     seleccionar(document.all.PRO)
 
+    var subcadena = '<%=RS("CODMON")%>';
+    var elemento = document.all.MON;
+    document.all.MON.selectedIndex = seleindice(subcadena, elemento);
 
-var subcadena ='<%=RS("CODMON")%>' ;
-var elemento = document.all.MON ;
-document.all.MON.selectedIndex = seleindice(subcadena,elemento);	
+    var subcadena = '<%=RS("TIPser")%>';
+    var elemento = document.all.TOC;
+    document.all.TOC.selectedIndex = seleindice(subcadena, elemento);
 
-var subcadena ='<%=RS("TIPser")%>' ;
-var elemento = document.all.TOC ;
-document.all.TOC.selectedIndex = seleindice(subcadena,elemento);
-CLIENTE()
-function CLIENTE() {
-//return true
-    if (trim(document.all.PRO.value) != '' && trim(document.all.MON.value) != '' && trim(document.all.TOC.value) != '') {
-        document.all.CLI.disabled = false
-        document.all.TEM.disabled = false
-        document.all.EST.disabled = false
+    var subcadena = '<%=RS("fpag")%>';
+    var elemento = thisForm.FPAG;
+    thisForm.FPAG.selectedIndex = seleindice(subcadena, elemento);
+
+   
+    var subcadena = '<%=RS("cliente")%>';
+    var elemento = thisForm.CLI;
+    thisForm.CLI.selectedIndex = seleindice(subcadena, elemento);
+
+ // cliente es primero porque si es edicion el CLIENTE NO SE PUEDE CAMBIARRRR
+    CLIENTE()
+
+
+  function CLIENTE() {
+        //return true
+        if (trim(document.all.PRO.value) != '' && trim(document.all.MON.value) != '' && trim(document.all.TOC.value) != '') {
+            document.all.CLI.disabled = false
+            document.all.CLI.style.backgroundColor = '#fff'
+            document.all.TEM.disabled = false
+            document.all.EST.disabled = false
+        }
+        else {
+            document.all.CLI.disabled = true
+            document.all.TEM.disabled = true
+            document.all.EST.disabled = true
+        }
+    }
+
+
+
+/**********************************************************
+ SI ES EDICION, HAY QUE MOSTRAR LOS VALORES GRABADOS
+ hay que colocar la funcion del setTimeout porque AHORA
+ ya no se ejecuta la pagina de arriba hacia abajo, 
+ sino que va ejecutando asincronamente las funciones
+ !!!!!!!!!!!!!!!!!!!!!!!! ajjj !!!!!!!!!!!!!!!!!!!!!
+**********************************************************/
+setTimeout(function(){
+    if (trim(document.all.CLI.value) != '') {
+        document.all.CLI.disabled = true;
+        document.all.CLI.style.backgroundColor = '#fff'
+        var select = document.all.TEM
+        select.options[0] = new Option(('<%=deste%>'), ('<%=tempo%>'));
+        thisForm.TEM.selectedIndex = 0
+        document.all.TEM.disabled = true
+
+        var select = document.all.EST
+        select.options[0] = new Option(trim('<%=deses%>'), trim('<%=codes%>'));
+        thisForm.EST.selectedIndex = 0
+        //alert(('<%=deste%>'))
+        document.all.EST.disabled = true
+
+        var select = document.all.COL
+        select.options[0] = new Option(trim('<%=COLO%>'), trim('<%=colo%>'));
+        thisForm.COL.selectedIndex = 0
+        document.all.COL.disabled = true;
+
+        COLOR()
+        cla = trim('<%=RS("CLASE")%>')
+
+        if (cla == '1') {
+            document.all.cla[0].checked = true
+            document.all.cla[1].checked = false
+        }
+        else {
+            document.all.cla[0].checked = false
+            document.all.cla[1].checked = true
+        }
+        document.all.MON.disabled = true
+    }
+}, 50)
+    /************************************************/
+   
+
+   
+    function SELE() {
+    /*    document.all.body10.style.display = 'block'
+        document.all.body10.height = "350"
+        document.all.body10.width = "100%"
+        */
+        var select = document.all.TEM
+        // borra los elementos PRE - existentes
+        select.options.length = 0;
+        // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
+        select.options[0] = new Option('', '');
+        select.selectedIndex = -1
+        var select = document.all.EST
+        // borra los elementos PRE - existentes
+        select.options.length = 0;
+        // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
+        select.options[0] = new Option('', '');
+     //   limpia()
+        cad = 'bake/baketemporadaCliente.asp?cli=' + trim($("#CLI").val())
+        document.all.body10.src = cad
+    }
+
+    function limpia() {
+        //return true
+        for (u = 1; u <= 60; u++) {
+
+            eval("$('#lin" + u + "').text('')")
+            eval("$('#lin" + u + "').css('display','none')")
+            eval("$('#chk" + u + "').val('')")
+            eval("$('#ccc" + u + "').css('display','none')")
+
+        }
+    }
+
+    function COLOR() {
+        //return true
+
+        cad = 'bake/BAKEcli-tem-est-pos-col.asp?cli=' + trim($("#CLI").val())
+        cad += '&tem=' + trim($("#TEM").val())
+        cad += '&est=' + trim($("#EST").val())
+        cad += '&col=' + trim($("#COL").val())
+        cad += '&oss=' + trim($("#OS").val())
+        document.all.DETACOL.src = cad
+
+    }
+    
+function precio() {
+
+    if (document.all.MON.value == '') {
+        alert("Favor ingresar moneda")
+        document.all.MON.focus();
+        return false;
+    }
+
+    // segundo veo si hay cantidad a procesar
+    qty = parseFloat(document.getElementById("TOTCOL").value)
+    if (qty == 0)
+    {    alert("Favor ingresar cantidad ")
+        document.all.TOTCOL.focus();
+        return false;
+    }
+
+    // tercero valido que el precio sea numerico
+    document.getElementById("PUN").value = toInt((document.getElementById("PUN").value))
+    pun = document.getElementById("PUN").value
+
+    // tipo de cambio --> siempre hay sinó no lo deja hacer nada
+    cam = parseFloat(document.getElementById("TCAM").value)
+
+    if (trim(document.all.MON.value) == 'US') {
+        dol = parseFloat(pun) * parseFloat(qty)
+        sol = (parseFloat(pun) * parseFloat(cam) )* parseFloat(qty)
     }
     else {
-        document.all.CLI.disabled = true
-        document.all.TEM.disabled = true
-        document.all.EST.disabled = true
+        sol = parseFloat(pun) * parseFloat(qty)
+        dol = (parseFloat(pun) / parseFloat(cam)) * parseFloat(qty)
     }
+
+   
+
+  sol = Math.floor(parseFloat(sol) * 1000)
+  sol = addCommasz(parseFloat(sol / 1000).toFixed(3))
+   
+  dol = Math.floor(parseFloat(dol) * 1000)
+  dol = addCommasz(parseFloat(dol / 1000).toFixed(3))
+
+    document.getElementById("soles").value   = sol
+    document.getElementById("dolares").value = dol
+
+
+    return true
 }
+
+function addCommasz(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+
+
 
 function BAKEPRO() {
     cad = 'bake/bakeREALpro.asp?pos=' + trim(thisForm.PRO.value)
-/*  
-document.all.body10.style.display = 'block'
-document.all.body10.height = "350"
-document.all.body10.width = "100%"
-  */ 
-document.all.body10.src = cad
-}
-
-function helpPRO() {   
-cad = 'help/HLPprovREAL.asp?hlp=1'
-window.open(cad,'',opc)
-}
-function SELE() {
-/*    document.all.body10.style.display = 'block'
+  
+ /*   document.all.body10.style.display = 'block'
     document.all.body10.height = "350"
     document.all.body10.width = "100%"
- */
-    var select = document.all.TEM
-    // borra los elementos PRE - existentes
-    select.options.length = 0;
-    // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
-    select.options[0] = new Option('', '');
-    select.selectedIndex=-1
-    var select = document.all.EST
-    // borra los elementos PRE - existentes
-    select.options.length = 0;
-    // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
-    select.options[0] = new Option('', '');
-    limpia()
-    cad = 'bake/baketemporadaCliente.asp?cli=' + trim($("#CLI").val())
+  */
     document.all.body10.src = cad
 }
-function NUME()
-{ if (Right(trim(document.all.OS.value),4) == 'AUTO')
-   {  oss = Right(trim(document.all.OS.value),9)
-      document.all.OS.value = document.all.TOC.value +'-'+ oss  
+
+function helpPRO() {
+    cad = 'help/HLPprovREAL.asp?hlp=1'
+    window.open(cad, '', opc)
+}
+
+
+
+function NUME() {// return true
+    if (Right(trim(document.all.OS.value), 4) == 'AUTO') {
+        oss = Right(trim(document.all.OS.value), 9)
+        document.all.OS.value = document.all.TOC.value + '-' + oss
     }
     else
-        document.all.TOC.disabled = true
+    { document.all.TOC.disabled = true }
+
+}
+
 
  
-    CAD = 'comun/deelOS.asp?OS=' + trim($("#OS").val())
-   // alert(CAD)
-    document.all.body10.src = CAD
-}
 function esti() {
-  /*  document.all.body10.style.display = 'block'
-    document.all.body10.height = "350"
-    document.all.body10.width = "100%"
-    */
+    //return true
     cad = 'bake/baketemporadaestilo.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
     cad += '&opc=1'
@@ -361,115 +529,57 @@ function esti() {
     limpia()
 
 }
+
+
 function pos() {
-//----------------------------------------------------
-// muestra lasPO's de la Temporada, estilo- cliente
-//----------------------------------------------------
- /*
-    document.all.body10.style.display = 'block'
-    document.all.body10.height = "100"
-    document.all.body10.width = "100%"
-*/
+    //----------------------------------------------------
+    // muestra lasPO's de la Temporada, estilo- cliente
+    //----------------------------------------------------
+    //return true 
     cad = 'bake/BAKEcli-tem-est-col.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
     cad += '&est=' + trim($("#EST").val())
-
     document.all.body10.src = cad
-  
-   //  acum(0)
-    
-
 }
-// acumula las cantidades de las po's que tienen Check
+
+
+
+
 function acum(nro) {
+// acumula las cantidades de las po's 
+
     cad = 'bake/BAKEcli-tem-est-pos-col.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
     cad += '&est=' + trim($("#EST").val())
     cad += '&oss=' + trim($("#OS").val())
-    document.all.DETACOL.src = cad   
-
-}
-function limpia() {
-
-    for (u = 1; u <= 60; u++) {
-       
-        eval("$('#lin" + u + "').text('')")
-        eval("$('#lin" + u + "').css('display','none')")
-        eval("$('#chk" + u + "').val('')")
-        eval("$('#ccc" + u + "').css('display','none')")
-        
-    }
-}
-
-
-function cambia() {
-    ttt = 0
-    cont = parseInt($("#maxi").val(), 10)
-    for (i = 1; i <= cont; i++)
-    { 
-		ttt += parseInt($("#qt" + i).val(), 10); 
-	}
-    
-    document.all.total.value = ttt
-}
-function COLOR() {
-    cad = 'bake/BAKEcli-tem-est-pos-col.asp?cli=' + trim($("#CLI").val())
-    cad += '&tem=' + trim($("#TEM").val())
-    cad += '&est=' + trim($("#EST").val())
-    cad += '&col=' + trim($("#COL").val())
     document.all.DETACOL.src = cad
 
 }
 
-function verevere() {
 
+function cambia() {
+    //return true
+    ttt = 0
+    cont = parseInt($("#maxi").val(), 10)
+    for (i = 1; i <= cont; i++) {
+        ttt += parseInt($("#qt" + i).val(), 10);
+    }
+
+    document.all.total.value = ttt
+}
+
+
+function verevere() {
+    //return true
     if (parseFloat(document.getElementById("PUN").value) != 0)
         precio()
     return true;
 
 }
-function precio() {
-
-// primero veo si hay CODIGO DE MONEDA
-if (document.all.MON.value == '') {
-    alert("Favor ingresar moneda")
-    document.all.MON.focus();
-    return false;
-}
-// segundo veo si hay cantidad a procesar
-qty = parseFloat(document.getElementById("TOTCOL").value)
-if (qty == 0)
-{    alert("Favor ingresar cantidad ")
-    document.all.TOTCOL.focus();
-    return false;
-}
-
-// tercero valido que el precio sea numerico
-document.getElementById("PUN").value = toInt((document.getElementById("PUN").value))
-pun = document.getElementById("PUN").value
-
-// tipo de cambio --> siempre hay sinó no lo deja hacer nada
-cam = parseFloat(document.getElementById("TCAM").value)
-
-if (trim(document.all.MON.value) == 'US') {
-    dol = parseFloat(pun) * parseFloat(qty)
-    sol = (parseFloat(pun) * parseFloat(cam) )* parseFloat(qty)
-}
-else {
-    sol = parseFloat(pun) * parseFloat(qty)
-    dol = (parseFloat(pun) / parseFloat(cam)) * parseFloat(qty)
-}
-
-document.getElementById("soles").value      = sol
-document.getElementById("dolares").value    = dol
-return true
-}
-
 
 function graba() {
  
-    var opc = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no,";
-    opc += "menubar=no,resizable=yes,scrollbars=no,left=100,top=20,height=600,width=900";
+    
     if (trim(document.all.PRO.value) == '') {
         alert("Antes de continuar, favor de informar el Proveedor");
         document.all.PRO.focus();
@@ -489,6 +599,18 @@ function graba() {
     {   alert("Formato de Fecha incorrecto")
         return true;
     }
+    if (document.all.PUN.value == '') {
+        alert("Favor ingresar Precio")
+        document.all.PUN.focus();
+        return false;
+    }
+    if (parseInt(document.all.PUN.value, 10) == 0) {
+        alert("Favor ingresar Precio")
+        document.all.PUN.focus();
+        return false;
+    }
+
+
     // vemos si hay precio / cantidad
     if (precio() == false)
         return true
@@ -505,17 +627,15 @@ function graba() {
         can = "qt" + m.toString()
         pos = "po" + m.toString()
         ubi = "ub" + m.toString()
-        if(parseInt(window.frames["DETACOL"].document.getElementById(can).value,10) > 0)
-         {  aCan[m] = window.frames["DETACOL"].document.getElementById(can).value;
-            aPos[m] = window.frames["DETACOL"].document.getElementById(pos).innerText;
-            aUbi[m] = window.frames["DETACOL"].document.getElementById(ubi).innerText;
-         }
+        aCan[m] = window.frames["DETACOL"].document.getElementById(can).value;
+        aPos[m] = window.frames["DETACOL"].document.getElementById(pos).innerText;
+        aUbi[m] = window.frames["DETACOL"].document.getElementById(ubi).innerText;
     }
     kad  = 'comun/inseros.asp?Os=' + trim(document.all.OS.value)
     kad += '&sit=1' 
-    kad += '&ser='  + trim(document.all.TOC.value)
+    kad += '&TOC='  + trim(document.all.TOC.value)
     kad += '&ruc='  + ltrim(document.all.PRO.value)
-    kad += '&ATT='  + toAlpha(document.all.ATT.value)
+    kad += '&ATT='  + Left(toAlpha(document.all.ATT.value),100)
     kad += '&CLI=' + ltrim(document.all.CLI.value)
     kad += '&MON=' + ltrim(document.all.MON.value)
     for (g = 0; g < 2; g++) {
@@ -531,31 +651,36 @@ function graba() {
     kad += '&FPAG=' + ltrim(document.all.FPAG.value) // forma de pago
     kad += '&PUN=' + ltrim(document.all.PUN.value)
     kad += '&usr='  + '<%=txtUsuario%>'
-    kad += '&glo='  + ltrim(document.all.GLO.value) // glosa
+    kad += '&glo='  + toAlpha(ltrim(document.all.GLO.value)) // glosa
     kad += '&dir=' + ltrim(document.all.DIR.value) // direccion de entrega
 
-    kad += '&dol=' + trim(toInt(document.all.dolares.value))  // IMPORTE US
-    kad += '&sol=' + trim(toInt(document.all.soles.value))    //IMPORTE SOLES 
+    kad += '&dol=' + removecommas(trim(toInt(document.all.dolares.value)))  // IMPORTE US
+    kad += '&sol=' + removecommas(trim(toInt(document.all.soles.value)) )   //IMPORTE SOLES 
 
-       
-    document.all.body10.style.display = 'block'
-    document.all.body10.height = "350"
-    document.all.body10.width = "100%"
- alert(kad)  
     document.all.body10.src = kad
 
    
     
 }
+
+function cierra()
+{window.opener.location.reload();
+
+window.close()
+} 
+
+
+
+
 NUME()
-
+//alert("fin")
 </script>
-
 <%	RS.Close  
 SET RS  = NOTHING
 Cnn.Close
 SET Cnn = NOTHING %>
 <script type="text/javascript">
+   // cuando se hayan cargado los estilos, los scripts... ejecuta
     $(document).ready(function () {
         // Función a lanzar cada vez que se presiona una tecla en un textarea
         // en el que se encuentra el atributo maxlength
@@ -567,6 +692,11 @@ SET Cnn = NOTHING %>
                 // Establece el valor del textarea al límite
                 $(this).val(value.substring(0, limit));
             }
+
+
+
+
+
         });
     });
  </script>

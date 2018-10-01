@@ -80,7 +80,7 @@ CAD =	" SET DATEFORMAT DMY;                                               " & _
             if len(trim(edo)) > 0 then cad = cad +  " and SITORD = '"&edo&"'   "
             cad = cad +  " ORDER BY 1 DESC ;                                   "
         end if
-	'	response.Write(Cad)
+		' response.Write(Cad)
 
 	RS.Open CAD, Cnn
     SINDATOS =1

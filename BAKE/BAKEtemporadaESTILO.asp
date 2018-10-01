@@ -22,7 +22,13 @@ var aVal = new Array()
 xx=0
 //alert(top.window.thisForm.COL.options.length)
 // se crea una variable llamada SELECT que captura el elemento del form que queremos llenar....
-var select = parent.window.thisForm.EST
+
+if (parent.window.thisForm.EST) {
+    var select = parent.window.thisForm.EST
+} else {
+    var select = window.parent.document.all.EST
+}
+
 // borra los elementos PRE - existentes
 select.options.length = 0;
 // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
@@ -67,4 +73,16 @@ tem	    = Request.QueryString("tem")
 
 
 </body>
+
+<script>
+op = trim('<%=request.querystring("opc") %>')
+if (op == "1") {
+
+    CAD = '../comun/deelOS.asp?OS=' + trim(window.parent.document.all.OS.value)
+   // alert(CAD)
+    window.location.replace(CAD)
+
+
+}
+</script>
 </html>

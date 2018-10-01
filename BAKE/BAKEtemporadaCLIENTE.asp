@@ -25,7 +25,15 @@ var aVal = new Array()
 xx=0
 //alert(top.window.thisForm.COL.options.length)
 // se crea una variable llamada SELECT que captura el elemento del form que queremos llenar....
-var select = parent.window.thisForm.TEM
+
+
+if (parent.window.thisForm.TEM) {
+    var select = parent.window.thisForm.TEM
+} else {
+    var select = window.parent.document.all.TEM
+}
+
+
 // borra los elementos PRE - existentes
 select.options.length = 0;
 // ARTIFICIO PARA QUE EL PRIMER ELEMENTO SE MUESTRE EN BLANCO
@@ -56,10 +64,14 @@ select.options[0] = new Option('','');
             	<%RS.MOVENEXT%>
             <%loop%>
             <script type="text/jscript" language="jscript">
-				 for(i=1; i <= xx; i++) 
-				  	select.options[i] = new Option( aVal[i-1], aData[i-1]); 				  
+                for (i = 1; i <= xx; i++) {
+
+                    select.options[i] = new Option(aVal[i - 1], aData[i - 1]);
+                }
              </script>	
 		<%end if%>
+
+     
 </body>
 
 </html>

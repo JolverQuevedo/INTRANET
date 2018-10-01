@@ -290,7 +290,7 @@ height: 100%;
         <tr bgcolor='<%=Application("color1")%>'>
             <td class="TALASBLUE22">Por Recibir</td>
             <td width="10%"><input id="xrec" name="xrec" value="" class="TALASBLUE22" style="text-align:right;padding-right:5px;"  readonly tabindex="-1"/></td>
-            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parï¿½metro</td>
+            <td colspan="3"  class="TALASBLUE22" style="text-align:left"> Incluida la tolerancia definida como parámetro</td>
             <td colspan="2"  class="TALASBLUE22" style="width:10%; text-align:right;">Mov Real</td>
             <td><input id="rea" name="rea" value="" class="TALASBLUE22"  style="text-align:right;padding-right:5px;" readonly tabindex="-1"/></td>
         </tr>
@@ -366,7 +366,7 @@ function ficha(r) {
         can = 0
     else
         can = parseFloat(t.rows(ff).cells(6).innerText)
-    if (Left(t.rows(ff).cells(1).innerText, 1) == 'S') {
+    if (Left(t.rows(ff).cells(1).innerText, 2) == 'ST' || Left(t.rows(ff).cells(1).innerText, 2) == 'SR' || Left(t.rows(ff).cells(1).innerText, 2) == 'SJ') {
         if(!confirm("Linea corresponde a un servicio\n NO a una Compra, desea continuar?")){
                    return true;
                 }
@@ -441,7 +441,7 @@ function vale() {
    }
 
     if (parseFloat(aten) > parseFloat(xrec)) {
-        alert("No puede recibir mï¿½s de lo pendiente")
+        alert("No puede recibir más de lo pendiente")
         document.all.aten.value = 0
         return false;
     }
@@ -473,7 +473,7 @@ function graba(opc) {
 
       
     var si
-    { si = confirm("ï¿½ Confirma que desea Grabar de este Registro ? "); }
+    { si = confirm("¿ Confirma que desea Grabar de este Registro ? "); }
     if (si == false)
     { return false; }
     if (vale() == true) {
@@ -521,7 +521,7 @@ function graba(opc) {
  function fin(opc) {
      
      var si
-     { si = confirm("ï¿½ Confirma que desea Finalizar estsa ORDEN DE COMPRA? "); }
+     { si = confirm("¿ Confirma que desea Finalizar estsa ORDEN DE COMPRA? "); }
      if (si == false)
      { return false; }
      else {
