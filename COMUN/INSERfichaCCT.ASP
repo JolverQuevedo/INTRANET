@@ -77,7 +77,9 @@ IF TRIM(DMAX) = "" THEN DMAX = 0
 for i=0 to ubound(aCan)
     IF TRIM(ACAN(I)) = "" THEN ACAN(I) = 0 
 next
-
+' AGREGUE UNA COLUMNA SALDO
+' PARA PODER LLEVAR CONTROL 
+' DE LOS KILOS ASIGNADOS A OFI's
 if trim(cct) = "AUTO" then
     rs.open "select count(*) as cc from CCTELA"  , cnn
     if rs.recordcount <=0 then
@@ -95,7 +97,7 @@ if trim(cct) = "AUTO" then
                 " VAPANCL, LAVFaLL, LAVREVL,TONO, MATCHING, DEGRADE, TACTO, " & _
                 " REPROCESO, CALIDAD, CONDICION, ANCHOOBTENIDO, ANCHOVAP,   " & _
                 " DENMIN, DENMAX, RLLINS, USUARIO, FECHA, ESTADO, LAVporv,  " & _
-                " LAVporL) VALUES (                                         " & _
+                " LAVporL,SALDO) VALUES (                                   " & _
                 " '"&CCT&"', '"&TEL&"', '"&PAR&"', '"&COL&"', '"&COM&"',    " & _
                 " '"&CLI&"', "&Fin&", '"&OFI&"', "&KGS&", "&RLL&", '"&OC&"'," & _
                 " '"&RUC&"', '"&TIP&"', "&POR&", "&VLA&", "&VAA&", "&VLD&", " & _
@@ -103,7 +105,7 @@ if trim(cct) = "AUTO" then
                 " "&VAL&", "&LFL&", "&LRL&", '"&TON&"', '"&MAC&"','"&DEG&"'," & _
                 " '"&TAC&"', '"&REP&"', '"&CAL&"', '"&CON&"', "&AO&","&AV&"," & _ 
                 " "&DMIN&", "&DMAX&", "&RL2&",'"&USUARIO&"',"&FECHA&",'A',  " & _
-                " "&LPV&", "&LPL&"); "
+                " "&LPV&", "&LPL&", "&KGS&");                               "
     CAD = CAD + " INSERT INTO CCTOBSERVACIONES (CCT, OBSERVACIONES, USUARIO," & _
                 " FECHA, ESTADO) VALUES ('"&CCT&"', '"&OBS&"','"&USUARIO&"'," & _
                 " "&FECHA&", 'A');                        "
@@ -149,10 +151,11 @@ else
                 " DENMIN    =   "&DMIN&",   " & _
                 " DENMAX    =   "&DMAX&",   " & _
                 " RLLINS    =   "&RL2&",    " & _
-                " USUARIO  = '"&USUARIO&"', " & _
+                " USUARIO   = '"&USUARIO&"'," & _
                 " FECHA     =   "&FECHA&",  " & _
+                " SALDO     =  "&KGS&",     " & _
                 " ESTADO    = 'A'           " & _
-                " where  cct= '"&cct&"';    "
+                " where cct = '"&cct&"';    "
 
     cad = cad + " UPDATE CCTOBSERVACIONES   " & _
                 " SET OBSERVACIONES =       " & _

@@ -7,8 +7,7 @@
 	end if
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
 	NIVEL = txtPerfil%>
-	<meta http-equiv="X-UA-Compatible" content="IE=10"/>
-
+<link rel="stylesheet" type="text/css" href="../ESTILOS1.CSS" />
 <script type="text/jscript" language="jscript">
 // SI AUTO ESTA EN cero, SIGNIFICA QUE ES CODIGO MANUAL
 // SI auto ESTA EN 1, SIGNIFICA QUE LA LLAVE ES idENTITY
@@ -28,8 +27,7 @@ var chk = ''
 '****************************************
 ' Definir el tamaño de la pagina
 Dim pagesize 
-'if nivel = 1 then	pagesize = 10 else pagesize =20
-pagesize=1000
+if nivel = 1 then	pagesize = 10 else pagesize =20
 '****************************************
 ' Definir el NOMBRE de la Tabla base
 Dim ALIAS
@@ -71,13 +69,25 @@ function dd2(ff)
 </script>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><%=titulo%></title>
-<link rel="stylesheet" type="text/css" href="../ESTILOS1.CSS" />
 </head>
 <body>
 <form name="thisForm" id="thisForm" method="post" action="COLORES.asp">
+<table width="100%">
+	<tr>
+		<td align= "left" width="35%"><img src="../imagenes/ATRAS.gif" style="cursor:hand;" alt="" onClick="javascript: window.location.replace('<%=submenu%>');" /></td>
+		<td align="center">
+	        <table cellpadding="22" cellspacing="0" border="1" bgcolor="#f7d975" align="center"	width="100%" bordercolorlight="#f7d975">
+	            <tr><td align="center" class="talasblue"><%=titulo%></td></tr>
+	        </table>
+		</td>
+		<td align="right" width="35%"><img src="../imagenes/logo.GIF" alt="" /></td>
+	</tr>
+	<tr>
+	    <td colspan="3"><hr /></td>
+	</tr>
+</table>
 <%
 POS = Request.QueryString("pos")
 if pos = "" or isnull(pos)  or pos = " " then	pos = ""
@@ -98,11 +108,11 @@ CAD =	" SELECT top  "&pagesize&" * " & _
             cad = cad+  " "&indice&" >= '"& POS &"'" & _
             " ORDER BY "& indice &"  " 
         end if
-        'response.write(cad)
+        response.write(cad)
 %>
 <!--#include file="../includes/Cnn.inc"-->
 <!--#include file="../COMUN/FUNCIONESCOMUNES.ASP"-->
-
+<!--#include file="../COMUN/COMUNCOLORES.ASP"-->
 <%  RS.Open CAD, Cnn
     SINDATOS =1
 	CONT = 1
@@ -194,12 +204,10 @@ columnas = rs.Fields.Count
 		RS2.ActiveConnection = Cnn
 		RS2.CursorType       = 3 'CONST adOpenStatic = 3
 		RS2.LockType         = 1 'CONST adReadOnly = 1 %>
- <!--#include file="../COMUN/COMUNCOLORES.ASP"-->
+ 
 <script type="text/jscript" language="jscript">
 function seleccionar(value){
-	//alert(value);
     console.log("window.opener.document.getElementById('<%=request.QueryString("elid")%>').value('"+value+"')");
-	eval("window.opener.document.getElementById('<%=request.QueryString("elid")%>').focus()");
     eval("window.opener.document.getElementById('<%=request.QueryString("elid")%>').value=('"+value+"')");
     
     window.close();
@@ -221,7 +229,7 @@ dd2('1');
 </script>    
 <%IF txtPerfil = 1 THEN%>
 	<script type="text/jscript" language="jscript"> 
-		//eval("DATAENTRY.style.display='block'");
+		eval("DATAENTRY.style.display='block'");
 		thisForm.COD.maxLength=largo
 		thisForm.DES.maxLength=largo2
 		if (rec <= 0)
@@ -231,154 +239,7 @@ dd2('1');
 		    {   thisForm.kod.maxLength=largo
 		        //thisForm.ds.maxLength=largo2
 		    }
-		}   function GRABAR_onclick() 
-{ var ok = VALIDA();
-  //alert(VALIDA())
-/*  document.all.ACTIV.style.visibility='visible'
-	document.all.ACTIV.height="150"
-	document.all.ACTIV.width="100%"
-    */
-	var cad =   'cod=' + trim(thisForm.COD.value)  ;
-		cad += '&des=' + Left(thisForm.DES.value,largo2)  ;
-	    cad += '&LARGO=' + largo    ;
-		cad += '&url=' + url;
-		cad += '&tbl=' + TBL;
-		cad += '&PK='  + PK;
-		cad += '&DS='  + DS	;
-	    cad += '&chk=' + chk;
-	    cad += '&TON=' + thisForm.TON.value;  
-	    cad += '&TEN=' + thisForm.TEN.value;  
-	    cad += '&CLI=' + thisForm.CLI.value;  
-	    cad += '&COL=' + thisForm.COL.value;  
-	if (ok == true )
-	{ 	document.all.ACTIV.src=(funcionalidad + cad); }
-}
-
-function NUEVO_onclick() {
-chk="0"
-	thisForm.COD.value = 'AUTO';
-    thisForm.TON.selectedIndex = -1;
-	thisForm.TEN.selectedIndex = -1;
-	thisForm.CLI.selectedIndex = -1;
-	thisForm.COL.value = '';
-    thisForm.DES.value = '';
-    thisForm.TON.disabled=false;
-	thisForm.TEN.disabled=false;
-	thisForm.CLI.disabled=false;	
-}
-function elimina()
-{	var si
-	{si = confirm("� Confirma la Eliminaci�n de este Registro ? ");} 
-	if (si == false)
-	{ return false;}
-	var cad  =	'COD='	 + thisForm.COD.value  ;
-		cad += '&chk=1' ;	
-		cad += '&url=' + url ;
-		cad += '&tbl=' + TBL ;
-		cad += '&PK='  + PK ;
-		cad += '&DS='  + DS	;
-	window.location.replace(funcionalidad + cad); 
-	return true;
-}
-
-
-
-function retrocede() 
-{	var t = document.all.TABLA;
-	var ff = 1;
-	if (oldrow>1)
-		dd(oldrow-1);
-}
-function avanza() 
-{	var t = document.all.TABLA;
-	var ff = 1;
-	
-  var max 
-  ff =oldrow  + 1
-  max =  t.rows.length -1;
-  if (ff <= max)
-   {dd(ff); }
-}
-function pagina(pag) 
-{	var t = document.all.TABLA;
-	var i = t.rows.length -1;
-	// captura el valor del �ltimo c�digo mostrado en el GRID
-	var cad = t.rows(i).cells(0).innerText;
-	window.location.replace(pag + cad)	;
-}
-function primera(pag) 
-{	window.location.replace(pag  + '?usr=1')	;
-}
-function atras(alias, pk) 
-{	var t = document.all.TABLA;
-	var cod = t.rows(1).cells(0).innerText; // primer valor del browse
-	niv =('1')
-	pagesize = '1000';
-	var cad = 'comun/BACK0.asp?pos='+ trim(cod) + '&pag='+ pagesize ;
-	cad = cad + '&alias='+ alias + '&pk='+pk + '&url='+ url;
-	window.location.replace(cad)	;
-}
-function ultima(url,alias,pk) 
-{	niv =('1')
-	pagesize = '1000';
-	var cad = 'comun/LAST0.asp?pag='+ pagesize  ;
-	cad = cad + '&ALIAS='+ alias   ;
-	cad = cad + '&url=../'+url+ '&PK='+ 'CODIGO';
-	window.location.replace( cad );
-}
-function VALIDA()
-{	if (trim(window.thisForm.DES.value)=='')
-	{	alert('Ingrese la Descripcion por favor')
-		window.thisForm.DES.focus();
-		return false;
-	}	
-	if (window.thisForm.TON.selectedIndex==0)
-	{	alert('Seleccione el TONO por favor')
-		window.thisForm.TON.focus();
-		return false;
-	}		
-	if (window.thisForm.TEN.selectedIndex==0)
-	{	alert('Seleccione TIPO DE TENIDO por favor')
-		window.thisForm.TEN.focus();
-		return false;
-	}		
-	if (window.thisForm.CLI.selectedIndex==0)
-	{	alert('Seleccione CLIENTE por favor')
-		window.thisForm.CLI.focus();
-		return false;
-	}	
-	return true;
-}
-
-function imprime()
-{	cad = 'REPORTES/prnTBL.asp?pk=' + PK + '&ds=' + DS+ '&tbl=' +alias + '&tit=' + 'Help DE COLORES'
-	window.open(cad)
-	}
-	
-function BUSCA(url, alias) 
-{	if (trim(window.thisForm.kod.value) == '' && trim(window.thisForm.ds.value) == '')
-	{	alert("Debe informar al menos el C�digo o la descripci�n");
-		window.thisForm.kod.focus();
-	}
-    cad = url+'?pos=' + trim(window.thisForm.kod.value)
-    cad += '&des=' + ltrim(window.thisForm.ds.value)
-	window.location.replace( cad );
-	return true;
-}
-		function dd(ff) 
-		{	var pos = parseInt(ff,10)
-			var t = document.all.TABLA;
-			if ((oldrow%2) ==0)
-				eval("document.all.fila" + oldrow + ".style.backgroundColor='#F0F0F0'");
-			else
-				eval("document.all.fila" + oldrow + ".style.backgroundColor='#FFFFFF'");
-			// PINTA LA LINEA DEL COLOR OSCURO (PREDETERMINADO )
-			eval("document.all.fila"+ff+".style.backgroundColor='#DDEBC6'");
-			
-			oldrow=pos
-			return true;
-		}
- 
+		}    
 	</script>
 <%END IF %>
 <%	RS.Close 

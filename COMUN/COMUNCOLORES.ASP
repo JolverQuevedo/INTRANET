@@ -61,22 +61,13 @@ function dd(ff)
 	// PINTA LA LINEA DEL COLOR OSCURO (PREDETERMINADO )
 	eval("document.all.fila"+ff+".style.backgroundColor='<%=(Application("BARRA"))%>'");
 	// Rellena los valores en los textbox
-	thisForm.COD.value = ltrim(t.rows(pos).cells(0).innerText );
-	thisForm.DES.value = ltrim(t.rows(pos).cells(1).innerText) ;
-    thisForm.COL.value = ltrim(t.rows(pos).cells(8).innerText) ; 
+	
     var subcadena =  trim(t.rows(pos).cells(6).innerText) ;
 	var elemento = thisForm.TON ;
-	thisForm.TON.selectedIndex = seleindice(subcadena,elemento);
 	var subcadena =  trim(t.rows(pos).cells(4).innerText) ;
 	var elemento = thisForm.TEN ;
-	thisForm.TEN.selectedIndex = seleindice(subcadena,elemento);
 	var subcadena =  trim(t.rows(pos).cells(2).innerText) ;
 	var elemento = thisForm.CLI ;
-	thisForm.CLI.selectedIndex = seleindice(subcadena,elemento); 
-	thisForm.COD.readOnly= true
-	thisForm.TON.disabled=true;
-	thisForm.TEN.disabled=true;
-	thisForm.CLI.disabled=true;
 	oldrow=pos
 	return true;
 }
