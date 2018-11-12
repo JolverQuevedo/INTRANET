@@ -28,7 +28,7 @@ CAD =	" SELECT top "&pag&" par,CLI	" & _
 %>
 	<script>
 	    cad = '../DETAsigna.ASP?POS=' + '<%=ss%>' + '&cli=' + '<%=cc%>'
-	    alert(cad)
+	  //  alert(cad)
 	    window.location.replace(cad)
 	</script>
 </body>

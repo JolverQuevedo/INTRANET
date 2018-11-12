@@ -20,14 +20,14 @@ CAD =	" SELECT top "&pag&" par, tel	" & _
 		RS.Open  CAD
 	IF rs.recordcount > 0 THEN 
 	    RS.movelast
-	    ss= rs.fields.item(0)	
+	    ss= trim(rs.fields.item(0)	)
         CC= rs.fields.item(1)	
 	END IF    
 	
 %>
 	<script>
-	cad =  '../DETasigna.ASP?POS=' + '<%=CC%>' + '&cli=' + '<%=cli%>'
-	//alert(cad)
+	cad =  '../DETasigna.ASP?POS=' + '<%=ss%>' + '&cli=' + '<%=cli%>'
+	
 	window.location.replace(cad)
 	</script>
 </BODY>

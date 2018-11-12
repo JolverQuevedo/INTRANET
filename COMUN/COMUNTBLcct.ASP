@@ -1,55 +1,7 @@
-<body text="Wheat">
+<body text="navy">
 
 <script ID="clientEventHandlersJS" LANGUAGE="javascript">
-function GRABAR_onclick() 
-{ var ok = VALIDA();
-	//alert(VALIDA())
-	/*document.all.ACTIV.style.visibility='visible'
-	document.all.ACTIV.height="150"
-	document.all.ACTIV.width="100%"
-	*/
-	var cad =   'cod=' + trim(thisForm.COD.value)  ;
-		cad += '&des=' + Left(thisForm.DES.value,largo2)  ;
-		cad += '&url=' + url
-		cad += '&tbl=' + TBL
-		cad += '&PK='  + PK
-		cad += '&DS='  + DS	
-	    cad += '&chk=' + chk   
-	    cad += '&LARGO=' + largo    
-       // alert(cad)
-	if (ok == true )
-	{ 	document.all.ACTIV.src=(funcionalidad + cad); }
-}
 
-function NUEVO_onclick() {
-chk="0"
-if (auto==1)
-{	thisForm.COD.readOnly= false;
-	thisForm.COD.value = 'AUTO';
-	thisForm.COD.readOnly= true;
-	thisForm.DES.focus();
-}
-else
-{	thisForm.COD.readOnly= false;
-	thisForm.COD.value = '';
-	thisForm.COD.focus();
-}
-thisForm.DES.value = '';
-}
-function elimina()
-{	var si
-	{si = confirm("¿ Confirma la Eliminación de este Registro ? ");} 
-	if (si == false)
-	{ return false;}
-	var cad =	'COD='	 + thisForm.COD.value  ;
-	cad = cad + '&chk=1' 	;
-	cad = cad + '&tbl=' + TBL;
-	cad = cad + '&PK=' + PK;
-	cad = cad + '&DS=' + DS	;
-    cad = cad + '&url=' + url ;
-	window.location.replace(funcionalidad + cad); 
-	return true;
-}
 
 function dd(ff) 
 {	var pos = parseInt(ff,10)
@@ -63,6 +15,7 @@ function dd(ff)
 	// Rellena los valores en los textbox
 	thisForm.COD.value = ltrim(t.rows[pos].cells[0].innerText );
 	thisForm.DES.value = ltrim(t.rows[pos].cells[1].innerText) ;
+    thisForm.CCT.value = ltrim(t.rows[pos].cells[8].innerText) ;
 	thisForm.COD.readOnly= true
 	oldrow=pos
 	return true;
@@ -111,33 +64,42 @@ function ultima()
 	//alert(cad)
 	window.location.replace( cad );
 }
-function fichas() {
-cad = ficha + thisForm.COD.value
+function ficha2() {
+
 niv = parseInt('<%=nivel%>')
 if (niv != 1)
 {	alert("OJO: Ud. solo es usuario de lectura")
 	return true
     }
+
 var opc =  "directories=no, height=600, hotkeys=no, location=no," ;
 	opc += "menubar=no, resizable=YES, left=0, top=0,scrollbars=yes," ;
 	opc += "status=no, titlebar=no, toolbar=no, width=800";	
+cad = 'FICHAasigna.asp?pos=' + thisForm.COD.value
+//alert(thisForm.CLI.value)
+cad += '&cli=' + thisForm.CLI.value
+cad += '&tel=' + thisForm.DES.value
+cad += '&cct=' + thisForm.CCT.value
 window.open(cad,'', opc)
 }
 
 
 function imprime()
-{	cad = 'REPORTES/prnTBL.asp?pk=' + PK + '&ds=' + DS+ '&tbl=' +alias + '&tit=' + '<%=titulo%>'
+{	cad = 'REPORTES/prnASIGNA.asp?cct='+ trim(thisForm.CCT.value)
 	window.open(cad)
 	}
 	
-function BUSCA(url, alias) 
-{	if (trim(window.thisForm.kod.value) == '' && trim(window.thisForm.ds.value) == '')
-	{	alert("Debe informar al menos el Código o la descripción");
+function BUSCA() 
+{	if (trim(window.thisForm.kod.value) == '' && trim(window.thisForm.tel.value) == '')
+	{	alert("Debe informar al menos la Partida o la Tela");
 		window.thisForm.kod.focus();
 	}
-    cad = url+'?pos=' + trim(window.thisForm.kod.value)
-    cad += '&des=' + ltrim(window.thisForm.ds.value)
-	window.location.replace( cad );
+   alert()
+    cad =url+'?pos=' + trim(window.thisForm.kod.value)
+    cad += '&tel=' + ltrim(window.thisForm.tel.value)
+    cad += '&cli='+ '<%=request.querystring("cli")%>';
+	alert(cad)
+    window.location.replace( cad );
 	return true;
 }
 </script>

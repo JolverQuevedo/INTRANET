@@ -1,11 +1,6 @@
 <%@ Language=VBScript %>
 <% Response.Buffer = true %>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
-<style>
-	td{
-		height: 40px;
-	}
-</style>
 <%	txtUsuario = Request.Cookies("Usuario")("USUARIO")
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
 	NIVEL	= Request.Cookies("Usuario")("Perfil") %>
@@ -161,7 +156,7 @@ columnas = rs.Fields.Count-2
 	<tr <% IF CONT mod 2  = 0 THEN %>bgcolor='<%=(Application("color1"))%>' <%else%> bgcolor='<%=(Application("color2"))%>' <%end IF%>
 			onclick="dd('<%=(cont)%>')" id="fila<%=Trim(Cstr(cont))%>" valign="top" ondblclick="EDITA('<%=cont%>')">
 	    <%FOR i=0 TO columnas-4%>
-		    <td class="texto td"><%=UCASE(TRIM(RS.FIELDS.ITEM(I))) %></td>
+		    <td class="texto"><%=UCASE(TRIM(RS.FIELDS.ITEM(I))) %></td>
 	    <%NEXT%>
 	   <td class="img-zoom"><img src="BAKE/recuperaFOTOESTILO.asp?ID=<%=rs("CODEST")%>&CLI=<%=POS%>" width="30" /></td> 
        <td  class="texto"><%=UCASE(TRIM(RS("cli"))) %></td>

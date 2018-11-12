@@ -9,7 +9,7 @@
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
 	NIVEL = txtPerfil
 %>
-<link rel="stylesheet" type="text/css" href="HITEPIMA.CSS" >
+<link rel="stylesheet" type="text/css" href="estilos1.cSS" >
 <!--#include file="includes/Cnn.inc"-->
 <!--#include file="COMUN/FUNCIONESCOMUNES.ASP"-->
 <HTML>

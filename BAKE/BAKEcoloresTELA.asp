@@ -47,7 +47,7 @@ CAD =   " select * from (SELECT  C1.COLOR+'-'+ C1.COMBIN as colo, DESCRI = case 
         " ORDER BY 2                                                                                            " 
         
 		RS.OPEN CAD, CNN
-		'RESPONSE.Write(cad)
+		RESPONSE.Write(cad)
 		'RESPONSE.Write("<br>")
 		'RESPONSE.Write(RS.RECORDCOUNT)
 		'response.end

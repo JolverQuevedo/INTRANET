@@ -263,6 +263,27 @@ function NUMEROS(dato)
 
 function graba()
 {   
+	document.all.DES.value= toAlpha(document.all.DES.value).toUpperCase();
+    if(trim(document.all.DES.value.length > 60))
+    {   
+       alert("La logintud de la descripcion excede el largo establecido.");
+       document.all.DES.style.backgroundColor="red"
+       return false;
+    }else{
+        for (j = 0; j < document.all.DESCOL.options.length; j++) 
+        {   
+            if (document.all.DESCOL.options[j].selected) 
+            {   
+                deeeees = document.all.DESCOL.options[j].text;
+                newtt=rtrim(ltrim(toAlpha(thisForm.DES.value))) + "" + rtrim(ltrim((deeeees.substring(14, 100))));
+                if (newtt.length > 60){
+                    alert("La logintud de la descripcion excede el largo establecido (60 caracteres). largo: "+newtt.length);
+                    document.all.DES.style.backgroundColor="red"
+                    return false;
+                }
+            }
+        }
+    }
     if(trim(thisForm.TEL.value)=='')
     {   alert("Debe informar el código del Artículo");
         help('help/hlpfamtelas.asp')
@@ -293,7 +314,7 @@ function graba()
     {   if (document.all.DESCOL.options[j].selected) 
         {   desco = document.all.DESCOL.options[j].text
             aCol[b] = trim(thisForm.TEL.value) + rtrim(ltrim(desco.substring(0, 8))) + Right(rtrim(ltrim(document.all.DESCOL.options[j].value)),2)
-            aDes[b++] = Left(rtrim(ltrim(thisForm.DES.value)) + ' ' + rtrim(ltrim(desco.substring(14, 100))), 60)
+            aDes[b++] = Left(rtrim(ltrim(toAlpha(thisForm.DES.value))) + ' ' + rtrim(ltrim(desco.substring(14, 100))), 60).toUpperCase()
         }
     }
     if (b == 0) {

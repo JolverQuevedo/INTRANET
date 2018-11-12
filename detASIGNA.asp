@@ -24,7 +24,7 @@ var pagesize = 20
 <!--#include file="COMUN/funcionescomunes.ASP"-->
 <!--#include file="COMUN/COMUNtblCCT.ASP"-->
 <%Dim pageSize 
-	pageSize = 30
+	pageSize = 20
 ' Captura la posición inicial del browse
 
 ' recibe tabla, primary key, y descripcion
@@ -32,21 +32,28 @@ tbl = "ASIGNA_CCT"
 tabla = ucase("ASIGNA_CCT")
 cli = request.QueryString("cli")
 pos = request.QueryString("pos")
+tel = request.QueryString("tel")
 '****************************************************
 ' Texto del Comando (SELECT) a ejecutar (POR DEFAULT)
 '****************************************************
 if pos = "" or isnull(pos)  or pos = " " then
 	pos = ""
 end if
+if tel = "" or isnull(tel)  or tel = " " then
+	tel = ""
+end if
 
-'CAD =	" SELECT  top "&pagesize&"  *   " & _
 
-CAD =	" SELECT    *   " & _
+'CAD =	" SELECT    *   " & _
+CAD =	" SELECT  top "&pagesize&"  *   " & _
 		" from ASIGNA_CCT WHERE         " & _
-        " cli    = '"&CLI&"'            " & _
-        " and par >= '"&pos&"'          " & _
-        " ORDER BY cct                  " 
-	'	response.Write(cad)
+        " cli    = '"&CLI&"'            "
+if len(trim(tel)) > 0 then 
+    cad = cad + " and tel >= '"&tel&"'  ORDER BY tel " 
+else
+    cad = cad + " and par >= '"&pos&"'  ORDER BY par " 
+end if
+		'response.Write(cad)
         'RESPONSE.End
 ' abre recordset	
 	RS.Open CAD, Cnn
@@ -63,7 +70,7 @@ columnas = rs.Fields.Count
 <title><%=tabla%></title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
-<link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <%IF NOT RS.EOF OR NOT RS.BOF THEN
@@ -92,7 +99,7 @@ columnas = rs.Fields.Count%>
 <%'LINEA DE CABECERA STANDAR %>
 <%'**************************%>
 <tr bgcolor="#0087d1" >
-<%for I=0 to columnas-1 %>
+<%for I=0 to columnas-5 %>
 	<td align="center">
 		<font face="arial" color="IVORY" size="1">
 		<b><%=RS.FIELDS(I).NAME%></b>
@@ -106,10 +113,19 @@ columnas = rs.Fields.Count%>
 <%IF NOT RS.EOF THEN%>
     <%RS.MOVEFIRST%>
     <%DO WHILE NOT RS.EOF %>
+        <%IF CDBL(RS("SALDO")) <= 2 then
+            col = "red"
+        elseif cdbl(rs("kgs")) > CDBL(RS("SALDO")) then
+            col = "green"
+        else
+            col="navy"
+        end if%>
+
 		    <tr <% IF CONT mod 2  = 0 THEN %>bgcolor='<%=(Application("color1"))%>' <%else%> bgcolor='<%=(Application("color2"))%>' <%end IF%>
-			    onclick="dd('<%=(cont)%>')" ondblclick="ficha()" id="fila<%=Trim(Cstr(cont))%>" >
-	    <%FOR i=0 TO columnas-1%>
-		    <td><span  class="texto"><%=TRIM(RS.FIELDS.ITEM(I))%></span> </td>
+			    onclick="dd('<%=(cont)%>')" ondblclick="ficha2()" id="fila<%=Trim(Cstr(cont))%>" >
+             
+	    <%FOR i=0 TO columnas-5%>
+		    <td><span  class="texto" style ="color:'<%=COL%>'"><%=TRIM(RS.FIELDS.ITEM(I))%></span> </td>
 	    <%NEXT%>
 	    </tr>
 	    <%RS.MOVENEXT%>
@@ -120,7 +136,8 @@ columnas = rs.Fields.Count%>
 <iframe src='' frameborder="1" id="bake" name="bake" style="display:none"></iframe>
 <input id="COD" style="display:none" type="text" />
 <input id="DES" style="display:none" type="text" />
-
+<input id="CCT" style="display:none" type="text" />
+<input id="CLI" style="display:none" type="text" value='<%=cli%>'/>
 <table border="0" align="center"  cellspacing="5">
 	<tr valign="top">
 		<td><img src="imagenes/primera.gif" style="cursor:pointer;" onClick="primera()" alt="PRIMERA PAGINA" /></td>
@@ -133,7 +150,7 @@ columnas = rs.Fields.Count%>
 			' el nombre de la tabla 
 			' el nombre de la columna de primary key%>
 		<td><img src= "imagenes/ultima.gif" alt="ULTIMA PAGINA" onClick="ultima('<%=urlBase%>','<%=ALIAS%>','<%=RS.Fields.Item(0).Name%>')" style="cursor:pointer;" /></td>
-       
+      <td><img src="imagenes/PRINT.gif" alt="IMPRESION" onClick="imprime()" style="cursor:pointer;" /></td> 
 	   
     <td><img src="imagenes/SEARCH.gif" onClick="document.all.seeker.style.display='block'" alt="BUSCAR" style="cursor:pointer;" /></td>
 	<td id="seeker" name="seeker" style="display:none">
@@ -141,20 +158,20 @@ columnas = rs.Fields.Count%>
 	  bgcolor="lightgrey"  cellpadding="0"  cellspacing="1"  border="1" >
 	  <tr>  
 	    <td  bgcolor='<%=Application("COLOR2")%>'><font face="arial" color='<%=Application("Titulo")%>' size="1">
-		    <b><%=pk%></b></font></td>
+		    <b>PAR</b></font></td>
 		<td><input id="kod" name="kod" value=""/> </td>    
 	  </tr>
 	  <tr>  
 	    <td  bgcolor='<%=Application("COLOR2")%>'><font face="arial" color='<%=Application("Titulo")%>' size="1">
 		    <b>Tela</b></font></td>
-		<td><input id="est" name="est" value="" /> </td>    
+		<td><input id="tel" name="tel" value="" /> </td>    
 	  </tr>
 	  
 	  <tr>  
 	    <td  bgcolor='<%=Application("COLOR2")%>' align="center" style="cursor:pointer" onClick="document.all.seeker.style.display='none'">
 	        <font face="arial" color="red" size="1">
 		    <b><u>(X) Cerrar</u></b></font></td>
-		<td  bgcolor='<%=Application("COLOR2")%>' align="CENTER" style="cursor:pointer" onClick="BUSCA('<%=urlBase%>','<%=alias%>')">
+		<td  bgcolor='<%=Application("COLOR2")%>' align='center' style="cursor:pointer" onClick="BUSCA()">
 		<font face="arial" color='<%=Application("Titulo")%>' size="1">
 		    <b><U>FILTRAR</U></b></font></td>
 	  </tr>
@@ -163,7 +180,16 @@ columnas = rs.Fields.Count%>
 	</tr>
 	</table>
 
-
+  <table align="center" cellpadding="1" cellspacing="4" border="0" >
+        <tr  class="DESCRIPTORnegro" ><td style="background-color:Red" width="20px">&nbsp;</td>
+          <td>Asignado TOTAL</td>
+        <td style="background-color:green" width="20px">&nbsp;</td>
+          <td>Asignado PARCIAL</td>
+        
+        <td style="background-color:navy" width="20px">&nbsp;</td>
+          <td>SIN Asignar</td>
+        </tr>
+    </table>
 
 
 
@@ -173,41 +199,6 @@ columnas = rs.Fields.Count%>
 <script>
 	if (marca == 0)
 		dd('1');
-function ficha() {
-    cad  = 'fichaAsigna.asp?cli=' + '<%=trim(pos)%>'
-    cad += '&par=' + thisForm.COD.value
-window.open(cad)
-
-}
-function GRABA()
-{   cad =  'comun/inserTEM.asp?pos='
-    cad += thisForm.COD.value
-	cad += '&des=' + ltrim(thisForm.DES.value)
-	cad += '&cli=' + '<%=trim(pos)%>'
-	cad += '&chk=0' 
-	//alert(cad)
-	/*document.all.bake.style.display='block'
-	document.all.bake.height="150"
-	document.all.bake.width="100%"
-    */
-    document.all.bake.src=cad
-}
-function DELE()
-{   cad  =  'comun/inserTEM.asp?pos='+(thisForm.COD.value)
-    cad += '&des=' + ltrim(thisForm.DES.value)
-	cad += '&cli=' + '<%=trim(pos)%>'
-	cad += '&chk=1' 
-	
-    xx =confirm("¿Está seguro de ELIMINAR este REGISTRO?")
-    if (xx == true)
-    {  // alert(cad)
-    document.all.bake.src=cad
-    }
-}	
-function NUEVO()
-{ 
-  return true;
-}
 function LLENA(pos,t)
 {   thisForm.COD.value = ltrim(t.rows(pos).cells(0).innerText);
 	thisForm.DES.value = ltrim(t.rows(pos).cells(1).innerText) ;

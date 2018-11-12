@@ -5,11 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1">
 
 <!--#include file="code/ingreso.code.asp"-->
 
-<title>:- Sistema de Pre-Producciï¿½n Textil :-</title>
+<title>:- Sistema de Pre-Producción Textil :-</title>
 <style type="text/css">
 <!--
 body {
@@ -21,7 +20,7 @@ body {
 }
 .tabla{
 	background:url(imagenes/ingreso.jpg); 
-	background-repeat: no-repeat;
+	no-repeat;
 	margin-left: 0px;
 	margin-top: 0px;
 	margin-right: 0px;
@@ -30,21 +29,15 @@ body {
 	
 	
 .Estilo5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; }
-.center{
-    position: absolute;
-  left: 35%;
-  top: 35%;
-
-
-}
+   
 -->
 </style></head>
 
-<body>
-<table style="height:100%"><tr valign="middle"><tr>
-  <td style="height:30%"><p><font size="50">&nbsp;&nbsp;&nbsp;&nbsp;<br /><br /></font></p></td></tr><tr><td>
+<body 
+<table STYEL="height:'100%'"><tr valign="middle"><tr>
+  <td style="height:'30%'"><p><font size="50">&nbsp;&nbsp;&nbsp;&nbsp;<br /><br /></font></p></td></tr><tr><td>
 <form action="index.asp" method="post" id="frmIngreso" onSubmit="return Ingresar()">
-<table width="440" class="tabla center" height="272" border="0" align="center"  cellpadding="0" cellspacing="30" >
+<table width="440" class="tabla" height="272" border="0" align="center"  cellpadding="0" cellspacing="30" >
        <tr valign="bottom" align="right">
         <td>
           <table width="150" border="0" align="right" cellpadding="2" cellspacing="1">

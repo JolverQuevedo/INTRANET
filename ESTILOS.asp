@@ -5,7 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <title>ESTILOS</title>
-<script src="/comun/jquery.js"></script>
 </head>
 
 <frameset rows="120,*" cols="*" framespacing="0" frameborder="no" border="0">
@@ -13,6 +12,5 @@
   <frame src="BLANCO.HTM" name="mainFrame" id="mainFrame" title="mainFrame" />
 </frameset>
 <noframes><body>
-
 </body>
 </noframes></html>

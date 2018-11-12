@@ -44,8 +44,7 @@ cad = cad + "order by ar_cdescri"
 	END IF 
 ' Nro de columnas regresadas por el objeto RECORDSET	
 	columnas = rs.Fields.Count
-' Modelo de objetos de secuencia de comandos de VI 6.0 habilitado
-response.write(cad) %>
+' Modelo de objetos de secuencia de comandos de VI 6.0 habilitado %>
 <!--#include file="../COMUN/COMUNhlp.ASP"-->
 <!--#include file="../COMUN/FUNCIONESCOMUNES.ASP"-->
 <HTML>
@@ -90,12 +89,11 @@ function redir(fam) {
             window.opener.thisForm.IIGV.value = t.rows(ff).cells(3).innerText;
             
         }
-        //alert(tip)
     }
     
 
     if (trim(tip) == 'I') {
-        //alert(tip)
+        alert(tip)
         window.opener.thisForm.IISC.value = 0
         window.opener.thisForm.IIGV.value = 0
     }
@@ -115,7 +113,7 @@ function dd2(ff)
 </HEAD>
 <BODY topmargin=0 leftmargin=10 rightmargin=10 text="#000000">
 
-<iframe  width="100%" style="display:block;" src="hlpbuscaartREAL.asp?opp=<%=opp%>&tip=<%=tip%>" id="body10" name="body10" scrolling="no" frameborder="0" height="100px"></iframe>
+<iframe  width="100%" style="display:block;" src="hlpbuscaartREAL.asp?opp=<%=opp%>" id="body10" name="body10" scrolling="no" frameborder="0" height="100px"></iframe>
 <form name="thisForm" METHOD="post" >
 
 <hr />

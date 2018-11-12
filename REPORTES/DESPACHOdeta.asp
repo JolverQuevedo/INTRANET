@@ -35,7 +35,7 @@ if len(tem) > 0 then cad = cad + " and codtem = '"&tem&"' "
 if len(gtex) > 0 then cad = cad + " and replace(faBRIC, ' ' , '') like '%"&GTEX&"%' "
 if len(FEC) > 0 then cad = cad + " and CONVERT(SMALLDATETIME, LLEGAPO, 103)  = CONVERT(SMALLDATETIME,'"&FEC&"',103) "
 
-'RESPONSE.WRITE (CAD)
+RESPONSE.WRITE (CAD)
 'RESPONSE.END
 
 

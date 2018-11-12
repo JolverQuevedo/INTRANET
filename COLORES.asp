@@ -7,8 +7,11 @@
 	end if
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
 	NIVEL = txtPerfil%>
+	<!--#include file="includes/Cnn.inc"-->
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
+
 <script type="text/jscript" language="jscript">
+
 // SI AUTO ESTA EN cero, SIGNIFICA QUE ES CODIGO MANUAL
 // SI auto ESTA EN 1, SIGNIFICA QUE LA LLAVE ES idENTITY
 var auto=1;
@@ -85,13 +88,42 @@ function dd2(ff)
 		</td>
 		<td align="right" width="35%"><img src="imagenes/logo.GIF" alt="" /></td>
 	</tr>
+	<%Set   RS3 = Server.CreateObject("ADODB.Recordset")
+						RS3.ActiveConnection = Cnn
+						RS3.CursorType       = 3 'CONST adOpenStatic = 3
+						RS3.LockType         = 1 'CONST adReadOnly = 1 %>
+			  <!--agregar consulta filtrada por cliente-->
+			  <tr style="text-align:center">
+					  
+					  <td colspan="3">
+							<select name="CLIEFILTRO" id="CLIEFILTRO" onchange="BUSCA('<%=urlBase%>','<%=alias%>')">
+								<option></option>
+								<%CAD = "select CODIGO, NOMBRE from CLIENTE WHERE ESTADO='A' ORDER BY NOMBRE"
+									RS3.OPEN CAD, Cnn %>
+									<%if RS3.recordcount <=0 then%>
+										<option value=''>No Hay Clientes Registradoas </option>
+									<%else%>
+										<%RS3.movefirst%>
+										<%do while not RS3.eof%>
+												<option value="<%=RS3("CODIGO")%>"><%=(ucase(RS3("NOMBRE")))%> </option>
+										<%RS3.movenext%>
+										<%loop%>
+								<%end if %>
+								<%RS3.close%>
+							</select>
+					  </td>
+			  </tr>
 	<tr>
 	    <td colspan="3"><hr /></td>
 	</tr>
 </table>
 <%
 POS = Request.QueryString("pos")
+
 if pos = "" or isnull(pos)  or pos = " " then	pos = ""
+
+clifil = Request.QueryString("clifil")
+if clifil = "" or isnull(clifil)  or clifil = " " then	clifil = ""
 
 des = Request.QueryString("des")
 if des = "" or isnull(des)  or des = " " then	des = ""
@@ -101,17 +133,17 @@ if des = "" or isnull(des)  or des = " " then	des = ""
 '****************************************************
 CAD =	" SELECT top  "&pagesize&" * " & _
 		" from "&ALIAS&"  WHERE " & _
-        " EDO = 'A' and "
+        " EDO = 'A' and CODCLI = '"&clifil&"' and "
         if len(TRIM(DES))>0 then
-            cad = cad + " "&DS&" >= '"&DES&"' " & _
+            cad = cad + " (COLCLI LIKE '%"&DES&"%' OR DESCRIPCION LIKE '%"&DES&"%') " & _
             "  ORDER BY "& ds &"  " 
         else
             cad = cad+  " "&indice&" >= '"& POS &"'" & _
             " ORDER BY "& indice &"  " 
         end if
-       ' response.write(cad)
+        response.write(cad)
 %>
-<!--#include file="includes/Cnn.inc"-->
+
 <!--#include file="COMUN/FUNCIONESCOMUNES.ASP"-->
 <!--#include file="COMUN/COMUNCOLORES.ASP"-->
 <%  RS.Open CAD, Cnn
@@ -188,7 +220,8 @@ columnas = rs.Fields.Count
 	                <td  bgcolor='<%=Application("COLOR2")%>'><font face="arial" color='<%=Application("Titulo")%>' size="1">
 		                <b><%=DS%></b></font></td>
 		            <td><input id="ds" name="ds" value="" /></td>    
-	          </tr>
+			  </tr>
+			
 	          <tr>  
 	                <td align="center" style="cursor:hand" onClick="document.all.seeker.style.display='none'"><font face="arial" color="red" size="1">
 		                <b><u>(X) Cerrar</u></b></font></td>
@@ -205,7 +238,7 @@ columnas = rs.Fields.Count
 		RS2.ActiveConnection = Cnn
 		RS2.CursorType       = 3 'CONST adOpenStatic = 3
 		RS2.LockType         = 1 'CONST adReadOnly = 1 %>
-        
+
 <table border="1" id="DATAENTRY" style="display:block;" width="100%" cellpadding="1" cellspacing="0" bgcolor="<%=application("color2")%>">
      <tr>            
 	    <td width="5%" bgcolor="<%=(Application("barra"))%>" align="right" class="DESCRIPTORnavy">CODIGO :</td>
@@ -269,7 +302,9 @@ columnas = rs.Fields.Count
         <td width="5%" bgcolor="<%=(Application("barra"))%>" align="right" class="DESCRIPTORnavy">COD CLI :</td>
        	<td bgcolor="<%=(Application("color2"))%>" width="5%"> 
         	    <input type="text" id="COL" name="COL" style="width:100%" /></td>
-    </tr>
+	</tr>
+	
+	
     <tr>
 	     <td width="5%" bgcolor="<%=(Application("barra"))%>" align="RIGHT" class="DESCRIPTORnavy">DESCRIPCION :</td>
          <td width="5%" bgcolor="<%=(Application("color2"))%>" colspan="9"> 

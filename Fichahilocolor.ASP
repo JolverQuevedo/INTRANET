@@ -116,7 +116,7 @@ function calcHeight()
 	    <td width="1%" colspan="1"  bgcolor="<%=(Application("BARRA"))%>" class="style2"><%if TRIM(RS("TEL"))= "" then%><img
              src="imagenes/help.gif" border="0" onClick="help('help/hlphilado.asp')" alt=""/><%else%>&nbsp;<%end if %></td>
         <td align="left" class="style2" colspan="2"> <input type="text" id="TEL" name="TEL"  
-            class="BARRA3" style="width:100%" maxlength="6" onChange="bake()" onkeyup="veri()"/></td>	
+            class="BARRA3" style="width:100%" maxlength="12" onChange="bake()" onkeyup="veri()"/></td>	
         <td align="left"  bgcolor="<%=(Application("color2"))%>"  width="10%" class="style2" colspan="2" >
             <input type="text" id="DES" name="DES" class="BARRA3"   /></td>    
     </tr>
@@ -230,7 +230,8 @@ function veri()
 }
 
 function bake() {
-    cad = 'bake/baketela.asp?pos=' + trim(thisForm.TEL.value)
+	
+    cad = 'bake/bakehilado.asp?pos=' + trim(thisForm.TEL.value)
     document.all.body0.src = cad
     document.all.xxx.style.display = 'block';
     document.all.xxx.focus();

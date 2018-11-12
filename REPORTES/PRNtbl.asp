@@ -15,17 +15,11 @@ pk	=	Request.QueryString("pk")
 ds	=	Request.QueryString("ds") 
 tbl	=	Request.QueryString("tbl") 
 tit	=	Request.QueryString("tit") 
-
 CAD =	" SELECT  " & _
 		" * " & _
-		" from "&TBL&" "
-		
-IF request.querystring("cli")<> "" then
-	cad = cad+" where codcli ='"&request.querystring("cli")&"' " 
-end if
-cad = cad+" ORDER BY "&DS&" " 
-response.write(cad)
-RS.OPEN CAD ,Cnn
+		" from "&TBL&" " & _
+		" ORDER BY "&DS&" " 
+		RS.OPEN CAD ,Cnn
 		
 If rs.eof or rs.bof then
 	Response.Write("Tabla  Vacía")		

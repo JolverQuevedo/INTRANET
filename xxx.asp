@@ -3,7 +3,8 @@
 <%
     if request.QueryString("oc") <> undefined then
         if request.QueryString("modificar") <> undefined and request.QueryString("modificar") = "true" then
-            cad = "Update RSFACCAR..CO0001MOVc Set OC_cuniord = '' Where OC_CNUMORD='"+request.QueryString("oc")+"' "
+            cad = "Update RSFACCAR..CO0001MOVc Set OC_cuniord = '' Where OC_CNUMORD='"+trim(request.QueryString("oc"))+"' "
+            'response.write(cad)
             %><script>alert("actualizado correctamente");</script><%
             Cnn.Execute(CAD)
 
@@ -98,11 +99,11 @@
     <script>
         function buscar(){
             var oc=strzero(document.getElementById("oc").value,10);
-            document.getElementById("miiframe").src="./ss.ASP?oc="+oc;
+            document.getElementById("miiframe").src="./xxx.ASP?oc="+oc;
         }
         function modificar(){
             var oc=strzero(document.getElementById("oc").value,10);
-            document.getElementById("miiframe").src="./ss.ASP?oc="+oc+"&modificar=true";
+            document.getElementById("miiframe").src="./xxx.ASP?oc="+oc+"&modificar=true";
             
         }
     </script>

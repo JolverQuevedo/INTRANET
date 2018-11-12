@@ -103,7 +103,7 @@
 		//var s = 1;
 		function buscar(){
 			
-			var url ="./help/HLPprovREAL_mm.asp";
+			var url ="http://localhost/modelador/help/HLPprovREAL_mm.asp";
 			var i =document.getElementsByClassName("txtruc").length-1;
 			var e =document.getElementsByClassName("txtruc")[i];
 			var filtroruc=document.getElementsByClassName("txtruc")[i].value;
@@ -117,8 +117,8 @@
 				if(i == 0){
 					document.getElementsByClassName("txtruc")[0].value=localStorage.getItem('ruc');
 					document.getElementsByClassName("lblrazon")[0].value=localStorage.getItem('razon');
-					console.log(localStorage.getItem('ruc'));
-					console.log(localStorage.getItem('razon'));
+					console.log(document.getElementsByClassName("txtruc")[0]);
+					console.log(document.getElementsByClassName("lblrazon")[0]);
 					e.focus();
 				}
 				else{
@@ -156,7 +156,7 @@
 			}
 			c+="&mes="+document.getElementById("txtmes").value+"&ano="+document.getElementById("txtano").value;
 			console.log(c);
-			window.open(c);
+			window.location.replace(c);
 		}
 	</script>
 </body>

@@ -28,7 +28,6 @@
 <form name="thisForm" id="thisForm" method="post" action="">
 <%
 opx = request.querystring("opp")
-tip = request.querystring("tip")
 '*********************************************************************%>
 <table align="center" width="100%" bgcolor="<%=application("color2") %>">
 	<tr>
@@ -68,8 +67,8 @@ function veri() {
     else {
 
 
-        cad = 'HLPartREAL2.asp?cod=' + trim(thisForm.COD.value) + '&des=' + ltrim(thisForm.DES.value) + '&opp=' + '<%=opx%>'+'&tip='+'<%=tip%>'
-        //alert(cad)
+        cad = 'HLPartREAL.asp?cod=' + trim(thisForm.COD.value) + '&des=' + ltrim(thisForm.DES.value) + '&opp=' + '<%=opx%>'
+       // alert(cad)
         parent.window.location.replace(cad)
         
     }

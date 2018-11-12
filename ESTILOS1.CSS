@@ -1,7 +1,7 @@
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
  .img-zoom{
-position:relative
-height:200px;
+position:relative;
+height:35px;
 }
 .img-zoom>img{
 	transition: all .8s ease-in-out;
@@ -163,6 +163,15 @@ padding:10px;
 /*	background-color:transparent;*/
 	
 }
+.AMERICANnavy333
+{	FONT-SIZE: 10px;
+	COLOR: navy;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:300;
+	vertical-align:top;
+/*	background-color:transparent;*/
+	
+}
 .AMERICANnavy11
 {	FONT-SIZE: 9px;
 	COLOR: navy;
@@ -224,6 +233,18 @@ padding:10px;
     BORDER-TOP: medium none;
 	BORDER-LEFT: medium none;
 	BORDER-BOTTOM: medium none;
+	padding-left:10px;
+	padding-right:10px;
+
+}
+
+.AMERICANred333
+{	FONT-SIZE: 10px;
+	COLOR:#FFF;
+	FONT-FAMILY:Arial, Helvetica, sans-serif;
+	font-weight:bolder;
+	vertical-align:top;
+	background-color:#F00;
 	padding-left:10px;
 	padding-right:10px;
 
@@ -412,6 +433,15 @@ height:80px;border: 1px dotted #000099;}
 	BORDER-LEFT: medium none;
 	BORDER-BOTTOM: medium none;
 	WIDTH: 100%;
+}
+.DESCRIPTORCENTERnavy2
+{   FONT-SIZE: 10px;
+    COLOR: navy;
+    FONT-FAMILY: Arial;
+    TEXT-ALIGN: center;
+	BACKGROUND-COLOR: transparent;
+	
+/*	WIDTH: 100%;*/
 }
 .DESCRIPTORnavy
 {   FONT-SIZE: 10px;
@@ -792,12 +822,12 @@ height:80px;border: 1px dotted #000099;}
 
 }
 .TEXTOblue1000
-{   FONT-SIZE: 10px;
+{   FONT-SIZE: 14px;
 	COLOR: navy;
     FONT-FAMILY: Arial;
-    font-weight:400;	
+    font-weight:900;	
 	padding-right:10px;
-	width:100%;
+	/*width:100%; */
 	border:none;
 	background-color:transparent;
 	
@@ -1368,6 +1398,26 @@ height:80px;border: 1px dotted #000099;}
     FONT-FAMILY: "Arial";
     BACKGROUND-COLOR: transparent;
     TEXT-ALIGN: center
+}
+.TITULITOcenterBLUE22
+{    FONT-WEIGHT: 900;
+    FONT-SIZE: 14px;
+    WIDTH: 100%;
+    COLOR: NAVY;
+	text-shadow:#FFF;
+    FONT-FAMILY:"Arial Black", Gadget, sans-serif Arial;
+    TEXT-ALIGN: center;
+}
+.TITULITOcenterBLUE222
+{   FONT-WEIGHT: 900;
+    FONT-SIZE: 14px;
+    WIDTH: 100%;
+    COLOR: NAVY;
+	text-shadow:#FFF;
+    FONT-FAMILY:"Arial Black", Gadget, sans-serif Arial;
+    TEXT-ALIGN: center;
+	BACKGROUND-COLOR: transparent;
+	border:none;
 }
 .TITULITOcenterGREEN
 {

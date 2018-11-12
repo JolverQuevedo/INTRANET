@@ -14,9 +14,6 @@
 'REVISAR EL LARGO DE LAS COLUMNAS de la tabla
 '*********************** OJO **********************
 CAM =   trim(REQUEST.QUERYSTRING("CAM"))
-IF CAM = "" THEN
-	CAM = 0
-END IF 
 response.write(CAM)
 response.Write("<br>")
 response.write("cam")
@@ -29,10 +26,6 @@ DIR =   LEFT(TRIM(REQUEST.QUERYSTRING("dir")),80)
 COT =   LEFT(TRIM(REQUEST.QUERYSTRING("COT")),30)
 FDO =   TRIM(REQUEST.QUERYSTRING("FEDO"))
 FPAG =  LEFT(TRIM(REQUEST.QUERYSTRING("FPAG")),30)
-
-response.write(REQUEST.QUERYSTRING("MON"))
-
-
 MON =   LEFT(TRIM(REQUEST.QUERYSTRING("MON")),2)
 
 ENT =   TRIM(REQUEST.QUERYSTRING("ENT"))
@@ -44,19 +37,10 @@ OBS =   LEFT(TRIM(REQUEST.QUERYSTRING("OBS")),80)
 TIP =   LEFT(TRIM(REQUEST.QUERYSTRING("TIP")),80)
 USR =   LEFT(TRIM(REQUEST.QUERYSTRING("USR")),5)
 TOC =   LEFT(TRIM(REQUEST.QUERYSTRING("TOC")),1)
-
-
 FAC =   DATE()
 HOR =   LEFT(TIME(),8)
 DOL =   TRIM(REQUEST.QUERYSTRING("mus")   )
 SOL =   TRIM(REQUEST.QUERYSTRING("mmn")   )
-IF DOL = "" THEN
-DOL = 0
-END IF
-IF SOL = "" THEN
-SOL = 0
-END IF
-
 PE1 =   TRIM(REQUEST.QUERYSTRING("PE1")   )
 PE2 =   LEFT(TRIM(REQUEST.QUERYSTRING("PE2")),30)
 PE3 =   LEFT(TRIM(REQUEST.QUERYSTRING("PE3")),30)
@@ -153,12 +137,12 @@ ELSE
                 " NUMORD = '"&OC&"' ;                                               "
      IF UCASE(TRIM(TIP)) = "I" THEN
             liqui = trim(oc) + "001"
-            CAD = CAD +" UPDATE RSFACCAR..AL0001LIQC SET LQ_CCODPRO = '"&PRO&"'      " & _
-                      " WHERE   LQ_CNUMLIQ = '"&LIQUI&"'    "
+            CAD = CAD + " UPDATE RSFACCAR..AL0001LIQC SET LQ_CCODPRO = '"&PRO&"'      " & _
+                        " WHERE   LQ_CNUMLIQ = '"&LIQUI&"'    "
      end if
 END IF
 
-' Inicia transacciï¿½n , para que los datos no queden a medias
+' Inicia transacción , para que los datos no queden a medias
 RESPONSE.WRITE("<br>")
 RESPONSE.WRITE(CAD)
 'RESPONSE.END
@@ -175,13 +159,13 @@ end if
 Cnn.Close	
 set Cnn = Nothing
 SET RS = Nothing	
-'regresa a la pï¿½gina de donde fuï¿½ llamado, para que vea que agregï¿½ el registro
+'regresa a la página de donde fué llamado, para que vea que agregó el registro
 %>
 <script language="javascript" type="text/jscript">
-    //parent.window.location.replace('../FICHAOC.ASP?OC=' + '<%=OC%>')
+   parent.window.location.replace('../FICHAOC.ASP?OC=' + '<%=OC%>')
 
 
-	//alert('<%=oc%>')
+
 
     //  window.open('../FICHAOC.ASP?OC=' + '<%=OC%>')
     //parent.window.opener.window.top.parent.frames['mainFrame'].window.location.replace('../detaoc.asp?fecha=<%=month(date())%>/<%=year(date())%>');

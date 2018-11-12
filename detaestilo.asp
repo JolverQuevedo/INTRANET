@@ -1,11 +1,6 @@
 ﻿<%@ Language=VBScript %>
 <% Response.Buffer = true %>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
-<style>
-	td{
-		height: 40px;
-	}
-</style>
 <meta http-equiv="X-UA-Compatible" content="ie=10" />
 <%	txtUsuario = Request.Cookies("Usuario")("USUARIO")
 	txtPerfil = Request.Cookies("Usuario")("Perfil")
@@ -39,14 +34,12 @@ var oldrow=1
 <!--#include file="COMUN/FUNCIONESCOMUNES.ASP"-->
 <!--#include file="includes/navegacion22.inc"-->
 <%Dim pageSize 
-
 if txtPerfil > 1 then 	pageSize = 16 else 	pageSize = 6
 ' Captura la posici�n inicial del browse
 POS = Request.QueryString("pos")
 if pos = "" or isnull(pos)  or pos = " " then
 	pos = ""
 end if
-
 est = Request.QueryString("est")
 if est = "" or isnull(est)  or est = " " then
 	est = ""
@@ -61,9 +54,7 @@ gen = Request.QueryString("gen")
 if gen = "" or isnull(gen)  or gen = " " then
 	gen = 0
 end if
-
 if cint(gen) = 1 then
-
     ' SI geN = 1 ES QUE VIENE DE GRABAR ESTILO Y NO VIENE CON CODIGO DE ARTICULO...
     cad = "select * from estilos where cliente = '"&pos&"' and codest = '"&est&"'"
    ' response.write(cad)
@@ -92,7 +83,7 @@ if cint(gen) = 1 then
                 nume = cdbl(rs("corr_pda"))+1
                 nuevaserie=array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","S","T","U","V","W","X","Y","Z")                           
                 ultimo=rs("letra_estilo")
-        if nume > 9998 then
+                if nume > 9998 then
                     s=0
                     nume=1
                     nume = right("0000"&""&nume,4)
@@ -127,8 +118,27 @@ if cint(gen) = 1 then
                 CNN.EXECUTE (CAD)
             END IF
             ' ACTUALIZA ARTICULO EN ESTILOS-MODELADOR
-                CAD = "UPDATE estilos SET CODARTICULO = '"&CODIGO&"' where cliente = '"&pos&"' and codest = '"&est&"'  "
+            CAD = "UPDATE estilos SET CODARTICULO = '"&CODIGO&"' where cliente = '"&pos&"' and codest = '"&est&"'  "
+            CNN.EXECUTE (CAD)
+			else 
+
+            estcli = rs("estcli")
+
+            cadddd = "SELECT RIGHT(st_ccodart,5) AS COD  , st_ccodart FROM dbprod..COMSTYOP WHERE ST_CCODIGO  = '" & estcli & "'"
+            set RS4 = Server.CreateObject("ADODB.Recordset")
+            RS4.ActiveConnection = Cnn
+            RS4.CursorType       = 3 'CONST adOpenStatic = 3
+            RS4.LockType         = 1 'CONST adReadOnly = 1
+            RS4.CursorLocation   = 3 'CONST adUseClient = 3
+            RS4.OPEN cadddd, CNN
+            
+            if rs4.recordcount = 0 then 
+                CAD =   " INSERT INTO dbprod..COMSTYOP(ST_CCODIGO,ST_CCODART,ST_CPRENDA,ST_CTEJIDO,ST_CCODEMP,ST_CEMPRESA,ST_CCODCLI,ST_CTIPO,ST_CTIEMPO) " & _
+                        " VALUES ('"&ESTCLI&"','"&rs("CODARTICULO")&"','"&rs("TIPOPRENDA")&"','','0001','EL MODELADOR S.A.','"&POS&"','P','')   "
+                'RESPONSE.WRITE (CAD)
+                'response.END
                 CNN.EXECUTE (CAD)
+            end if
         end if
     end if
     RS.CLOSE
@@ -158,7 +168,6 @@ CAD =	" SELECT  top 15               			" & _
 		" AS T3 ON ESTILOS.GENERO = T3.GENERO	" & _
 		" WHERE ESTILOS.ESTADO = 'A'    		" & _
         " and cliente   = '"&POS&"'     		"
-
 IF LEN(TRIM(ESTCLI)) > 0 THEN  
     CAD = CAD +   " and ltrim(rtrim(ESTCLI)) >= '"&ESTCLI&"' order by estcli" 
 elseIF LEN(TRIM(codmod)) > 0 THEN  
@@ -173,12 +182,14 @@ end if
 ' contador de lineas
 	CONT = 1
 IF RS.RECORDCOUNT > 0 THEN 
-	RS.MOVEFIRST%>
+    RS.MOVEFIRST%>
+    <%=rs("estcli") %>
 <%else%>
     <script type="text/jscript">
 	    marca = 1	
     </script>
 <%END IF%>
+
 
 <script type="text/jscript">
     clien = '<%=pos%>'
@@ -212,7 +223,7 @@ columnas = rs.Fields.Count
 
 <form name="thisForm" method="post" action="DETAESTILO.asp">
 <%'*********************************************************************%>
-<table id="TABLA" class="datos" align="CENTER" cols="2" width="100%"
+<table id="TABLA" align="CENTER" cols="2" width="100%"
 	 cellpadding="2"  cellspacing="1" bordercolor="White"
 	  bgcolor="lightgrey" border="1" >
 <%'**************************%>
@@ -229,7 +240,6 @@ columnas = rs.Fields.Count
 	<td align="center" style="display:none"><%=RS.FIELDS(i).NAME%></td>
 	<td align="center" style="display:block"><font face="arial" color="IVORY" size="1"><b><%=RS.FIELDS(i+1).NAME%></b></font></td>
 </tr>
-
 <%'*****************************%>
 <%' MUESTRA EL GRID (2 COLORES) %>
 <%'*****************************%>
@@ -241,15 +251,14 @@ cont= 1 %>
 	    <tr <% IF CONT mod 2  = 0 THEN %>bgcolor='<%=(Application("color1"))%>' <%else%> bgcolor='<%=(Application("color2"))%>' <%end IF%>
 			    onclick="dd('<%=(cont)%>')" id="fila<%=Trim(Cstr(cont))%>" valign="top" ondblclick="EDITA('<%=cont%>')">
 	        <%FOR i=0 TO columnas-3%>
-		        <td class="texto td"><%=TRIM(RS.FIELDS.ITEM(I))%></td>
+		        <td class="texto"><%=TRIM(RS.FIELDS.ITEM(I))%></td>
 	        <%NEXT%>
 	        <td align="center" style="display:none"><%=RS.FIELDS(i).NAME%></td>
-            <td  class="img-zoom" ><img src="BAKE/recuperaFOTOESTILO.asp?ID=<%=rs("CODEST")%>&CLI=<%=POS%>" HEIGHT="40" /></td>
+            <td  class="img-zoom" ><img src="BAKE/recuperaFOTOESTILO.asp?ID=<%=rs("CODEST")%>&CLI=<%=POS%>" HEIGHT="40" /></td> 
         </tr>
 	    <%RS.MOVENEXT%>
 	    <%CONT = CONT + 1%>
     <%LOOP%>
-    
 </table>
 <table border="0" align="center"  cellspacing="5">
 	<tr valign="top">
@@ -345,10 +354,8 @@ function BUSCA(url, alias) {
     return true;
 }
 </script>
-
 <%SET RS  = NOTHING 
-    SET Cnn = NOTHING  %>
-    
+	SET Cnn = NOTHING  %>
 </form>
 </body>
 </html>

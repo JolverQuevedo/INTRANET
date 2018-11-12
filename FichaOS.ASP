@@ -237,17 +237,23 @@ function calcHeight(obj)
                 <option value =""></option>
             </select>
         </td>
-  </tr>  
-  <tr>
-       <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >COLORES </td>
+  </tr> 
+   <tr>
+     <td colspan="2">   
+            <iframe  id="COL"  onload="calcHeight(this.id)" style="display:block;width:100%;" src="" scrolling="no" frameborder="1"></iframe>
+      </td>
+      <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >CANTIDAD</td>
+        <td width="40%" colspan="2"> <input type="text" id="TOTCOL" class="AMERICANnavy1" style="width:100%; text-align:right; padding-right:5px" value='<%=rs("cant")%>' disabled="disabled"/>  
+        </td>
+   </tr> 
+<!--  <tr>
+       <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >COLOR-PO </td>
        <td width="40%" colspan="1"> <select id="COL" name="COL" class="DESCRIPTORES"  onchange="COLOR()"  >
            <option value =""></option>              
            </select>
         </td>
-        <td align="left" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" >CANTIDAD</td>
-        <td width="40%" colspan="2"> <input type="text" id="TOTCOL" class="AMERICANnavy1" style="width:100%; text-align:right; padding-right:5px" value='<%=rs("cant")%>' disabled="disabled"/>  
-        </td>
-   </tr>
+        
+   </tr> -->
    <tr>
      <td colspan="6">   
             <iframe  id="DETACOL"  onload="calcHeight(this.id)" style="display:block;width:100%;" src="" scrolling="no" frameborder="1"></iframe>
@@ -532,14 +538,15 @@ function esti() {
 
 
 function pos() {
-    //----------------------------------------------------
-    // muestra lasPO's de la Temporada, estilo- cliente
-    //----------------------------------------------------
+    //----------------------------------------------------------------------------------------
+    // muestra COLORES DE COMBOS DEL CLIENTE, TEMPORADA, ESTILO QUE TIENEN EXPLOSION DE TELA
+    //----------------------------------------------------------------------------------------
     //return true 
-    cad = 'bake/BAKEcli-tem-est-col.asp?cli=' + trim($("#CLI").val())
+    cad = 'bake/BAKEcli-tem-est-col_new.asp?cli=' + trim($("#CLI").val())
     cad += '&tem=' + trim($("#TEM").val())
     cad += '&est=' + trim($("#EST").val())
-    document.all.body10.src = cad
+    //document.all.body10.style.display='block'
+    document.all.COL.src = cad
 }
 
 

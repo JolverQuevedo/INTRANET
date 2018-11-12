@@ -31,7 +31,7 @@ function dd(ff)
 		eval("document.all.fila" + oldrow + ".style.backgroundColor='<%=(Application("color2"))%>'");
 	// PINTA LA LINEA DEL COLOR OSCURO (PREDETERMINADO )
 	eval("document.all.fila"+ff+".style.backgroundColor='<%=(Application("BARRA"))%>'");
-	// llena el codigo del PK activo para edición en ficha
+	// llena el codigo del PK activo para ediciï¿½n en ficha
 	
 	oldrow=pos
 	return true;
@@ -55,7 +55,7 @@ function avanza()
 function pagina(pag) 
 {	var t = document.all.TABLA;
 	var i = t.rows.length -1;
-	// captura el valor del último código mostrado en el GRID
+	// captura el valor del ï¿½ltimo cï¿½digo mostrado en el GRID
 	var cad = t.rows(i).cells(10).innerText;
 	window.location.replace(pag + cad+ '&PO='+t.rows(i).cells(0).innerText)	;
 }
@@ -89,7 +89,7 @@ function imprime()
 	
 function BUSCA(url, alias) 
 {	if (trim(document.all.kod.value) == '' && trim(document.all.ds.value) == '')
-	{	alert("Debe informar al menos el Código o la descripción");
+	{	alert("Debe informar al menos el Cï¿½digo o la descripciï¿½n");
 		window.thisForm.kod.focus();
 	}
     cad = url+'?po=' + trim(document.all.kod.value)+'&pos='+'<%=Request.QueryString("pos")%>';

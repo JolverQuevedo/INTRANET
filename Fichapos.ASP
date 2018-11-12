@@ -50,14 +50,32 @@ function calcHeight()
 	rs.open cad , cnn
 	IF RS.RecordCount > 0 THEN
 		RS.MOVEFIRST
-		TITULO ="PO -> " + ucase(trim(DESCLI))
+        TITULO ="PO -> " + ucase(trim(DESCLI))
+        
 
-	END IF
+
+        Set RS3 = Server.CreateObject("ADODB.Recordset")
+        RS3.CursorLocation   = 3
+        RS3.CursorType       = 3    
+        RS3.LockType         = 1 
+    
+    
+    
+        kkk="select top 1 t2.DESCRIPCION as 'TEMPO' from PROTOS as t1 "
+        kkk=kkk+"inner join TEMPORADAS as t2 on t2.CODIGO=t1.temporada and t2.CLIENTE=t1.CLIENTE "
+        kkk=kkk+"where PROTO='"&rs("pro")&"' and version='"&rs("ver")&"'; "
+        'response.write(kkk)
+        rs3.open kkk,cnn
+
+    END IF
+    
+
+    
+
     'RESPONSE.END
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" >
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=11">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" lang="es-pe" />
 <title><%=titulo%></title>
 <link rel="stylesheet" type="text/css" href="ESTILOS1.CSS" />
@@ -99,9 +117,9 @@ function calcHeight()
                     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="10%">PROTO-VER:</td>
                      <td width="1%"  bgcolor="<%=(Application("BARRA"))%>"><img src="imagenes/help.gif" border="0" id="estilocli" onClick="help()" alt="" /></td>
                      <%if trim(rs("pro")) <> "" then prov= rs("pro")&"-"&rs("ver") else prov = ""%>
-                    <td width="10%"><input type="text" id="PRO" name="PRO" value="<%=prov%>" class="DATOSKHAKI" onblur="bakepro()"/></td>
+                    <td width="8%"><input type="text" id="PRO" name="PRO" value="<%=prov%>" class="DATOSKHAKI" onblur="bakepro()"/></td>
                     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="5%">Destino:</td>
-                    <td width="12%"><SELECT id="DESTINO" name="DESTINO" class="DESCRIPTORES">
+                    <td width="8%"><SELECT id="DESTINO" name="DESTINO" class="DESCRIPTORES">
                     <option value=""></option>
                     <%CAD = "select codigo, nombre from destinos where cliente = '"&cli&"' order by 1"
                     rs2.open CAD , cnn
@@ -115,10 +133,14 @@ function calcHeight()
                     <%RS2.CLOSE %>
                     </SELECT>
                     </td>
+					<%if rs3.recordcount >0 then %>
+                    <TD bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="5%">Temporada</TD>
+                    <td width="8%"><input type="text" id="TTEMPO" name="TTEMPO" value="<%=rs3("TEMPO")%>" class="BARRA3" maxlength="20" /></td>
+                    <%end if%>
                     <td width="5%" bgcolor="<%=(Application("BARRA"))%>" class="TITULITO">Estilo:</td>
                     <td style="display:none"><input type="text" id="CODEST" name="CODEST" value="<%=rs("CODEST") %>" class="AMERICANnavy" readonly tabindex="-1"/></td>
                     <td width="8%"><input type="text" id="ESTCLI" name="ESTCLI" value="<%=trim(rs("ESTCLI")) %>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
-                    <td width="20%" style="text-align:left"><input type="text" id="DESEST" name="DESEST" value="<%=rs("DESEST") %>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
+                    <td width="15%" style="text-align:left"><input type="text" id="DESEST" name="DESEST" value="<%=rs("DESEST") %>" class="DESCRIPTORES" readonly tabindex="-1"/></td>
                     <td bgcolor="<%=(Application("BARRA"))%>" class="TITULITO" width="5%">OFI:</td>
                     <td width="8%"><input type="text" id="OFI" name="OFI" value="<%=rs("Ofi")%>" class="BARRA3" maxlength="20" readonly tabindex="-1" /></td>
 	            </tr>
@@ -189,7 +211,7 @@ RS2.MOVEFIRST%>
         <%FOR I = 0 TO 9%>
             <td align="center" width="5%">
                 <%TALLA = "T"&i %>
-                <input id="x<%=i%>" readonly="readonly" name="x<%=i%>" value="<%=RS2(TALLA)%>" class="talas" style="width:100%" tabindex=-1 readonly/>
+                <input id="x<%=i%>" name="x<%=i%>" value="<%=RS2(TALLA)%>" class="talas" style="width:100%" tabindex=-1 readonly/>
             </td>    
         <%NEXT%>
         <td width="15%" class="texto" align="center">TOTAL COLOR</td>
@@ -197,10 +219,7 @@ RS2.MOVEFIRST%>
 <%DO WHILE NOT RS2.EOF %>   
   <tr  id="LIN<%=U%>" name="LIN<%=U%>">
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=u%>" name="IT<%=u%>"><%=u%></td>
-    <td style="width:39%" style="display:inline">
-        <img id="estilocli" onclick="helpcolores('COL<%=u%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>	
-	    <input id="COL<%=u%>"  readonly="readonly" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:91%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" />
-    </td>
+    <td style="width:39%"><input id="COL<%=u%>" name="COL<%=u%>" class="DATOSyellow" style="text-align:left;width:100%" maxlength="30" onfocus="lineas('<%=u%>');" value="<%=rs2("color")%>" /></td>
      <td style="width:4%" ><input id="FOB<%=u %>" name="FOB<%=u%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs2("fob"),2,,true)%>"/></td>   
             <%FOR I = 0 TO 9%>
                <td align="center" width="5%">
@@ -222,7 +241,7 @@ if 36 > u+19 then maximus = u+19 else maximus = 36%>
     <td class="AMERICANNAVY" style="width:1%" id="IT<%=k%>" name="IT<%=k%>"><%=k%></td>
     <td style="width:39%" style="display:inline">
         <img id="estilocli" onclick="helpcolores('COL<%=k%>')" alt="" src="imagenes/help.gif" style="top:0;left:0;transform:translateY(25%)"/>
-        <input id="COL<%=k%>" readonly="readonly"  name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:91%" onfocus="lineas('<%=k%>');" />
+        <input id="COL<%=k%>" name="COL<%=k%>" maxlength="30" class="DATOSyellow" style="text-align:left;width:91%" onfocus="lineas('<%=k%>');" />
     </td>
      <td style="width:4%" ><input id="FOB<%=k%>" name="FOB<%=k%>" class="DATOSyellow" style="text-align:right;width:100%" onblur="precio(this)" value="<%=formatnumber(rs("fob"),2,,true) %>   "/></td>      
             <%FOR I = 0 TO 9%>
@@ -308,13 +327,12 @@ if 36 > u+19 then maximus = u+19 else maximus = 36%>
 
 <script language="javascript" src="includes/cal.js"></script>
 <script type="text/jscript" language="jscript">
-	function helpcolores(elemento){
+function helpcolores(elemento){
         var opc  = "directories=no,status=no,titlebar=yes,toolbar=no,hotkeys=no,location=no," ;
 	    opc += "menubar=no,resizable=yes,scrollbars=yes,left=0,top=0,height=600,width=900" ;
 
         window.open('help/helpcolores.asp?elid='+elemento+'&cliente=<%=cli%>','',opc)
     }
-
 
     addCalendar("Calendar1", "Elija una fecha", "EMB", "thisForm")
     addCalendar("Calendar2", "Elija una fecha", "LLE", "thisForm")
@@ -578,7 +596,7 @@ function grabaylimpia() {
             //document.all.body10.style.display = 'none'
         }
     }
-	window.location=("fichapos.asp?PO=AUTO&cli=<%=cli%>");
+
 }
 
 function graba()

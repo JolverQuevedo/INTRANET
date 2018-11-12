@@ -4,9 +4,7 @@
   txtPerfil = Request.Cookies("Usuario")("Perfil")%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
 <title>::::::: INTRANET - PPFS :::::::</title>
 <style type="text/css">
 <!--
@@ -16,7 +14,6 @@ body {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-	height: 100% ;
 }
 .Estilo6 {
 	font-family: Tahoma;
